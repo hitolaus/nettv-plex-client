@@ -1,0 +1,33 @@
+$scroller-transition-time:500ms;
+
+@mixin scroller-base {
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+}
+@mixin vertical-scroller {
+    @include scroller-base;
+    transition: top $scroller-transition-time ease;
+    -moz-transition: top $scroller-transition-time ease; /* Firefox 4 */
+    -webkit-transition: top $scroller-transition-time ease; /* Safari and Chrome */
+    -o-transition: top $scroller-transition-time ease; /* Opera */
+}
+
+@mixin horizontal-scroller {
+    @include scroller-base;
+    transition: left $scroller-transition-time ease;
+    -moz-transition: left $scroller-transition-time ease; /* Firefox 4 */
+    -webkit-transition: left $scroller-transition-time ease; /* Safari and Chrome */
+    -o-transition: left $scroller-transition-time ease; /* Opera */
+}
+
+#scroller {
+    @include vertical-scroller;
+}
+#scroller-ondeck {
+    @include horizontal-scroller;
+}
+#scroller-recentlyadded {
+    @include horizontal-scroller;
+}

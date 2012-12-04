@@ -1,0 +1,102 @@
+$menu-transition-time: 1s;
+
+#home-time {
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+#home-menu {
+    position:absolute;
+    left:0;
+    top:0;
+    height:720px;
+    width:420px;
+    font-size: 36px;
+    padding: 0 10px;
+    text-align: right;
+    color: #1E1D1D;
+    background-image:url('../images/HomeBladeLeft.png');
+    background-position: center right;
+    z-index: 10;
+}
+#home-menu ul {
+    overflow: hidden;
+}
+
+#home-menu li {
+    padding: 10px 35px;
+}
+#home-menu .current-scroller {
+    color: #aaa;
+    text-shadow: 1px 1px black;
+}
+#home-menu #current {
+    color: $highlight-color;
+    text-shadow: 1px 1px black;
+    font-size:36px;
+}
+
+#preview-menu {
+    position:absolute;
+    left:400px;
+    top:121px;
+    height:488px;
+    width:880px;
+    background:black;
+    background-image:url('../images/newlistdoublebgunfocused1.png');
+}
+#preview-menu ul {
+    padding: 10px 20px;
+    width: 5000px; /* FIXME: no-wrap hack */
+}
+#preview-menu li {
+    float: left;
+    color: black;
+    margin: 10px;
+    border: 5px solid transparent;
+}
+#preview-menu li img {
+    width: 110px;
+    height: 150px;
+}
+@mixin selectedPoster {
+    border-radius: 5px;
+    border: 5px solid $highlight-color;    
+}
+h2 {
+    position:absolute;
+    width:200px;
+    text-align:right;
+    color: $highlight-color;
+    left:670px;
+    margin:0;
+    font-size:20px;
+    font-weight:normal;
+    text-shadow: 1px 1px black ;
+}
+h2.ondeck {
+    top:8px;
+}
+h2.recentlyadded {
+    bottom:8px;
+}
+#ondeck-menu {
+    position:relative;
+    top:20px;
+    height: 200px;
+    overflow:hidden;
+}
+#recentlyadded-menu {
+    position:relative;
+    top:30px;
+    height: 200px; 
+    overflow:hidden;   
+}
+
+#recentlyadded-menu .current-scroller #current-recentlyadded {
+    @include selectedPoster;
+}
+#ondeck-menu .current-scroller #current-ondeck {
+    @include selectedPoster;
+}

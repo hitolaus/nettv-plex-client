@@ -1,0 +1,23 @@
+$highlight-color: #D1801C;
+
+* {
+    font-family: sans-serif;
+    box-sizing: border-box; 
+}
+body {
+    width:1280px;
+    height:720px;
+    overflow:hidden;
+    margin:0;
+    color:white;
+    background: black;
+}
+
+li {
+    list-style: none;
+}
+
+@import 'settings';
+@import 'home';
+@import 'scroller';
+@import 'player';
