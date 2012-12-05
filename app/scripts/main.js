@@ -5,15 +5,12 @@ function init() {
 	var initialized = Settings.init();
 	
 	if (!initialized) {
-		//document.getElementById('settings').style.display = 'block';
+		window.view = new SettingsView();
 	}
-    
-    window.view = new HomeView();
+    else {
+        window.view = new HomeView();
+    }
     window.view.render();
-    
-    setTimeout(function() {
-        document.getElementById('loader').style.display = 'none';
-    }, 2000);
 }
 
 

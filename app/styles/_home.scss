@@ -20,6 +20,18 @@ $menu-transition-time: 1s;
     background-position: center right;
     z-index: 10;
 }
+
+#home-menu .overlay {
+    position:absolute;
+    left:0;
+    top:0;
+    height:720px;
+    width:235px;
+    background-image:url('../images/CustomHomeLeftOverlay.png');
+    background-position: center center;
+    z-index:0;
+}
+
 #home-menu ul {
     overflow: hidden;
 }
@@ -27,6 +39,11 @@ $menu-transition-time: 1s;
 #home-menu li {
     padding: 10px 35px;
 }
+#home-menu li:hover {
+    color: $highlight-color;
+    cursor:pointer;
+}
+
 #home-menu .current-scroller {
     color: #aaa;
     text-shadow: 1px 1px black;
@@ -37,10 +54,20 @@ $menu-transition-time: 1s;
     font-size:36px;
 }
 
+.line {
+    position:absolute;
+    left:0;
+    top:372px;
+    background-color:black;
+    width:390px;
+    height:1px;
+    z-index:-10;
+}
+
 #preview-menu {
     position:absolute;
     left:400px;
-    top:121px;
+    top:127px;
     height:488px;
     width:880px;
     background:black;
@@ -63,6 +90,22 @@ $menu-transition-time: 1s;
 @mixin selectedPoster {
     border-radius: 5px;
     border: 5px solid $highlight-color;    
+}
+#preview-menu h1 {
+    position:absolute;
+    width:400px;
+    color: $highlight-color;
+    left: 15px;
+    margin:0;
+    font-size:20px;
+    font-weight:normal;
+    text-shadow: 1px 1px black ;
+}
+#ondeck-title {
+    top:8px;
+}
+#recentlyadded-title {
+    bottom:8px;
 }
 h2 {
     position:absolute;
@@ -98,5 +141,8 @@ h2.recentlyadded {
     @include selectedPoster;
 }
 #ondeck-menu .current-scroller #current-ondeck {
+    @include selectedPoster;
+}
+#preview-menu li:hover {
     @include selectedPoster;
 }

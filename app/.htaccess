@@ -124,6 +124,9 @@ AddType application/x-shockwave-flash       swf
 AddType text/vtt                            vtt
 
 
+# CE-HTML
+AddType application/ce-html+xml;charset="UTF-8";supportspointer=false     html
+
 # ----------------------------------------------------------------------
 # Allow concatenation from within specific js and css files
 # ----------------------------------------------------------------------

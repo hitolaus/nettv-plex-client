@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="content-type" content="application/ce-html+xml; charset=UTF-8"/>
+        <meta http-equiv="content-type" content="application/ce-html+xml;charset=UTF-8;supportspointer=false"/>
         <link rel="stylesheet" href="styles/main.css">
         <style>
 #loader {
@@ -21,21 +21,23 @@
     </head>
     <body onload="init()">
         <section id="loader"></section>
-        <section id="settings" style="display:none">test</section>
+        <section id="settings" style="display:none"></section>
         <section id="home">
             <section id="home-time"></section>
             <section id="home-menu">
+                <div class="overlay"></div>
                 <ul id="scroller" style="top:0">
                 </ul>
+                <div class="line"></div>
             </section>
             <section id="preview-menu">
-                <h2 id="ondeck-title"></h2>
+                <h1 id="ondeck-title"></h1>
                 <h2 class="ondeck">On Deck</h2>
                 <section id="ondeck-menu">
                     <ul id="scroller-ondeck" style="left:0">
                     </ul>
                 </section>
-                <h2 id="recentlyadded-title"></h2>
+                <h1 id="recentlyadded-title"></h1>
                 <h2 class="recentlyadded">Recently Added</h2>
                 <section id="recentlyadded-menu">
                     <ul id="scroller-recentlyadded" style="left:0">
@@ -78,6 +80,7 @@
         <script src="scripts/dom.js"></script>
         <script src="scripts/plex-api.js"></script>
         <script src="scripts/nav.js"></script>
+        <script src="scripts/view/settings-view.js"></script>
         <script src="scripts/view/player-view.js"></script>
         <script src="scripts/view/home-view.js"></script>
         <script src="scripts/main.js"></script>

@@ -6,4 +6,31 @@
     height:720px;
     z-index: 100;
     background-color: rgba(0,0,0,0.8);
+    text-align: center;
+}
+
+#settings h1 {
+    color: #ccc;
+    text-shadow:1px 1px black;
+    font-size:36px;
+}
+
+#address {
+    margin-top: 200px;
+    font-size: 72px;
+}
+
+#address-error {
+    color:red;
+    font-size:48px;
+}
+
+input[type=text] {
+    input-format:numeric;
+    font-size:48px;
+    text-align:right;
+    width:85px;
+    color:white;
+    background-color: black;
+    border: 1px solid #444;
 }

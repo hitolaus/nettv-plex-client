@@ -4,8 +4,10 @@ function Video(elem) {
 	var typeAttrNode = elem.attributes.getNamedItem("type");
 	var summaryAttrNode = elem.attributes.getNamedItem("summary");
 	var thumbAttrNode = elem.attributes.getNamedItem("thumb");
-    var grandparentThumbAttrNode = elem.attributes.getNamedItem("grandparentThumb");
 	var artAttrNode = elem.attributes.getNamedItem("art");
+
+    var grandparentTitleAttrNode = elem.attributes.getNamedItem("grandparentTitle");
+    var grandparentThumbAttrNode = elem.attributes.getNamedItem("grandparentThumb");
 
 	var durationAttrNode = elem.attributes.getNamedItem("duration");
 	var viewOffsetAttrNode = elem.attributes.getNamedItem("viewOffset");
@@ -31,6 +33,12 @@ function Video(elem) {
 	if (thumbAttrNode != null) {
 		thumb = thumbAttrNode.nodeValue;
 	}
+    
+    var grandparentTitle = "";
+    if (grandparentTitleAttrNode != null) {
+        grandparentTitle = grandparentTitleAttrNode.nodeValue;
+    }
+
     var grandparentThumb = "";
     if (grandparentThumbAttrNode != null) {
         grandparentThumb = grandparentThumbAttrNode.nodeValue;
@@ -106,6 +114,7 @@ function Video(elem) {
 		title: title,
 		summary: summary,
 		thumb: thumb,
+        grandparentTitle: grandparentTitle,
         grandparentThumb: grandparentThumb,
 		art: art,
 		url: url,

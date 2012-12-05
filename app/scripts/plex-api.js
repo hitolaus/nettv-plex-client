@@ -42,7 +42,8 @@ function PlexAPI() {
         dummy.onerror = function () {
             callback(false);
         };
-        dummy.src = 'http://'+address+':32400/';
+        // TODO: is /:/resources/movie-fanart.jpg always okay?
+        dummy.src = 'http://'+address+':32400/:/resources/movie-fanart.jpg';
     };
     
     this.getScaledImageURL = function(url, width, height) {

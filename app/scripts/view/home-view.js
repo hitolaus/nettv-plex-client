@@ -7,15 +7,34 @@ function HomeView() {
     var homeMenu = null;
 
     function changeActiveMenu(newMenu) {
+        document.getElementById('ondeck-title').innerHTML = '';
+        document.getElementById('recentlyadded-title').innerHTML = '';
         nav.deactivate();
         nav = newMenu;
         nav.activate();
     }
     
+    function setTitle(id, element) {
+    }
+    
     function buildNavigation() {
         ondeckMenu = new HorizontalFixedScrollMenu('scroller-ondeck','current-ondeck');
-        ondeckMenu.onmenuleft = function(e) { if (e.boundary) changeActiveMenu(homeMenu); };
-        ondeckMenu.onmenudown = function(e) { if (e.boundary) changeActiveMenu(recentlyAddedMenu); };
+        ondeckMenu.onmenuleft = function(e) { 
+            if (e.boundary) { changeActiveMenu(homeMenu) }
+            else {
+                setTitle('ondeck-title', e.element);
+            }
+        };
+        ondeckMenu.onmenuright = function (e) {
+            if (!e.boundary) {
+                setTitle('ondeck-title', e.element);
+            }
+        }
+        ondeckMenu.onmenudown = function(e) { 
+            if (e.boundary) {
+                changeActiveMenu(recentlyAddedMenu);
+            }
+        };
     
         recentlyAddedMenu = new HorizontalFixedScrollMenu('scroller-recentlyadded','current-recentlyadded');
         recentlyAddedMenu.onmenuleft = function(e) { if (e.boundary) changeActiveMenu(homeMenu); };
@@ -75,17 +94,16 @@ function HomeView() {
     function buildVideoList(id, activeId, media) {
         var list = document.getElementById(id);
         
-        // reset
-        while (list.hasChildNodes()) {
-            list.removeChild(list.lastChild);
-        }
+        // clear old content
+        list.innerHTML = '';
         
         for (var i = 0; i < media.length; i++) {
             var video = media[i];
-                
+            
             var item = document.createElement('li');
             item.setAttribute('data-key', video.key);
             item.setAttribute('data-type', (video.container) ? "container" : "video");
+            //item.setAttribute('onclick', 'jump(,"'+(i*140)+'px");');
             
             var img = document.createElement('img');
             
@@ -103,6 +121,7 @@ function HomeView() {
             if (i === 0) {
                 item.setAttribute('id',activeId);
             }
+
         }
     }
     
@@ -123,8 +142,7 @@ function HomeView() {
                 
             item.appendChild(document.createTextNode(section.title));
             list.appendChild(item);
-                
-                
+            
             if (i === Math.floor(media.length/2)) {
                 item.setAttribute('id','current');
                 activeKey = section.key;
@@ -145,8 +163,12 @@ function HomeView() {
         plexAPI.browse(plexAPI.sections(), function(container) {
 
             buildSectionList(container.media);
-    
             buildNavigation();
+            
+            // Hide the loading screen
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+            }, 2000);
         });
     }
 
