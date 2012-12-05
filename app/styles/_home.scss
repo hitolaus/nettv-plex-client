@@ -113,6 +113,11 @@ $menu-transition-time: 1s;
 #recentlyadded-title span {
     color:white;
 }
+span img {
+    vertical-align:middle;
+    padding: 0 2px;
+    width:10px;
+}
 h2 {
     position:absolute;
     width:200px;

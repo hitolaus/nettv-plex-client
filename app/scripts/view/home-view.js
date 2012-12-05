@@ -125,7 +125,7 @@ function HomeView() {
             if (video.grandparentTitle) {
                 title = video.grandparentTitle;
             }
-            var meta = ' &sdot; ' + video.year;
+            var meta = ' <img src="images/bullet.png" alt=""  /> ' + video.year;
             
             var item = document.createElement('li');
             item.setAttribute('data-key', video.key);
