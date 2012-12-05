@@ -3,6 +3,7 @@ function Video(elem) {
 	var titleAttrNode = elem.attributes.getNamedItem("title");
 	var typeAttrNode = elem.attributes.getNamedItem("type");
 	var summaryAttrNode = elem.attributes.getNamedItem("summary");
+	var yearAttrNode = elem.attributes.getNamedItem("year");
 	var thumbAttrNode = elem.attributes.getNamedItem("thumb");
 	var artAttrNode = elem.attributes.getNamedItem("art");
 
@@ -28,6 +29,10 @@ function Video(elem) {
 	var summary = "";
 	if (summaryAttrNode != null) {
 		summary = summaryAttrNode.nodeValue;
+	}
+	var year = "";
+	if (yearAttrNode != null) {
+		year = yearAttrNode.nodeValue;
 	}
 	var thumb = "";
 	if (thumbAttrNode != null) {
@@ -113,6 +118,7 @@ function Video(elem) {
 		container:false,
 		title: title,
 		summary: summary,
+        year: year,
 		thumb: thumb,
         grandparentTitle: grandparentTitle,
         grandparentThumb: grandparentThumb,

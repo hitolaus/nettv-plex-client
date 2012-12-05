@@ -19,6 +19,9 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     this.onmenuup = function() {};
     this.onmenudown = function() {};
     
+    this.current = function() {
+        return current;
+    }
     this.reload = function() {
         current = document.getElementById(activeId);
     };
@@ -79,6 +82,9 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     this.onmenuup = function() {};
     this.onmenudown = function() {};
     
+    this.current = function() {
+        return current;
+    }
     this.reload = function() {
         current = document.getElementById(activeId);
     };

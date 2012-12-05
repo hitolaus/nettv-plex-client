@@ -95,17 +95,23 @@ $menu-transition-time: 1s;
     position:absolute;
     width:400px;
     color: $highlight-color;
-    left: 15px;
+    left: 30px;
     margin:0;
-    font-size:20px;
+    font-size:18px;
     font-weight:normal;
     text-shadow: 1px 1px black ;
 }
 #ondeck-title {
-    top:8px;
+    top:9px;
+}
+#ondeck-title span {
+    color:white;
 }
 #recentlyadded-title {
-    bottom:8px;
+    bottom:9px;
+}
+#recentlyadded-title span {
+    color:white;
 }
 h2 {
     position:absolute;
@@ -114,15 +120,15 @@ h2 {
     color: $highlight-color;
     left:670px;
     margin:0;
-    font-size:20px;
+    font-size:18px;
     font-weight:normal;
     text-shadow: 1px 1px black ;
 }
 h2.ondeck {
-    top:8px;
+    top:9px;
 }
 h2.recentlyadded {
-    bottom:8px;
+    bottom:9px;
 }
 #ondeck-menu {
     position:relative;

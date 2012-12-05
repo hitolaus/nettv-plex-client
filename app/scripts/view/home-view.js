@@ -12,9 +12,15 @@ function HomeView() {
         nav.deactivate();
         nav = newMenu;
         nav.activate();
+        
+        var scrollerId = DOM.getParent(nav.current()).getAttribute('id');
+        var titleId = scrollerId.substring(scrollerId.indexOf('-')+1) + '-title';
+        
+        setTitle(titleId, nav.current());
     }
     
     function setTitle(id, element) {
+        document.getElementById(id).innerHTML = element.getAttribute('data-title')+'<span>'+element.getAttribute('data-meta')+'</span>';
     }
     
     function buildNavigation() {
@@ -37,8 +43,23 @@ function HomeView() {
         };
     
         recentlyAddedMenu = new HorizontalFixedScrollMenu('scroller-recentlyadded','current-recentlyadded');
-        recentlyAddedMenu.onmenuleft = function(e) { if (e.boundary) changeActiveMenu(homeMenu); };
-        recentlyAddedMenu.onmenuup = function(e) { if (e.boundary) changeActiveMenu(ondeckMenu); };
+        recentlyAddedMenu.onmenuleft = function(e) { 
+            if (e.boundary) { changeActiveMenu(homeMenu); }
+            else {
+                setTitle('recentlyadded-title', e.element);
+            } 
+        };
+        recentlyAddedMenu.onmenuright = function(e) { 
+            if (!e.boundary) {
+                setTitle('recentlyadded-title', e.element);
+            } 
+        };
+        recentlyAddedMenu.onmenuup = function(e) { 
+            if (e.boundary) { 
+                changeActiveMenu(ondeckMenu); 
+            }
+        };
+        
     
         homeMenu = new VerticalFixedScrollMenu('scroller', 'current');
         homeMenu.onmenuright = function(e) { if (e.boundary) changeActiveMenu(ondeckMenu); };
@@ -100,9 +121,17 @@ function HomeView() {
         for (var i = 0; i < media.length; i++) {
             var video = media[i];
             
+            var title = video.title;
+            if (video.grandparentTitle) {
+                title = video.grandparentTitle;
+            }
+            var meta = ' &sdot; ' + video.year;
+            
             var item = document.createElement('li');
             item.setAttribute('data-key', video.key);
             item.setAttribute('data-type', (video.container) ? "container" : "video");
+            item.setAttribute('data-title', title);
+            item.setAttribute('data-meta', meta);
             //item.setAttribute('onclick', 'jump(,"'+(i*140)+'px");');
             
             var img = document.createElement('img');
