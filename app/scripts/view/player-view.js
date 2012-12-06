@@ -8,6 +8,8 @@ function PlayerView(uri) {
     var totalDuration = 0;
     var durationIndex = 0;
     
+    var loading = false;
+    
     var CONTROLS_TIMEOUT = 5000;
     var controlsTimer;
     
@@ -16,6 +18,14 @@ function PlayerView(uri) {
     }
     function hideControls() {
         controls.style.bottom = -controls.offsetHeight + 'px';
+    }
+     
+    function closePlayer() {
+        video.pause();
+        window.view = new HomeView();
+        window.view.reload();
+        
+        player.style.display = 'none';
     }
      
     function durationChangeHandler() {
@@ -31,8 +41,21 @@ function PlayerView(uri) {
         var sliceTime = Math.round(ct * durationIndex);
         document.getElementById('progressbar-front').style.width = sliceTime+"px"; 
     }
-     
+    function errorHandler() {
+        loading = false;
+        console.log('ERROR');
+    }
+	function finishedHandler() {
+        closePlayer();
+	}
+    function readyHandler() {
+        loading = false;
+        document.getElementById('video-loading').style.display = 'none';
+    }
+    
     function togglePause() {
+        if (loading) return;
+        
         if (parseInt(controls.style.bottom,10) === 0) {
             video.play();
             hideControls();
@@ -43,6 +66,8 @@ function PlayerView(uri) {
         }
     }
     function doSkip(time) {
+        if (loading) return;
+        
         clearTimeout(controlsTimer);
         showControls();
     	
@@ -65,25 +90,24 @@ function PlayerView(uri) {
         doSkip(60.0);
 	};
 	this.onEnter = function () {
-        togglePause();
+        togglePause();   
 	};
 	this.onBack = function () {
-        video.pause();
-        window.view = new HomeView();
-        window.view.reload();
-        
-        player.style.display = 'none';
+        closePlayer();
 	};
 	this.render = function (container) {
 		var media = container.media[0];
 		
+        loading = true;
+        document.getElementById('video-loading').style.display = 'block';
+        
         player.style.display = 'block';
         
 		var url = plexAPI.getURL(media.url);
         
 		video.src = url;
-		video.play();
-		
+        video.play();
+        
         document.getElementById('description').innerHTML = media.summary;
         document.getElementById('title').innerHTML = media.title;
         
@@ -99,6 +123,9 @@ function PlayerView(uri) {
 		scope.render(container);
 	});
     
+    video.addEventListener("loadeddata", readyHandler, true);
+    video.addEventListener("ended", finishedHandler, true);
+    video.addEventListener("error", errorHandler, true);
     video.addEventListener("timeupdate", timeUpdateHandler, true);
 	video.addEventListener("durationchange", durationChangeHandler, true);
 }

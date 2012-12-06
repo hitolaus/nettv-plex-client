@@ -2,8 +2,15 @@ $menu-transition-time: 1s;
 
 #home-time {
     position:absolute;
-    left:0;
-    top:0;
+    left:30px;
+    top:20px;
+    z-index:11;
+    color:#aaa;
+    font-size:28px;
+}
+#home-time span {
+    color: $highlight-color;
+    padding-right: 4px;
 }
 
 #home-menu {

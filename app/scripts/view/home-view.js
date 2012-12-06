@@ -6,6 +6,20 @@ function HomeView() {
     var recentlyAddedMenu = null;
     var homeMenu = null;
 
+    function updateTime() {
+        var date = new Date();
+        
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+
+        document.getElementById('home-time').innerHTML = '<span>&#149;</span>' + strTime;
+    }
+
     function changeActiveMenu(newMenu) {
         document.getElementById('ondeck-title').innerHTML = '';
         document.getElementById('recentlyadded-title').innerHTML = '';
@@ -14,9 +28,13 @@ function HomeView() {
         nav.activate();
         
         var scrollerId = DOM.getParent(nav.current()).getAttribute('id');
-        var titleId = scrollerId.substring(scrollerId.indexOf('-')+1) + '-title';
+        var typeIdx = scrollerId.indexOf('-');
+        if (typeIdx > 0) {
+            // The section menu scroller doesn't contain '-'
+            var titleId = scrollerId.substring(typeIdx+1) + '-title';
         
-        setTitle(titleId, nav.current());
+            setTitle(titleId, nav.current());
+        }
     }
     
     function setTitle(id, element) {
@@ -196,6 +214,9 @@ function HomeView() {
 
             buildSectionList(container.media);
             buildNavigation();
+            
+            updateTime();
+            setInterval(updateTime, 1000);
             
             // Hide the loading screen
             setTimeout(function() {
