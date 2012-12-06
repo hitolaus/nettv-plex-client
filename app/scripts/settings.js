@@ -2,8 +2,9 @@ function Settings() {
     var _pms = null;
     
     function getCookie(c_name) {
-        var i,x,y,ARRcookies=document.cookie.split(";");
-        for (i=0;i<ARRcookies.length;i++) {
+        var x,y,ARRcookies=document.cookie.split(";");
+        var n = ARRcookies.length;
+        for (var i = 0; i < n; i++) {
             x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
             y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
             x=x.replace(/^\s+|\s+$/g,"");

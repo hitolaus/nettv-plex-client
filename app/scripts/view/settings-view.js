@@ -13,7 +13,8 @@ function SettingsView() {
 	
 		var digits = document.getElementsByTagName('input');
 
-		for (var i = 0; i < digits.length; i++) {
+        var n = digits.length;
+		for (var i = 0; i < n; i++) {
 			var digit = digits[i].value;
 
             if (i > 0) {

@@ -118,7 +118,8 @@ function HomeView() {
         // clear old content
         list.innerHTML = '';
         
-        for (var i = 0; i < media.length; i++) {
+        var n = media.length;
+        for (var i = 0; i < n; i++) {
             var video = media[i];
             
             var title = video.title;
@@ -161,7 +162,9 @@ function HomeView() {
 
         var activeHeight = 0;
         
-        for (var i = 0; i < media.length; i++) {
+        var n = media.length;
+        var selectedIndex = Math.floor(n/2);
+        for (var i = 0; i < n; i++) {
             var section = media[i];
                 
             var item = document.createElement('li');
@@ -172,7 +175,7 @@ function HomeView() {
             item.appendChild(document.createTextNode(section.title));
             list.appendChild(item);
             
-            if (i === Math.floor(media.length/2)) {
+            if (i === selectedIndex) {
                 item.setAttribute('id','current');
                 activeKey = section.key;
                 activeBg = section.art;

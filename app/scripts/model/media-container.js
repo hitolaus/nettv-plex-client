@@ -20,8 +20,10 @@ function MediaContainer(elem) {
 	
     var media = [];
     
-    for (var i = 0; i < elem.childNodes.length; i++) {
-        var e = elem.childNodes[i];
+    var children = elem.childNodes;
+    var n = children.length;
+    for (var i = 0; i < n; i++) {
+        var e = children[i];
         
         if (e.nodeName === "Directory") {
             media.push(new Directory(e));

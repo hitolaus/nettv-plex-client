@@ -67,12 +67,16 @@ function Video(elem) {
 	var url = "";
 	var subtitles = null;
 	var files = [];
-	for (var i = 0; i < elem.childNodes.length; i++) {
-		var media = elem.childNodes[i];	
+    
+    var children = elem.childNodes;
+    var mediaCount = children.length;
+	for (var i = 0; i < mediaCount; i++) {
+		var media = children[i];	
 		if (media.nodeName != "Media") continue;
 
 		var parts = media.getElementsByTagName("Part");
-		for (var j = 0; j < parts.length; j++) {
+        var partCount = parts.length;
+		for (var j = 0; j < partCount; j++) {
 			var part = parts[j];
 
 			var partKeyAttrNode = part.attributes.getNamedItem("key");
@@ -82,7 +86,8 @@ function Video(elem) {
 			}
 			
 			var streams = part.getElementsByTagName("Stream");
-			for (var k = 0; k < streams.length; k++) {
+            var streamCount = streams.length;
+			for (var k = 0; k < streamCount; k++) {
 				var stream = streams[k];
 				
 				var streamKey = "";
