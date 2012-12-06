@@ -15,7 +15,7 @@ function PlexAPI() {
 	
 	this.getURL = function(key, url) {
 		if (key.indexOf('/') === 0) {
-			return "http://10.0.0.30:32400" + key;
+			return "http://"+Settings.getPMS()+":32400" + key;
 		}
         else if (!url) {
             return this.sections() + '/' + key;
@@ -31,7 +31,7 @@ function PlexAPI() {
         return this.getURL(key) + '/recentlyAdded';
     };
 	this.sections = function() {
-		return "http://10.0.0.30:32400/library/sections";
+		return "http://"+Settings.getPMS()+":32400/library/sections";
 	};
     
     this.ping = function(address, callback) {
@@ -47,7 +47,7 @@ function PlexAPI() {
     };
     
     this.getScaledImageURL = function(url, width, height) {
-        return "http://10.0.0.30:32400/photo/:/transcode?width="+width+"&height="+height+"&url="+encodeURIComponent(url);
+        return "http://"+Settings.getPMS()+":32400/photo/:/transcode?width="+width+"&height="+height+"&url="+encodeURIComponent(url);
     };
 
 }

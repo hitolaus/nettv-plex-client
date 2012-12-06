@@ -140,9 +140,6 @@ AddType application/ce-html+xml;charset="UTF-8";supportspointer=false     html
   ExpiresByType video/mp4                 "access plus 1 month"
   ExpiresByType video/webm                "access plus 1 month"
 
-# HTC files  (css3pie)
-  ExpiresByType text/x-component          "access plus 1 month"
-
 # Webfonts
   ExpiresByType application/x-font-ttf    "access plus 1 month"
   ExpiresByType font/opentype             "access plus 1 month"
@@ -164,5 +161,5 @@ AddType application/ce-html+xml;charset="UTF-8";supportspointer=false     html
 # You can add custom pages to handle 500 or 403 pretty easily, if you like.
 # If you are hosting your site in subdirectory, adjust this accordingly
 #    e.g. ErrorDocument 404 /subdir/404.html
-ErrorDocument 404 /404.html
+ErrorDocument 404 /nettv/plex/404.html
 
