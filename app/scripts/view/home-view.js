@@ -6,6 +6,8 @@ function HomeView() {
     var recentlyAddedMenu = null;
     var homeMenu = null;
 
+    var lastUsedMenu = null;
+
     function updateTime() {
         var date = new Date();
         
@@ -21,6 +23,7 @@ function HomeView() {
     }
 
     function changeActiveMenu(newMenu) {
+        lastUsedMenu = null;
         document.getElementById('ondeck-title').innerHTML = '';
         document.getElementById('recentlyadded-title').innerHTML = '';
         nav.deactivate();
@@ -57,6 +60,7 @@ function HomeView() {
         ondeckMenu.onmenudown = function(e) { 
             if (e.boundary) {
                 changeActiveMenu(recentlyAddedMenu);
+                lastUsedMenu = "recentlyadded";
             }
         };
     
@@ -73,14 +77,30 @@ function HomeView() {
             } 
         };
         recentlyAddedMenu.onmenuup = function(e) { 
-            if (e.boundary) { 
+            if (e.boundary) {
                 changeActiveMenu(ondeckMenu); 
+                lastUsedMenu = "ondeck";
             }
         };
         
     
         homeMenu = new VerticalFixedScrollMenu('scroller', 'current');
-        homeMenu.onmenuright = function(e) { if (e.boundary) changeActiveMenu(ondeckMenu); };
+        homeMenu.onmenuright = function(e) { 
+            if (e.boundary) {
+                if (lastUsedMenu === null || lastUsedMenu === "ondeck") {
+                    changeActiveMenu(ondeckMenu);
+                    lastUsedMenu = "ondeck";
+                }
+                else if (lastUsedMenu === "recentlyadded") {
+                    changeActiveMenu(recentlyAddedMenu);
+                    lastUsedMenu = "recentlyadded";
+                }
+                else {
+                    changeActiveMenu(ondeckMenu);
+                    lastUsedMenu = "ondeck";
+                }
+            }
+        };
         homeMenu.onmenuup = function(e) {
             loadBackground(e.element.getAttribute('data-bg'))
             loadPreviewMenu(e.element.getAttribute('data-key'));

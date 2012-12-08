@@ -22,6 +22,7 @@ function Settings() {
     
 	this.init = function() {
 		_pms = getCookie("nettv_plex_pms_ip");
+        console.log('Using PMS: ' + _pms);
 		return _pms != null;
 	},
 	this.setPMS = function(pms) {

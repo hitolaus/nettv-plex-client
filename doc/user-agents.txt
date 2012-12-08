@@ -1,0 +1,5 @@
+# User Agent
+
+Examples of NetTV user agents:
+
+* Opera/9.80 (Linux i686; U; HbbTV/1.1.1 (; BANGOLUFSEN; A3; ; ; ) CE-HTML/1.0 NETTV/1.0; en) Presto/2.10.287 Version/12.00 A3/1.0.1.28219 (BANGOLUFSEN, A3, wired)

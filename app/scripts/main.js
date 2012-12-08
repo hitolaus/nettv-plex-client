@@ -1,9 +1,7 @@
 function init() {
-
     document.addEventListener("keydown", keydownHandler, true);
-    
+
 	var initialized = Settings.init();
-	
 	if (!initialized) {
 		window.view = new SettingsView();
 	}
