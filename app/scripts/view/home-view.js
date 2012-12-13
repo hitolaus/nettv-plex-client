@@ -138,7 +138,6 @@ function HomeView() {
     }
     
     function loadPreviewMenu(key) {
-        
         plexAPI.browse(plexAPI.onDeck(key), function(container) {
             buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
             ondeckMenu.reload();

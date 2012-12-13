@@ -21,8 +21,9 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     
     this.current = function() {
         return current;
-    }
+    };
     this.reload = function() {
+        menu.style.top = 0;
         current = document.getElementById(activeId);
     };
     this.activate = function() {
@@ -84,8 +85,9 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     
     this.current = function() {
         return current;
-    }
+    };
     this.reload = function() {
+        menu.style.left = 0;
         current = document.getElementById(activeId);
     };
     this.activate = function() {
