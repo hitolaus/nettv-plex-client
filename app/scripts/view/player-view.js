@@ -1,4 +1,4 @@
-function PlayerView(uri) {
+function PlayerView(uri, useViewOffset) {
 	var scope = this;
 	
     var player = document.getElementById('player');
@@ -9,6 +9,7 @@ function PlayerView(uri) {
     var durationIndex = 0;
     
     var loading = false;
+    var startViewOffset = null;
     
     var CONTROLS_TIMEOUT = 5000;
     var controlsTimer;
@@ -51,6 +52,11 @@ function PlayerView(uri) {
     function readyHandler() {
         loading = false;
         document.getElementById('video-loading').style.display = 'none';
+        
+        if (startViewOffset) {
+            video.currentTime = startViewOffset;
+            startViewOffset = null;
+        }
     }
     
     function togglePause() {
@@ -108,11 +114,17 @@ function PlayerView(uri) {
 		video.src = url;
         video.play();
         
+        if (useViewOffset && media.viewOffset) {
+            // Save the offset so we can set if when the video is loaded
+            startViewOffset = media.viewOffset;
+        }
+        
         document.getElementById('description').innerHTML = media.summary;
         document.getElementById('title').innerHTML = media.title;
         
 		// Load subtitles
 		if (media.subtitles) {
+            console.log('Loading subtitle ' + media.subtitles + '...');
 			var p = Popcorn( "video" )
 					.parseSRT(plexAPI.getURL(media.subtitles))
 					.play();

@@ -21,6 +21,15 @@
     </head>
     <body onload="init()">
         <section id="loader"></section>
+        
+        <section id="resume" style="display:none">
+            <h1>Menu</h1>
+            <ul>
+                <li id="resume-offset"></li>
+                <li>Start from beginning</li>
+            </ul>
+        </section>
+        
         <section id="settings" style="display:none"></section>
         <section id="home">
             <section id="home-time"><span>&#149;</span>0:00 AM</section>
@@ -80,6 +89,7 @@
         <script src="scripts/plex-api.js"></script>
         <script src="scripts/nav.js"></script>
         <script src="scripts/view/settings-view.js"></script>
+        <script src="scripts/view/resume-view.js"></script>
         <script src="scripts/view/player-view.js"></script>
         <script src="scripts/view/home-view.js"></script>
         <script src="scripts/main.js"></script>

@@ -165,12 +165,14 @@ function HomeView() {
                 title = video.grandparentTitle;
             }
             var meta = ' <img src="images/bullet.png" alt=""  /> ' + video.year;
+            var offset = (video.viewOffset) ? video.viewOffset : 0;
             
             var item = document.createElement('li');
             item.setAttribute('data-key', video.key);
             item.setAttribute('data-type', (video.container) ? "container" : "video");
             item.setAttribute('data-title', title);
             item.setAttribute('data-meta', meta);
+            item.setAttribute('data-offset', offset);
             //item.setAttribute('onclick', 'jump(,"'+(i*140)+'px");');
             
             var img = document.createElement('img');
@@ -260,7 +262,15 @@ function HomeView() {
         var current = document.getElementById(currentId);
         
         if (current.getAttribute('data-type') === "video") {
-            window.view = new PlayerView(plexAPI.getURL(current.getAttribute('data-key')));
+            var key = current.getAttribute('data-key');
+            var offset = parseInt(current.getAttribute('data-offset'), 10);
+            
+            if (offset > 0) {
+                window.view = new ResumeView(plexAPI.getURL(key), offset);
+            }
+            else {
+                window.view = new PlayerView(plexAPI.getURL(key));
+            }
         }
     }
 
