@@ -54,7 +54,13 @@ function SettingsView() {
             }
         }
     };
-    this.onBack = function () {};
+    this.onBack = function () {
+        if (Settings.getPMS()) {
+            window.view = new HomeView();
+            window.view.reload();
+            hide();
+        }
+    };
     this.onLeft = function () {};
     this.onRight = function () {};
     this.onUp = function () {};

@@ -1,7 +1,5 @@
 function Directory(elem) {
 	
-	//leafCount="67" viewedLeafCount="54"
-	
 	var keyAttrNode = elem.attributes.getNamedItem("key");
 	var titleAttrNode = elem.attributes.getNamedItem("title");
 	var typeAttrNode = elem.attributes.getNamedItem("type");

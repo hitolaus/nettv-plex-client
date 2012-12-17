@@ -9,17 +9,7 @@ function HomeView() {
     var lastUsedMenu = null;
 
     function updateTime() {
-        var date = new Date();
-        
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
-        var strTime = hours + ':' + minutes + ' ' + ampm;
-
-        document.getElementById('home-time').innerHTML = '<span>&#149;</span>' + strTime;
+        document.getElementById('home-time').innerHTML = '<span>&#149;</span>' + Time.to12HourFormat(new Date());
     }
 
     function changeActiveMenu(newMenu) {
@@ -123,6 +113,9 @@ function HomeView() {
             else if (currentId.indexOf('recentlyadded') > -1) {
                 nav = recentlyAddedMenu;
             }
+            else {
+                nav = homeMenu;
+            }
         }
         
         nav.activate();
@@ -138,6 +131,12 @@ function HomeView() {
     }
     
     function loadPreviewMenu(key) {
+        if (key === "") {
+            document.getElementById("preview-menu").style.display = 'none';
+            return;
+        }
+        document.getElementById("preview-menu").style.display = 'block';
+
         plexAPI.browse(plexAPI.onDeck(key), function(container) {
             buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
             ondeckMenu.reload();
@@ -222,6 +221,14 @@ function HomeView() {
                 activeHeight = list.offsetHeight;
             }
         }
+        var item = document.createElement('li');
+        item.setAttribute('data-key', "");
+        item.setAttribute('data-bg', "");
+        item.setAttribute('data-type', "pref");
+
+        item.appendChild(document.createTextNode("Preferences"));
+        list.appendChild(item);
+
         list.style.top = (360-activeHeight+4)+'px';
         
         loadBackground(activeBg);
@@ -261,7 +268,8 @@ function HomeView() {
         var currentId = getCurrentId(currentScroller.getAttribute('id'));
         var current = document.getElementById(currentId);
         
-        if (current.getAttribute('data-type') === "video") {
+        var type = current.getAttribute('data-type');
+        if (type === "video") {
             var key = current.getAttribute('data-key');
             var offset = parseInt(current.getAttribute('data-offset'), 10);
             
@@ -271,6 +279,10 @@ function HomeView() {
             else {
                 window.view = new PlayerView(plexAPI.getURL(key));
             }
+        }
+        else if (type === "pref") {
+            window.view = new SettingsView();
+            window.view.render();
         }
     }
 
