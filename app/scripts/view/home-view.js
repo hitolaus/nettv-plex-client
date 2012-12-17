@@ -124,7 +124,11 @@ function HomeView() {
     function loadBackground(url) {
         if (url) {
             var body = document.body;
-            body.style.backgroundImage = 'url('+plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720)+')';
+            var scaledBackground = 'url('+plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720) + ')';
+            if (body.style.backgroundImage === scaledBackground) {
+                return;
+            }
+            body.style.backgroundImage = scaledBackground;
             body.style.backgroundSize = '1280px 720px';
             body.style.backgroundRepeat = 'no-repeat';
         }
