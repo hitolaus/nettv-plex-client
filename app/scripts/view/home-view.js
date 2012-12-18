@@ -123,7 +123,7 @@ function HomeView() {
     
     function loadBackground(url) {
         if (url) {
-            var body = document.body;
+            var body = document.getElementsByTagName('body')[0];
             var scaledBackground = 'url('+plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720) + ')';
             if (body.style.backgroundImage === scaledBackground) {
                 return;

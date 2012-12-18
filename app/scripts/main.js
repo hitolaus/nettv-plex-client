@@ -11,7 +11,6 @@ function init() {
     window.view.render();
 }
 
-
 function keydownHandler(e) {
 	switch (e.keyCode) {
 		case VK_UP:

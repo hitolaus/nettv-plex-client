@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
+        <title>Plex</title>
         <meta http-equiv="content-type" content="application/ce-html+xml;charset=UTF-8;supportspointer=false"/>
         <link rel="stylesheet" href="styles/main.css" />
         <style type="text/css">
@@ -20,55 +21,58 @@
         </style>
     </head>
     <body onload="init()">
-        <section id="loader"></section>
+        <div id="loader"></div>
         
-        <section id="resume" style="display:none">
+        <div id="resume" style="display:none">
             <h1>Menu</h1>
             <ul>
                 <li id="resume-offset"></li>
                 <li>Start from beginning</li>
             </ul>
-        </section>
+        </div>
         
-        <section id="settings" style="display:none"></section>
-        <section id="home">
-            <section id="home-time"><span>&#149;</span>0:00 AM</section>
-            <section id="home-menu">
+        <div id="settings" style="display:none"></div>
+        <div id="home">
+            <div id="home-time"><span>&#149;</span>0:00 AM</div>
+            <div id="home-menu">
                 <div class="overlay"></div>
                 <ul id="scroller" style="top:0">
+                    <li>dummy</li>
                 </ul>
                 <div class="line"></div>
-            </section>
-            <section id="preview-menu">
+            </div>
+            <div id="preview-menu">
                 <h1 id="ondeck-title"></h1>
                 <h2 class="ondeck">On Deck</h2>
-                <section id="ondeck-menu">
+                <div id="ondeck-menu">
                     <ul id="scroller-ondeck" style="left:0">
+                        <li>dummy</li>
                     </ul>
-                </section>
+                </div>
                 <h1 id="recentlyadded-title"></h1>
                 <h2 class="recentlyadded">Recently Added</h2>
-                <section id="recentlyadded-menu">
+                <div id="recentlyadded-menu">
                     <ul id="scroller-recentlyadded" style="left:0">
+                        <li>dummy</li>
                     </ul>
-                </section>
-            </section>
-        </section>
+                </div>
+            </div>
+        </div>
         
-        <section id="player" style="display:none">
-            <section id="video-loading"><h1>Please Wait...</h1></section>
-            <section id="controls">
-                <section id="title"></section>
-                <section id="description"></section>
-                <section id="progressbar-back"></section>
-                <section id="progressbar-front"></section>
-                <section id="duration">00:00:00</section>
-                <section id="total-duration">00:00:00</section>
-            </section>
-            <video tabindex="0" id="video"></video>
-        </section>
-        
-        <script>
+        <div id="player" style="display:none">
+            <div id="video-loading"><h1>Please Wait...</h1></div>
+            <div id="controls">
+                <div id="title"></div>
+                <div id="description"></div>
+                <div id="progressbar-back"></div>
+                <div id="progressbar-front"></div>
+                <div id="duration">00:00:00</div>
+                <div id="total-duration">00:00:00</div>
+            </div>
+            <object id="video" border="0" tabindex="0" />
+        </div>
+
+        <script type="text/javascript">
         <![CDATA[
             var _gaq=[['_setAccount','UA-28747965-1'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -76,7 +80,7 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         ]]>
         </script>
-        
+
         <!-- build:js scripts/app.js -->
         <script src="scripts/vendor/popcorn-complete.min.js"></script>
         <script src="scripts/debug.js"></script>

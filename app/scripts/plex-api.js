@@ -1,20 +1,20 @@
 function PlexAPI() {
-    
+    'use strict';
 	this.browse = function(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-        	if (xhr.readyState == 4) {
-        		if (xhr.status == 200 || xhr.status === 304) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 || xhr.status === 304) {
                     callback(new MediaContainer(xhr.responseXML.firstChild));
-        		}
+                }
                 else {
                     // TODO: Proper error handling
                     console.log('ERROR(' + xhr.status + ') msg: ' + xhr.statusText);
                 }
             }
         };
-    	xhr.open("GET", url, true);
-    	xhr.send(null);
+        xhr.open('GET', url, true);
+        xhr.send(null);
 	};
 	
 	this.getURL = function(key, url) {

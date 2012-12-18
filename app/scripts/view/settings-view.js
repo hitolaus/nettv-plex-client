@@ -28,9 +28,10 @@ function SettingsView() {
 
     
     this.onEnter = function () {
-        var activeId = document.activeElement.getAttribute('id');
-        var lastValueEntered = activeId === "c4" && document.activeElement.value !== "";
-        
+        var activeElement = document.querySelector('input:focus');
+        var activeId = activeElement.getAttribute('id');
+        var lastValueEntered = activeId === "c4" && activeElement.value !== "";
+
         if (lastValueEntered) {
     		var address = getAddressAsString();
     		return plexAPI.ping(address, function(valid) {
@@ -47,7 +48,7 @@ function SettingsView() {
     		});
         }
         else {
-            if (document.activeElement.value !== "") {
+            if (activeElement.value !== "") {
                 var cnt = activeId.substring(1);
                 var nextId = "c"+(parseInt(cnt, 10)+1);
                 document.getElementById(nextId).focus();
