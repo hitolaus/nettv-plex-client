@@ -2,3 +2,15 @@ The following objects are not available in Opera/CE-HTML:
 
 * document.body
 * document.activeElement
+
+## Media object
+
+### Properties
+
+* playTime: Total time in milliseconds
+* playPosition: Current time in milliseconds
+
+### Functions
+
+* play(i): i==1 Play, i==0 Pause
+* stop(): Stop

@@ -15,8 +15,30 @@
     "quotmark": "single",
     "regexp": true,
     "undef": true,
-    "unused": true,
-    "strict": true,
+    "unused": false, /* This is needed for the 'class' definition. use 'export: HomeView' when jshint is updated */
+    "strict": false,
     "trailing": true,
-    "smarttabs": true
+    "smarttabs": true,
+    "predef": [
+        "plexAPI",
+        "Time",
+        "DOM",
+        "HorizontalFixedScrollMenu",
+        "VerticalFixedScrollMenu",
+        "ResumeView",
+        "PlayerView",
+        "HomeView",
+        "SettingsView",
+        "Settings",
+        "MediaContainer",
+        "VK_UP",
+        "VK_DOWN",
+        "VK_LEFT",
+        "VK_RIGHT",
+        "VK_ENTER",
+        "VK_BACK",
+        "VK_PLAY",
+        "VK_PAUSE",
+        "VK_STOP"
+    ]
 }

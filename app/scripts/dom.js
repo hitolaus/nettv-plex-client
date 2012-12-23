@@ -1,4 +1,4 @@
-function DOM() {};
+function DOM() {}
 
 DOM.isElement = function(node) {
     return node.nodeType === 1;
@@ -7,9 +7,11 @@ DOM.isElement = function(node) {
 DOM.getParent = function(elem) {
     var parent = elem.parentNode;
     while (true) {
-        if (parent === null) return null;
+        if (parent === null) {
+            return null;
+        }
         if (!this.isElement(parent)) {
-          parent = parent.parentNode;  
+          parent = parent.parentNode;
         }
         else {
             return parent;
@@ -19,9 +21,11 @@ DOM.getParent = function(elem) {
 DOM.getPreviousElement = function (elem) {
     var prev = elem.previousSibling;
     while (true) {
-        if (prev === null) return null;
+        if (prev === null) {
+            return null;
+        }
         if (!this.isElement(prev)) {
-          prev = prev.previousSibling;  
+          prev = prev.previousSibling;
         }
         else {
             return prev;
@@ -31,9 +35,11 @@ DOM.getPreviousElement = function (elem) {
 DOM.getNextElement = function(elem) {
     var next = elem.nextSibling;
     while (true) {
-        if (next === null) return null;
+        if (next === null) {
+            return null;
+        }
         if (!this.isElement(next)) {
-          next = next.nextSibling;  
+          next = next.nextSibling;
         }
         else {
             return next;
@@ -57,6 +63,6 @@ DOM.addClass = function(elem, className) {
  */
 DOM.removeClass = function(elem, className) {
     if (DOM.hasClass(elem, className)) {
-        elem.className = "";
+        elem.className = '';
     }
 };

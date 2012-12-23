@@ -22,7 +22,7 @@
     </head>
     <body onload="init()">
         <div id="loader"></div>
-        
+
         <div id="resume" style="display:none">
             <h1>Menu</h1>
             <ul>
@@ -30,7 +30,7 @@
                 <li>Start from beginning</li>
             </ul>
         </div>
-        
+
         <div id="settings" style="display:none"></div>
         <div id="home">
             <div id="home-time"><span>&#149;</span>0:00 AM</div>
@@ -58,9 +58,11 @@
                 </div>
             </div>
         </div>
-        
-        <div id="player" style="display:none">
+
+        <!-- the object tag needs to be visible at load therefore we load it offscreen -->
+        <div id="player" style="top:-9999px">
             <div id="video-loading"><h1>Please Wait...</h1></div>
+            <div id="player-message"></div>
             <div id="controls">
                 <div id="title"></div>
                 <div id="description"></div>
@@ -69,7 +71,7 @@
                 <div id="duration">00:00:00</div>
                 <div id="total-duration">00:00:00</div>
             </div>
-            <object id="video" border="0" tabindex="0" />
+            <object id="video" border="0" type="video/mp4" />
         </div>
 
         <script type="text/javascript">
@@ -82,21 +84,22 @@
         </script>
 
         <!-- build:js scripts/app.js -->
-        <script src="scripts/vendor/popcorn-complete.min.js"></script>
-        <script src="scripts/debug.js"></script>
-        <script src="scripts/time.js"></script>
-        <script src="scripts/model/directory.js"></script>
-        <script src="scripts/model/media-container.js"></script>
-        <script src="scripts/model/video.js"></script>
-        <script src="scripts/settings.js"></script>
-        <script src="scripts/dom.js"></script>
-        <script src="scripts/plex-api.js"></script>
-        <script src="scripts/nav.js"></script>
-        <script src="scripts/view/settings-view.js"></script>
-        <script src="scripts/view/resume-view.js"></script>
-        <script src="scripts/view/player-view.js"></script>
-        <script src="scripts/view/home-view.js"></script>
-        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/popcorn-complete.min.js" type="text/javascript"></script>
+        <script src="scripts/debug.js" type="text/javascript"></script>
+        <script src="scripts/string.js" type="text/javascript"></script>
+        <script src="scripts/time.js" type="text/javascript"></script>
+        <script src="scripts/model/directory.js" type="text/javascript"></script>
+        <script src="scripts/model/media-container.js" type="text/javascript"></script>
+        <script src="scripts/model/video.js" type="text/javascript"></script>
+        <script src="scripts/settings.js" type="text/javascript"></script>
+        <script src="scripts/dom.js" type="text/javascript"></script>
+        <script src="scripts/plex-api.js" type="text/javascript"></script>
+        <script src="scripts/nav.js" type="text/javascript"></script>
+        <script src="scripts/view/settings-view.js" type="text/javascript"></script>
+        <script src="scripts/view/resume-view.js" type="text/javascript"></script>
+        <script src="scripts/view/player-view.js" type="text/javascript"></script>
+        <script src="scripts/view/home-view.js" type="text/javascript"></script>
+        <script src="scripts/main.js" type="text/javascript"></script>
         <!-- endbuild -->
     </body>
 </html>

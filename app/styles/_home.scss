@@ -29,6 +29,7 @@ $selected-poster-height: 160px;
     background-image:url('../images/HomeBladeLeft.png');
     background-position: center right;
     z-index: 10;
+    overflow: hidden;
 }
 
 #home-menu .overlay {
@@ -90,7 +91,7 @@ $selected-poster-height: 160px;
 @mixin selectedPoster {
     margin:10px;
     border-radius:5px;
-    border:5px solid $highlight-color;    
+    border:5px solid $highlight-color;
     height:$selected-poster-height;
 }
 #preview-menu li {
@@ -98,7 +99,7 @@ $selected-poster-height: 160px;
     color: black;
     margin: 15px; /* 10px plus 5 px border */
     box-shadow: 2px 2px 10px black;
-    height:$poster-height; 
+    height:$poster-height;
 }
 #preview-menu li img {
     width: $poster-width;
@@ -165,8 +166,8 @@ h2.recentlyadded {
 #recentlyadded-menu {
     position:relative;
     top:30px;
-    height: 200px; 
-    overflow:hidden;   
+    height: 200px;
+    overflow:hidden;
 }
 
 #recentlyadded-menu .current-scroller #current-recentlyadded {

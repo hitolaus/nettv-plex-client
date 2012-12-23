@@ -16,3 +16,12 @@ if (!window.VK_ENTER) {
 if (!window.VK_BACK) {
     VK_BACK = 27; // ESC
 }
+if (!window.VK_PLAY) {
+    VK_PLAY = 80; // 'P'
+}
+if (!window.VK_PAUSE) {
+    VK_PAUSE = 90; // 'Z'
+}
+if (!window.VK_STOP) {
+    VK_STOP = 83; // 'S'
+}
