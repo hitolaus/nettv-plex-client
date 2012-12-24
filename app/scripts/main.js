@@ -1,5 +1,5 @@
 function keydownHandler(e) {
-    console.log('key: ' + e.keyCode);
+
 	switch (e.keyCode) {
 		case VK_UP:
             window.view.onUp();
@@ -18,15 +18,16 @@ function keydownHandler(e) {
             break;
         case VK_BACK:
             window.view.onBack();
-
-            console.log('Current view: ' + window.view.constructor);
-
-            // Prevent the app from quitting on back (unless we are at the homeview)
-            if (!(window.view instanceof HomeView)) {
-                console.log('STOOOPPPP');
-                e.preventDefault();
+            break;
+        case VK_STOP:
+            if (window.view.onStop) {
+                window.view.onStop();
             }
-
+            break;
+        case VK_PLAY:
+            if (window.view.onPlay) {
+                window.view.onPlay();
+            }
             break;
 		default:
 			break;

@@ -147,9 +147,15 @@ function PlayerView(uri, useViewOffset) {
 	this.onEnter = function () {
         togglePause();
 	};
+    this.onPlay = function () {
+        togglePause();
+    };
 	this.onBack = function () {
         closePlayer();
 	};
+    this.onStop = function () {
+        closePlayer();
+    };
 	this.render = function (container) {
 		var media = container.media[0];
 
