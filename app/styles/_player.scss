@@ -98,6 +98,14 @@ $control-transition-time: 500ms;
     z-index:25;
 }
 
+#player-status-message {
+    position:absolute;
+    bottom: 10px;
+    left: 200px;
+    width: 880px;
+    text-align: center;
+}
+
 #duration {
     position:absolute;
     bottom: 10px;

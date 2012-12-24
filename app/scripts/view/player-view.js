@@ -5,6 +5,7 @@ function PlayerView(uri, useViewOffset) {
     var player = document.getElementById('player');
 	var controls = document.getElementById('controls');
     var message = document.getElementById('player-message');
+    var status = document.getElementById('player-status-message');
 
     var totalDuration = 0;
     var durationIndex = 0;
@@ -15,8 +16,14 @@ function PlayerView(uri, useViewOffset) {
     var CONTROLS_TIMEOUT = 5000;
     var controlsTimer;
 
-    function showControls() {
+    function showControls(msg, timeout) {
         controls.style.bottom = 0;
+        status.innerHTML = msg;
+
+        if (timeout) {
+            clearTimeout(controlsTimer);
+            controlsTimer = setTimeout(hideControls, timeout);
+        }
     }
     function hideControls() {
         controls.style.bottom = -controls.offsetHeight + 'px';
@@ -54,7 +61,6 @@ function PlayerView(uri, useViewOffset) {
     }
 
     function checkPlayState() {
-        console.log('Got state: ' + video.playState);
         switch (video.playState)
         {
             case 5: // finished
@@ -65,6 +71,8 @@ function PlayerView(uri, useViewOffset) {
                 break;
             case 6: // error
                 message.innerHTML = 'Error';
+                // TODO: Error message for the enduser
+                closePlayer();
                 break;
             case 1: // playing
                 if (loading) {
@@ -80,6 +88,7 @@ function PlayerView(uri, useViewOffset) {
                 break;
             case 4: // buffering
                 message.innerHTML = 'Buffering';
+                showControls('BUFFERING', CONTROLS_TIMEOUT);
                 break;
             default:
                 // do nothing
@@ -95,6 +104,9 @@ function PlayerView(uri, useViewOffset) {
         document.getElementById('progressbar-front').style.width = sliceTime+'px';
     }
 
+    /**
+     * Toggle the player state between playing and paused.
+     */
     function togglePause() {
         if (loading) {
             return;
@@ -106,7 +118,7 @@ function PlayerView(uri, useViewOffset) {
         }
         else {
             video.play(0);
-            showControls();
+            showControls('PAUSED');
         }
     }
 
@@ -121,8 +133,7 @@ function PlayerView(uri, useViewOffset) {
             return;
         }
 
-        clearTimeout(controlsTimer);
-        showControls();
+        showControls('', CONTROLS_TIMEOUT);
 
         // Get the total time in milliseconds
         var totalTime = video.playPosition + (time * 1000);
@@ -130,8 +141,6 @@ function PlayerView(uri, useViewOffset) {
         if (totalTime < video.playTime && totalTime > 0) {
             video.seek(totalTime);
         }
-
-        controlsTimer = setTimeout(hideControls, CONTROLS_TIMEOUT);
     }
 
 	this.onUp = function () {
@@ -166,7 +175,6 @@ function PlayerView(uri, useViewOffset) {
 
 		var url = plexAPI.getURL(media.url);
 
-        console.log('Playing: ' + url);
 
 		video.data = url;
         if (media.mimeType) {
