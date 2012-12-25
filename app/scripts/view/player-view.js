@@ -25,6 +25,7 @@ function PlayerView(uri, useViewOffset) {
 
     var CONTROLS_TIMEOUT = 5000;
     var controlsTimer;
+    var processTimer;
 
     function showControls(msg, timeout) {
         controls.style.bottom = 0;
@@ -46,6 +47,9 @@ function PlayerView(uri, useViewOffset) {
     }
     function closePlayer() {
         video.stop();
+
+        clearInterval(processTimer);
+
         window.view = new HomeView();
         window.view.reload();
 
@@ -219,7 +223,7 @@ function PlayerView(uri, useViewOffset) {
 
 
         // Update process bar every 2 seconds
-        setInterval(updateElapsedTime, 2000);
+        processTimer = setInterval(updateElapsedTime, 2000);
 
 		// Load subtitles
 		if (media.subtitles) {

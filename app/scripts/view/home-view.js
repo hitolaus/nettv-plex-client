@@ -223,6 +223,7 @@ function HomeView() {
             var scaledThumb = plexAPI.getScaledImageURL(plexAPI.getURL(thumb), 110, 150);
 
             var img = new Image();
+            img.onerror = posterErrorHandler;
             if (i < NO_PRELOAD_IMAGES) {
                 img.src = scaledThumb;
             }
@@ -230,8 +231,6 @@ function HomeView() {
                 img.src = PLACEHOLDER_IMAGE;
                 img.setAttribute('data-src', scaledThumb);
             }
-
-            img.onerror = posterErrorHandler;
 
             item.appendChild(img);
             list.appendChild(item);
