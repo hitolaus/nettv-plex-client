@@ -4,7 +4,6 @@ function PlayerView(uri, useViewOffset) {
 
     var player = document.getElementById('player');
 	var controls = document.getElementById('controls');
-    var message = document.getElementById('player-message');
     var status = document.getElementById('player-status-message');
 
     var totalDuration = 0;
@@ -67,10 +66,8 @@ function PlayerView(uri, useViewOffset) {
                 closePlayer();
                 break;
             case 0: // stopped
-                message.innerHTML = 'Stopped';
                 break;
             case 6: // error
-                message.innerHTML = 'Error';
                 // TODO: Error message for the enduser
                 closePlayer();
                 break;
@@ -78,16 +75,12 @@ function PlayerView(uri, useViewOffset) {
                 if (loading) {
                     readyHandler();
                 }
-                message.innerHTML = 'Playing';
                 break;
             case 2: // paused
-                message.innerHTML = 'Paused';
                 break;
             case 3: // connecting
-                message.innerHTML = 'Connecting';
                 break;
             case 4: // buffering
-                message.innerHTML = 'Buffering';
                 showControls('BUFFERING', CONTROLS_TIMEOUT);
                 break;
             default:
@@ -114,7 +107,9 @@ function PlayerView(uri, useViewOffset) {
 
         if (parseInt(controls.style.bottom,10) === 0) {
             video.play(1);
-            hideControls();
+            setTimeout(function() {
+                hideControls();
+            }, 1000);
         }
         else {
             video.play(0);
