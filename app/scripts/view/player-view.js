@@ -150,9 +150,15 @@ function PlayerView(uri, useViewOffset) {
 	this.onLeft = function () {
         doSkip(-60.0);
 	};
+    this.onRew = function () {
+        doSkip(300.0);
+    };
 	this.onRight = function () {
         doSkip(60.0);
 	};
+    this.onFF = function () {
+        doSkip(-300.0);
+    };
 	this.onEnter = function () {
         togglePause();
 	};

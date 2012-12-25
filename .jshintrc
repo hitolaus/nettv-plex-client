@@ -39,6 +39,14 @@
         "VK_BACK",
         "VK_PLAY",
         "VK_PAUSE",
-        "VK_STOP"
+        "VK_STOP",
+        "VK_FAST_FWD",
+        "VK_REWIND",
+        "VK_PAGE_UP",
+        "VK_PAGE_DOWN",
+        "VK_RED",
+        "VK_GREEN",
+        "VK_BLUE",
+        "VK_YELLOW"
     ]
 }
