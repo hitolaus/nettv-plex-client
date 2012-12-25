@@ -25,3 +25,27 @@ if (!window.VK_PAUSE) {
 if (!window.VK_STOP) {
     VK_STOP = 83; // 'S'
 }
+if (!window.VK_FAST_FWD) {
+    VK_FAST_FWD = 84;
+}
+if (!window.VK_REWIND) {
+    VK_REWIND = 85;
+}
+if (!window.VK_PAGE_UP) {
+    VK_PAGE_UP = 85;
+}
+if (!window.VK_PAGE_DOWN) {
+    VK_PAGE_DOWN = 85;
+}
+if (!window.VK_RED) {
+    VK_RED = 85;
+}
+if (!window.VK_BLUE) {
+    VK_BLUE = 85;
+}
+if (!window.VK_GREEN) {
+    VK_GREEN = 85;
+}
+if (!window.VK_YELLOW) {
+    VK_YELLOW = 85;
+}

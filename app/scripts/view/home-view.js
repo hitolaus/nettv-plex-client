@@ -212,9 +212,10 @@ function HomeView() {
         // clear old content
         list.innerHTML = '';
 
+        var i = 0;
         var n = media.length;
         var selectedIndex = Math.floor(n/2);
-        for (var i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
             var section = media[i];
 
             item = document.createElement('li');
@@ -240,7 +241,8 @@ function HomeView() {
         item.appendChild(document.createTextNode('Preferences'));
         list.appendChild(item);
 
-        list.style.top = (360-activeHeight+4)+'px';
+        // 360 = mid height, move half the count of elements down
+        list.style.top = (360-(Math.floor(i/2)*activeHeight)+8)+'px';
 
         loadBackground(activeBg);
         loadPreviewMenu(activeKey);
