@@ -1,5 +1,4 @@
 function keydownHandler(e) {
-
 	switch (e.keyCode) {
 		case VK_UP:
             window.view.onUp();
@@ -20,6 +19,7 @@ function keydownHandler(e) {
             window.view.onBack();
             break;
         case VK_STOP:
+        case 19: // This is the stop button on B&O
             if (window.view.onStop) {
                 window.view.onStop();
             }
@@ -27,6 +27,11 @@ function keydownHandler(e) {
         case VK_PLAY:
             if (window.view.onPlay) {
                 window.view.onPlay();
+            }
+            break;
+        case VK_PAUSE:
+            if (window.view.onPause()) {
+                window.view.onPause();
             }
             break;
         case VK_FAST_FWD:

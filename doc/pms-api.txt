@@ -107,3 +107,12 @@ Not used for hmac
              "mp3",
              "aac{bitrate=160000}"
              "ac3{channels:6}"
+
+
+## Progress reporting
+
+/:/progress?key=[mediaKey]&identifier=com.plexapp.plugins.library&time=[time]&state=[state]
+
+[mediaKey] =  key
+[time] = time in milliseconds
+[state] = playing?/stopped?

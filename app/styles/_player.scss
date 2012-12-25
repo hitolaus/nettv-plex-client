@@ -9,17 +9,26 @@ $control-transition-time: 500ms;
     background-color: black;
     background-position: center center;
     background-repeat: no-repeat;
-    background-image:url('../images/video-loader.gif');
+    background-image:url('../images/ActivityIndicator.gif');
     z-index:100;
 }
 #video-loading h1 {
     position:absolute;
     left:0;
-    bottom:100px;
+    bottom:150px;
     width:1280px;
     text-align:center;
     font-size:36px;
     color:$highlight-color;
+}
+#video-loading-message {
+    position:absolute;
+    left:0;
+    bottom:100px;
+    width:1280px;
+    text-align:center;
+    font-size:28px;
+    color:#444;
 }
 
 #player-message {

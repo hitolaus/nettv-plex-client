@@ -1,10 +1,21 @@
+/**
+ * The player view.
+ *
+ * @author Jakob Hilarius, http://syscall.dk
+ *
+ * @constructor
+ * @param {string} uri The PLex API address of the video meta data.
+ * @param {boolean} useViewOffset If <code>true</code> the view offset will be used.
+ */
 /*global Popcorn,video */
 function PlayerView(uri, useViewOffset) {
 	var scope = this;
 
+    // Preload the element lookups
     var player = document.getElementById('player');
 	var controls = document.getElementById('controls');
     var status = document.getElementById('player-status-message');
+    var loadingMessage = document.getElementById('video-loading-message"');
 
     var totalDuration = 0;
     var durationIndex = 0;
@@ -30,6 +41,7 @@ function PlayerView(uri, useViewOffset) {
 
     function showPlayer () {
         player.style.display = 'block';
+        // Initially the player is offscreen due to the loading hack, so we need to move it back
         player.style.top = '0';
     }
     function closePlayer() {
@@ -38,6 +50,14 @@ function PlayerView(uri, useViewOffset) {
         window.view.reload();
 
         player.style.display = 'none';
+    }
+    function setLoadingMessage(msg) {
+        loadingMessage.innerHTML = msg;
+    }
+
+    function setMetaData(media) {
+        document.getElementById('description').innerHTML = media.summary;
+        document.getElementById('title').innerHTML = media.title;
     }
 
     function readyHandler() {
@@ -79,8 +99,10 @@ function PlayerView(uri, useViewOffset) {
             case 2: // paused
                 break;
             case 3: // connecting
+                setLoadingMessage('Connecting...');
                 break;
             case 4: // buffering
+                setLoadingMessage('Buffering...');
                 showControls('BUFFERING', CONTROLS_TIMEOUT);
                 break;
             default:
@@ -89,6 +111,9 @@ function PlayerView(uri, useViewOffset) {
         }
     }
 
+    /**
+     * Update the progress bar.
+     */
     function updateElapsedTime() {
         var ct = video.playPosition/1000;
         document.getElementById('duration').innerHTML = Time.format(ct);
@@ -107,6 +132,7 @@ function PlayerView(uri, useViewOffset) {
 
         if (parseInt(controls.style.bottom,10) === 0) {
             video.play(1);
+            // Delay hidding the controls a bit to make it more fluent
             setTimeout(function() {
                 hideControls();
             }, 1000);
@@ -133,14 +159,16 @@ function PlayerView(uri, useViewOffset) {
         // Get the total time in milliseconds
         var totalTime = video.playPosition + (time * 1000);
 
-        if (totalTime < video.playTime && totalTime > 0) {
+        if (totalTime > 0 && totalTime < video.playTime) {
             video.seek(totalTime);
         }
     }
 
 	this.onUp = function () {
+        hideControls();
 	};
 	this.onDown = function () {
+        showControls('');
 	};
 	this.onLeft = function () {
         doSkip(-60.0);
@@ -160,6 +188,9 @@ function PlayerView(uri, useViewOffset) {
     this.onPlay = function () {
         togglePause();
     };
+    this.onPause = function () {
+        togglePause();
+    };
 	this.onBack = function () {
         closePlayer();
 	};
@@ -169,15 +200,18 @@ function PlayerView(uri, useViewOffset) {
 	this.render = function (container) {
 		var media = container.media[0];
 
-        loading = true;
-        document.getElementById('video-loading').style.display = 'block';
-
         showPlayer();
 
-		var url = plexAPI.getURL(media.url);
+        if (useViewOffset && media.viewOffset) {
+            // Save the offset so we can set if when the video is loaded
+            startViewOffset = media.viewOffset;
+        }
 
+        setMetaData(media);
 
-		video.data = url;
+        var url = plexAPI.getURL(media.url);
+
+        video.data = url;
         if (media.mimeType) {
             video.type = media.mimeType;
         }
@@ -187,22 +221,17 @@ function PlayerView(uri, useViewOffset) {
         // Update process bar every 2 seconds
         setInterval(updateElapsedTime, 2000);
 
-        if (useViewOffset && media.viewOffset) {
-            // Save the offset so we can set if when the video is loaded
-            startViewOffset = media.viewOffset;
-        }
-
-        document.getElementById('description').innerHTML = media.summary;
-        document.getElementById('title').innerHTML = media.title;
-
 		// Load subtitles
 		if (media.subtitles) {
             console.log('Loading subtitle ' + media.subtitles + '...');
-			var p =  new Popcorn( 'video' )
+			var p =  new Popcorn( '#video' )
                         .parseSRT(plexAPI.getURL(media.subtitles))
                         .play();
 		}
 	};
+
+    loading = true;
+    document.getElementById('video-loading').style.display = 'block';
 
     video.onPlayStateChange=checkPlayState;
 

@@ -1,4 +1,3 @@
-$menu-transition-time: 1s;
 $poster-width: 110px;
 $poster-height: 150px;
 $selected-poster-height: 160px;
@@ -10,6 +9,11 @@ $selected-poster-height: 160px;
     z-index:11;
     color:#aaa;
     font-size:24px;
+    text-align: right;
+    width: 120px;
+    background-image:url('../images/bullet2.png');
+    background-position: center left;
+    background-repeat: no-repeat;
 }
 #home-time span {
     color: $highlight-color;

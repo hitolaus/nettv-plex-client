@@ -1,4 +1,7 @@
 function HomeView() {
+    var PLACEHOLDER_IMAGE = 'images/PosterPlaceholder.png';
+    var NO_PRELOAD_IMAGES = 7;
+
     var nav = null;
 
     var ondeckMenu = null;
@@ -8,7 +11,7 @@ function HomeView() {
     var lastUsedMenu = null;
 
     function updateTime() {
-        document.getElementById('home-time').innerHTML = '<span>&#149;</span>' + Time.to12HourFormat(new Date());
+        document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
     }
 
     function changeActiveMenu(newMenu) {
@@ -18,7 +21,12 @@ function HomeView() {
         nav = newMenu;
         nav.activate();
 
-        var scrollerId = DOM.getParent(nav.current()).getAttribute('id');
+        var menuList = DOM.getParent(nav.current());
+
+        loadImages(menuList);
+
+        // Set title of the scroller
+        var scrollerId = menuList.getAttribute('id');
         var typeIdx = scrollerId.indexOf('-');
         if (typeIdx > 0) {
             // The section menu scroller doesn't contain '-'
@@ -34,6 +42,26 @@ function HomeView() {
         var meta = element.getAttribute('data-meta');
 
         heading.innerHTML = title+'<span>'+meta+'</span>';
+    }
+
+    /**
+     * TODO: Not very effective.
+     */
+    function loadImages(elem) {
+        if (!elem) {
+            return;
+        }
+        var images = elem.getElementsByTagName('img');
+
+        var n = images.length;
+        for (var i = 0; i < n; i++) {
+            var image = images[i];
+
+            if (image.getAttribute('data-src')) {
+                image.src = image.getAttribute('data-src');
+                image.removeAttribute('data-src');
+            }
+        }
     }
 
     function buildNavigation() {
@@ -156,6 +184,12 @@ function HomeView() {
 
     }
 
+    function posterErrorHandler (source) {
+        this.src = PLACEHOLDER_IMAGE;
+        this.onerror = ''; // Reset the error handler to avoid recursive references
+        return true;
+    }
+
     function buildVideoList(id, activeId, media) {
         var list = document.getElementById(id);
 
@@ -170,7 +204,7 @@ function HomeView() {
             if (video.grandparentTitle) {
                 title = video.grandparentTitle;
             }
-            var meta = ' <img src="images/bullet.png" alt=""  /> ' + video.year;
+            var meta = ' <img src="images/bullet1.png" alt=""  /> ' + video.year;
             var offset = (video.viewOffset) ? video.viewOffset : 0;
 
             var item = document.createElement('li');
@@ -181,8 +215,6 @@ function HomeView() {
             item.setAttribute('data-offset', offset);
             //item.setAttribute('onclick', 'jump(,"'+(i*140)+'px");');
 
-            var img = document.createElement('img');
-
             var thumb = video.thumb;
             if (video.grandparentThumb) {
                 thumb = video.grandparentThumb;
@@ -190,7 +222,17 @@ function HomeView() {
 
             var scaledThumb = plexAPI.getScaledImageURL(plexAPI.getURL(thumb), 110, 150);
 
-            img.setAttribute('src', scaledThumb);
+            var img = new Image();
+            if (i < NO_PRELOAD_IMAGES) {
+                img.src = scaledThumb;
+            }
+            else {
+                img.src = PLACEHOLDER_IMAGE;
+                img.setAttribute('data-src', scaledThumb);
+            }
+
+            img.onerror = posterErrorHandler;
+
             item.appendChild(img);
             list.appendChild(item);
 

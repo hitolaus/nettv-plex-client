@@ -10,8 +10,13 @@ function PlexAPI() {
                 else {
                     // TODO: Proper error handling
                     console.log('ERROR(' + xhr.status + ') msg: ' + xhr.statusText);
+                    callback(new MediaContainer());
                 }
             }
+        };
+        xhr.onerror = function() {
+            console.log('ERROR');
+            callback(new MediaContainer());
         };
         xhr.open('GET', url, true);
         xhr.send(null);
@@ -48,6 +53,10 @@ function PlexAPI() {
         };
         // TODO: is /:/resources/movie-fanart.jpg always okay?
         dummy.src = 'http://'+address+':32400/:/resources/movie-fanart.jpg';
+    };
+
+    this.reportProgress = function(key, time, state) {
+        //'http://'+Settings.getPMS()+':32400/:/progress?key='+key+'&identifier=com.plexapp.plugins.library&time='+time+'&state='+state;
     };
 
     this.getScaledImageURL = function(url, width, height) {
