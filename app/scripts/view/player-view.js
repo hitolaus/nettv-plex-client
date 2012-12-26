@@ -223,8 +223,8 @@ function PlayerView(uri, useViewOffset) {
         video.play(1);
 
 
-        // Update process bar every 2 seconds
-        processTimer = setInterval(updateElapsedTime, 2000);
+        // Update process bar every second
+        processTimer = setInterval(updateElapsedTime, 1000);
 
 		// Load subtitles
 		if (media.subtitles) {

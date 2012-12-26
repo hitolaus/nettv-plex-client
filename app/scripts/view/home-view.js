@@ -1,6 +1,7 @@
 function HomeView() {
     var PLACEHOLDER_IMAGE = 'images/PosterPlaceholder.png';
     var PRELOADED_IMAGES = 7;
+    var PREVIEW_MENU_LOADING_DELAY = 1000;
 
     var nav = null;
 
@@ -108,6 +109,12 @@ function HomeView() {
 
         homeMenu = new VerticalFixedScrollMenu('scroller', 'current');
         homeMenu.onmenuright = function(e) {
+            var key = e.element.getAttribute('data-key');
+            if (key === '') {
+                // This is the preferences element
+                return;
+            }
+
             if (e.boundary) {
                 if (lastUsedMenu === null || lastUsedMenu === 'recentlyadded') {
                     changeActiveMenu(recentlyAddedMenu);
@@ -158,14 +165,24 @@ function HomeView() {
 
     function loadBackground(url) {
         if (url) {
-            var body = document.getElementsByTagName('body')[0];
-            var scaledBackground = 'url('+plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720) + ')';
-            if (body.style.backgroundImage === scaledBackground) {
-                return;
+            var scaledBackground = plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720);
+
+            var bg1 = document.getElementById('bg1');
+            var bg2 = document.getElementById('bg2');
+
+            if (bg2.style.opacity === '0') {
+                if (bg2.src !== scaledBackground) {
+                    bg2.src = scaledBackground;
+                }
+
+                bg2.style.opacity = 1;
             }
-            body.style.backgroundImage = scaledBackground;
-            body.style.backgroundSize = '1280px 720px';
-            body.style.backgroundRepeat = 'no-repeat';
+            else {
+                if (bg1.src !== scaledBackground) {
+                    bg1.src = scaledBackground;
+                }
+                bg2.style.opacity = 0;
+            }
         }
     }
 
@@ -188,7 +205,7 @@ function HomeView() {
                 recentlyAddedMenu.reload();
             });
 
-        }, 1000);
+        }, PREVIEW_MENU_LOADING_DELAY);
 
         document.getElementById('preview-menu').style.display = 'block';
     }
@@ -206,6 +223,9 @@ function HomeView() {
         list.innerHTML = '';
 
         var n = media.length;
+
+        console.log('Building menu ('+id+') with ' + n + ' elements');
+
         for (var i = 0; i < n; i++) {
             var video = media[i];
 
