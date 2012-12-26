@@ -38,6 +38,9 @@ function Video(elem) {
 	var summary = elem.getAttribute('summary');
 	var year = elem.getAttribute('year');
 
+    var season = elem.getAttribute('parentIndex');
+    var episode = elem.getAttribute('index');
+
 	var thumb = elem.getAttribute('thumb');
     var art = elem.getAttribute('art');
 
@@ -109,6 +112,8 @@ function Video(elem) {
 		type: type,
 		container:false,
 		title: title,
+        season: season,
+        episode: episode,
 		summary: summary,
         year: year,
 		thumb: thumb,

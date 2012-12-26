@@ -60,8 +60,22 @@ function PlayerView(uri, useViewOffset) {
     }
 
     function setMetaData(media) {
-        document.getElementById('description').innerHTML = media.summary;
-        document.getElementById('title').innerHTML = media.title;
+        var heading1, heading2;
+        var title = document.getElementById('controls-title');
+
+        if (media.type === 'episode') {
+            heading1 = media.grandparentTitle;
+            heading2 = 'Season ' + media.season + ', Episode ' + media.episode + '<br/>' + media.title;
+        }
+        else {
+            heading1 = media.title;
+            heading2 = '(' + media.year + ')';
+        }
+
+        title.innerHTML = '<h1>' + heading1 + '</h1><h2>' + heading2 + '</h2>';
+
+
+        document.getElementById('controls-description').innerHTML = media.summary;
     }
 
     function readyHandler() {

@@ -144,7 +144,7 @@ span img {
     padding: 0 2px;
     width:10px;
 }
-h2 {
+#preview-menu h2 {
     position:absolute;
     width:200px;
     text-align:right;
@@ -155,10 +155,10 @@ h2 {
     font-weight:normal;
     text-shadow: 1px 1px black ;
 }
-h2.ondeck {
+#preview-menu h2.ondeck {
     top:9px;
 }
-h2.recentlyadded {
+#preview-menu h2.recentlyadded {
     bottom:9px;
 }
 #ondeck-menu {

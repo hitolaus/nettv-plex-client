@@ -163,6 +163,12 @@ function HomeView() {
         nav.activate();
     }
 
+    /**
+     * Set the new background if it has changed. It sets the background image on the
+     * non-visible image element and changes opacity to allow a CSS transition.
+     *
+     * @param {String} url The background url without Plex server address.
+     */
     function loadBackground(url) {
         if (url) {
             var scaledBackground = plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720);

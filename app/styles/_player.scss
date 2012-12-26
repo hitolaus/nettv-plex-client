@@ -69,19 +69,32 @@ $control-transition-time: 500ms;
     -o-transition: bottom $control-transition-time ease; /* Opera */
 }
 
-#title {
+#controls-title {
     position:absolute;
     left:40px;
-    bottom: 100px;
-    font-size: 24px;
+    bottom: 75px;
+    color:white;
 }
 
-#description {
+#controls-title h1 {
+    color:$highlight-color;
+    font-size: 24px;
+    font-weight: normal;
+    margin:0;
+}
+
+#controls-title h2 {
+    font-size: 20px;
+    font-weight: normal;
+    margin:0;
+}
+
+#controls-description {
     position:absolute;
-    left:640px;
-    bottom: 65px;
-    width:630px;
-    height: 100px;
+    left:440px;
+    bottom:65px;
+    width:800px;
+    height: 90px;
     overflow:hidden;
 }
 
