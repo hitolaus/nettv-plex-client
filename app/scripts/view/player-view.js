@@ -84,6 +84,7 @@ function PlayerView(uri, useViewOffset) {
     }
 
     function checkPlayState() {
+        console.log('Player state: ' + video.playState);
         switch (video.playState)
         {
             case 5: // finished

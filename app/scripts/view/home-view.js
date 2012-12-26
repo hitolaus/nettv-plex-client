@@ -1,6 +1,6 @@
 function HomeView() {
     var PLACEHOLDER_IMAGE = 'images/PosterPlaceholder.png';
-    var NO_PRELOAD_IMAGES = 7;
+    var PRELOADED_IMAGES = 7;
 
     var nav = null;
 
@@ -9,6 +9,8 @@ function HomeView() {
     var homeMenu = null;
 
     var lastUsedMenu = null;
+
+    var previewLoader;
 
     function updateTime() {
         document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
@@ -122,11 +124,13 @@ function HomeView() {
             }
         };
         homeMenu.onmenuup = function(e) {
+            clearTimeout(previewLoader);
             loadBackground(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
             lastUsedMenu = null;
         };
         homeMenu.onmenudown = function(e) {
+            clearTimeout(previewLoader);
             loadBackground(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
             lastUsedMenu = null;
@@ -166,22 +170,27 @@ function HomeView() {
     }
 
     function loadPreviewMenu(key) {
+
         if (key === '') {
             document.getElementById('preview-menu').style.display = 'none';
             return;
         }
+
+        previewLoader = setTimeout(function() {
+
+            plexAPI.browse(plexAPI.onDeck(key), function(container) {
+                buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
+                ondeckMenu.reload();
+            });
+
+            plexAPI.browse(plexAPI.recentlyAdded(key), function(container) {
+                buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media);
+                recentlyAddedMenu.reload();
+            });
+
+        }, 1000);
+
         document.getElementById('preview-menu').style.display = 'block';
-
-        plexAPI.browse(plexAPI.onDeck(key), function(container) {
-            buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
-            ondeckMenu.reload();
-        });
-
-        plexAPI.browse(plexAPI.recentlyAdded(key), function(container) {
-            buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media);
-            recentlyAddedMenu.reload();
-        });
-
     }
 
     function posterErrorHandler (source) {
@@ -224,7 +233,7 @@ function HomeView() {
 
             var img = new Image();
             img.onerror = posterErrorHandler;
-            if (i < NO_PRELOAD_IMAGES) {
+            if (i < PRELOADED_IMAGES) {
                 img.src = scaledThumb;
             }
             else {
