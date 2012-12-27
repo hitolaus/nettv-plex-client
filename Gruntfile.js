@@ -19,7 +19,7 @@ module.exports = function( grunt ) {
     coffee: {
       compile: {
         files: {
-          'temp/scripts/*.js': 'app/scripts/**/*.coffee' 
+          'temp/scripts/*.js': 'app/scripts/**/*.coffee'
         },
         options: {
           basePath: 'app/scripts'
@@ -131,9 +131,10 @@ module.exports = function( grunt ) {
     // versioning
     rev: {
       js: 'scripts/**/*.js',
-      css: 'styles/**/*.css',
-      img: 'images/**'
+      css: 'styles/**/*.css'
+      //img: 'images/**'
     },
+
 
     // usemin handler should point to the file containing
     // the usemin blocks to be parsed
@@ -154,7 +155,8 @@ module.exports = function( grunt ) {
 
     // Optimizes JPGs and PNGs (with jpegtran & optipng)
     img: {
-      dist: '<config:rev.img>'
+      //dist: '<config:rev.img>'
+      dist: 'images/**'
     },
 
     // rjs configuration. You don't necessarily need to specify the typical
