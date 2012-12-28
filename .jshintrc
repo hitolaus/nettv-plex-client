@@ -29,7 +29,9 @@
         "PlayerView",
         "HomeView",
         "SettingsView",
+        "PreferencesView",
         "Settings",
+        "UUID",
         "MediaContainer",
         "Video",
         "Directory",
@@ -50,6 +52,8 @@
         "VK_RED",
         "VK_GREEN",
         "VK_BLUE",
-        "VK_YELLOW"
+        "VK_YELLOW",
+        "unescape",
+        "escape"
     ]
 }

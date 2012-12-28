@@ -1,0 +1,77 @@
+#preferences {
+    position:absolute;
+    left:0;
+    top:0;
+    width:1280px;
+    height:720px;
+    overflow: hidden;
+    z-index: 15;
+}
+
+#preferences .left-spacer {
+    position:absolute;
+    left:0;
+    top:0;
+    width: 200px;
+    height:720px;
+    background-image:url('../images/HomeBladeLeft.png');
+    background-position: center right;
+    z-index: 21;
+}
+
+#preferences .main {
+    position:absolute;
+    left:180px; /* Make sure that the left spacer overlaps a bit */
+    top:0;
+    width:620px;
+    height:720px;
+    background-image:url('../images/HomeBladeMiddle.png');
+    background-position: center right;
+    color: #FCFCFC;
+}
+
+#preferences .main h1 {
+    position:absolute;
+    left:0;
+    top:96px;
+    width:580px;
+    margin:0;
+    text-align: right;
+    font-size: 28px;
+    text-shadow: 1px 1px black;
+}
+#preferences .main h2 {
+    position:absolute;
+    left:0;
+    top:128px;
+    width:580px;
+    margin:0;
+    text-align: right;
+    font-size: 38px;
+    text-shadow: 1px 1px black;
+}
+
+#preferences .main ul {
+    position:absolute;
+    left:-40px;
+    top:200px;
+    width:650px;
+}
+
+#preferences .main li {
+    font-size: 20px;
+    border-bottom: 1px solid black;
+    padding: 10px 30px;
+}
+
+#preferences .main li.active {
+    background-color: #D1801C;
+}
+
+#preferences .main .value {
+    float: right;
+}
+#preferences .main .value img {
+    width: 27px;
+    height: 27px;
+}

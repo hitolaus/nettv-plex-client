@@ -222,6 +222,9 @@ function HomeView() {
         return true;
     }
 
+    /**
+     * FIXME: List is being modified directly on the DOM. Make a temp list and only one append to the DOM
+     */
     function buildVideoList(id, activeId, media) {
         var list = document.getElementById(id);
 
@@ -277,6 +280,9 @@ function HomeView() {
         }
     }
 
+    /**
+     * FIXME: List is being modified directly on the DOM. Make a temp list and only one append to the DOM
+     */
     function buildSectionList(media) {
         var list = document.getElementById('scroller');
         var item;
@@ -370,7 +376,7 @@ function HomeView() {
             }
         }
         else if (type === 'pref') {
-            window.view = new SettingsView();
+            window.view = new PreferencesView();
             window.view.render();
         }
     };

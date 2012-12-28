@@ -1,4 +1,4 @@
-function SettingsView() {
+function SettingsView(returnView) {
     var settingsView = document.getElementById('settings');
 
     function show() {
@@ -6,6 +6,16 @@ function SettingsView() {
     }
     function hide() {
         settingsView.style.display = 'none';
+    }
+    function close() {
+        if (!returnView) {
+            window.view = new HomeView();
+            window.view.reload();
+        }
+        else {
+            window.view = returnView;
+        }
+        hide();
     }
 
 	function getAddressAsString() {
@@ -37,9 +47,7 @@ function SettingsView() {
             return plexAPI.ping(address, function(valid) {
                 if (valid) {
                     Settings.setPMS(address);
-                    hide();
-                    window.view = new HomeView();
-                    window.view.render();
+                    close();
                 }
                 else {
                     document.getElementById('c1').focus();
@@ -57,9 +65,7 @@ function SettingsView() {
     };
     this.onBack = function () {
         if (Settings.getPMS()) {
-            window.view = new HomeView();
-            window.view.reload();
-            hide();
+            close();
         }
     };
     this.onLeft = function () {};

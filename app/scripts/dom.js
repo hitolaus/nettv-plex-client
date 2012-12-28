@@ -18,7 +18,24 @@ DOM.getParent = function(elem) {
         }
     }
 };
+DOM.getFirstElement = function (elem) {
+    var first = elem.firstChild;
+    while (true) {
+        if (first === null) {
+            return null;
+        }
+        if (!this.isElement(first)) {
+          first = first.nextSibling;
+        }
+        else {
+            return first;
+        }
+    }
+};
 DOM.getPreviousElement = function (elem) {
+    if (!elem) {
+        return null;
+    }
     var prev = elem.previousSibling;
     while (true) {
         if (prev === null) {
@@ -33,6 +50,9 @@ DOM.getPreviousElement = function (elem) {
     }
 };
 DOM.getNextElement = function(elem) {
+    if (!elem) {
+        return null;
+    }
     var next = elem.nextSibling;
     while (true) {
         if (next === null) {
@@ -48,12 +68,18 @@ DOM.getNextElement = function(elem) {
 };
 
 DOM.hasClass = function(elem, className) {
+    if (!elem) {
+        return null;
+    }
     return elem.className.indexOf(className) > -1;
 };
 /**
  * TODO: Make proper implementation
  */
 DOM.addClass = function(elem, className) {
+    if (!elem) {
+        return null;
+    }
     if (!DOM.hasClass(elem,className)) {
         elem.className = className;
     }
@@ -62,6 +88,9 @@ DOM.addClass = function(elem, className) {
  * TODO: Make proper implementation
  */
 DOM.removeClass = function(elem, className) {
+    if (!elem) {
+        return null;
+    }
     if (DOM.hasClass(elem, className)) {
         elem.className = '';
     }

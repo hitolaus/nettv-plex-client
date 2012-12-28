@@ -54,7 +54,7 @@ function Video(elem) {
         viewOffset = Math.floor(parseInt(elem.getAttribute('viewOffset'), 10)/1000);
     }
 
-    var grandparentTitle =elem.getAttribute('grandparentTitle');
+    var grandparentTitle = elem.getAttribute('grandparentTitle');
     var grandparentThumb = elem.getAttribute('grandparentThumb');
 
 	var url = '';
