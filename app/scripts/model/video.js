@@ -33,6 +33,7 @@ function Video(elem) {
     }
 
 	var key = elem.getAttribute('key');
+    var ratingKey = elem.getAttribute('ratingKey');
 	var title = elem.getAttribute('title');
 	var type = elem.getAttribute('type');
 	var summary = elem.getAttribute('summary');
@@ -109,6 +110,7 @@ function Video(elem) {
 
 	return {
 		key: key,
+        ratingKey: ratingKey,
 		type: type,
 		container:false,
 		title: title,

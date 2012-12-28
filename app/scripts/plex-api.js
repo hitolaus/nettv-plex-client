@@ -56,7 +56,10 @@ function PlexAPI() {
     };
 
     this.reportProgress = function(key, time, state) {
-        //'http://'+Settings.getPMS()+':32400/:/progress?key='+key+'&identifier=com.plexapp.plugins.library&time='+time+'&state='+state;
+        var url = 'http://'+Settings.getPMS()+':32400/:/progress?key='+key+'&identifier=com.plexapp.plugins.library&time='+time+'&state='+state;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send(null);
     };
 
     this.getScaledImageURL = function(url, width, height) {

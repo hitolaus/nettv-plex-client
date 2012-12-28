@@ -9,6 +9,9 @@
  */
 /*global Popcorn,video */
 function PlayerView(uri, useViewOffset) {
+    var CONTROLS_TIMEOUT = 5000;
+    var PROGRESS_INTERVAL = 60000;
+
 	var scope = this;
 
     // Preload the element lookups
@@ -20,12 +23,13 @@ function PlayerView(uri, useViewOffset) {
     var totalDuration = 0;
     var durationIndex = 0;
 
+    var mediaRatingKey;
     var loading = false;
     var startViewOffset = null;
 
-    var CONTROLS_TIMEOUT = 5000;
     var controlsTimer;
     var processTimer;
+    var plexProgressTimer;
 
     function showControls(msg, timeout) {
         controls.style.bottom = 0;
@@ -48,13 +52,40 @@ function PlayerView(uri, useViewOffset) {
     function closePlayer() {
         video.stop();
 
+        // Manually report that we have stopped
+        reportPlexProgress();
+
         clearInterval(processTimer);
+        clearInterval(plexProgressTimer);
 
         window.view = new HomeView();
         window.view.reload();
 
         player.style.display = 'none';
     }
+    function reportPlexProgress() {
+        console.log('reporting progress for '  + mediaRatingKey);
+        if (!mediaRatingKey) {
+            return;
+        }
+
+        var state = 'stopped';
+        switch (video.playState)
+        {
+            case 0:
+                state = 'stopped';
+                break;
+            case 1:
+                state = 'playing';
+                break;
+            case 2:
+                state = 'paused';
+                break;
+        }
+
+        plexAPI.reportProgress(mediaRatingKey, video.playPosition, state);
+    }
+
     function setLoadingMessage(msg) {
         loadingMessage.innerHTML = msg;
     }
@@ -221,6 +252,7 @@ function PlayerView(uri, useViewOffset) {
 
         showPlayer();
 
+        mediaRatingKey = media.ratingKey;
         if (useViewOffset && media.viewOffset) {
             // Save the offset so we can set if when the video is loaded
             startViewOffset = media.viewOffset;
@@ -239,6 +271,8 @@ function PlayerView(uri, useViewOffset) {
 
         // Update process bar every second
         processTimer = setInterval(updateElapsedTime, 1000);
+        // Report progress to Plex
+        plexProgressTimer = setInterval(reportPlexProgress, PROGRESS_INTERVAL);
 
 		// Load subtitles
 		if (media.subtitles) {
