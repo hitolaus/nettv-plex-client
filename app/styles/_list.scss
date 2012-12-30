@@ -1,0 +1,175 @@
+#list {
+    position:absolute;
+    left:0;
+    top:0;
+    width:1280px;
+    height:720px;
+    z-index: 15;
+    background-color: black;
+}
+
+#list .header {
+    position:absolute;
+    left:0;
+    top:0;
+    width:1280px;
+    height:55px;
+    background-color: rgba(0,0,0,0.9);
+    border-bottom: 1px solid #555354;
+}
+
+#list .main {
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:1280px;
+    height:450px;
+    background-color: rgba(0,0,0,0.9);
+    border-top: 1px solid #555354;
+}
+
+#list-menu {
+    position:relative;
+    left:0;
+    top:28px;
+    font-size: 24px;
+    width: 600px;
+    height: 402px;
+    overflow: hidden;
+}
+
+#list-info {
+    position:absolute;
+    left:600px;
+    top:28px;
+    width:680px;
+}
+
+#list-info .episode img {
+    position: absolute;
+    top:75px;
+    left:30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px black;
+}
+#list-info .episode h1 {
+    position: absolute;
+    top:0;
+    left:30px;
+    margin: 0;
+    width: 350px;
+    font-size: 24px;
+    text-shadow: 1px 1px 5px black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#list-info .episode h2 {
+    position: absolute;
+    top:30px;
+    left:30px;
+    margin: 0;
+    width: 600px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    color: $highlight-color;
+}
+#list-info .episode h2 span {
+    color: white;
+}
+
+
+#list-info .generic img {
+    position: absolute;
+    top:0;
+    right:30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px black;
+}
+
+#list-info .video img {
+    position: absolute;
+    top:0;
+    right:30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px black;
+}
+
+#list-info .video h1 {
+    position: absolute;
+    top:0;
+    left:30px;
+    margin: 0;
+    width: 350px;
+    font-size: 24px;
+    text-shadow: 1px 1px 5px black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#list-info .video h2 {
+    position: absolute;
+    top:30px;
+    left:30px;
+    margin: 0;
+    width: 350px;
+    font-size: 20px;
+    font-weight: normal;
+    overflow: hidden;
+    color: #A2A2A2;
+}
+
+#list-info .video p {
+    position: absolute;
+    top:75px;
+    left:30px;
+    margin: 0;
+    width: 350px;
+    height: 275px;
+    overflow: hidden;
+    font-size: 18px;
+    color:#C9C9C9;
+}
+
+#list-scroller {
+    position:relative;
+    left:0;
+    top:0;
+    margin:0;
+}
+
+#list-scroller {
+    padding:0;
+}
+
+#list-menu li {
+    color: #909090;
+    background-color: rgba(0,0,0,0.4);
+    padding: 10px 30px;
+    margin: 2px 0;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+}
+#list-menu li.active {
+    color: white;
+    background-color: $highlight-color;
+}
+
+#list-objects {
+    position:absolute;
+    right:10px;
+    top:15px;
+    width: 250px;
+    font-size:24px;
+    padding-left: 15px;
+    background-image:url('../images/bullet2.png');
+    background-position: center left;
+    background-repeat: no-repeat;
+}
+
+#list-objects-count {
+    color: $highlight-color;
+}

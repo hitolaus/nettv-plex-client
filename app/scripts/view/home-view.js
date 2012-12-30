@@ -13,6 +13,8 @@ function HomeView() {
 
     var previewLoader;
 
+    var backgroundLoader = new BackgroundLoader('bg1', 'bg2');
+
     function updateTime() {
         document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
     }
@@ -132,13 +134,13 @@ function HomeView() {
         };
         homeMenu.onmenuup = function(e) {
             clearTimeout(previewLoader);
-            loadBackground(e.element.getAttribute('data-bg'));
+            backgroundLoader.load(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
             lastUsedMenu = null;
         };
         homeMenu.onmenudown = function(e) {
             clearTimeout(previewLoader);
-            loadBackground(e.element.getAttribute('data-bg'));
+            backgroundLoader.load(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
             lastUsedMenu = null;
         };
@@ -161,35 +163,6 @@ function HomeView() {
         }
 
         nav.activate();
-    }
-
-    /**
-     * Set the new background if it has changed. It sets the background image on the
-     * non-visible image element and changes opacity to allow a CSS transition.
-     *
-     * @param {String} url The background url without Plex server address.
-     */
-    function loadBackground(url) {
-        if (url) {
-            var scaledBackground = plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720);
-
-            var bg1 = document.getElementById('bg1');
-            var bg2 = document.getElementById('bg2');
-
-            if (bg2.style.opacity === '0') {
-                if (bg2.src !== scaledBackground) {
-                    bg2.src = scaledBackground;
-                }
-
-                bg2.style.opacity = 1;
-            }
-            else {
-                if (bg1.src !== scaledBackground) {
-                    bg1.src = scaledBackground;
-                }
-                bg2.style.opacity = 0;
-            }
-        }
     }
 
     function loadPreviewMenu(key) {
@@ -326,7 +299,7 @@ function HomeView() {
         // 360 = mid height, move half the count of elements down
         list.style.top = (360-(Math.floor(i/2)*activeHeight)+8)+'px';
 
-        loadBackground(activeBg);
+        backgroundLoader.load(activeBg);
         loadPreviewMenu(activeKey);
     }
 
@@ -363,9 +336,9 @@ function HomeView() {
         var currentId = getCurrentId(currentScroller.getAttribute('id'));
         var current = document.getElementById(currentId);
 
+        var key = current.getAttribute('data-key');
         var type = current.getAttribute('data-type');
         if (type === 'video') {
-            var key = current.getAttribute('data-key');
             var offset = parseInt(current.getAttribute('data-offset'), 10);
 
             if (offset > 0) {
@@ -377,6 +350,10 @@ function HomeView() {
         }
         else if (type === 'pref') {
             window.view = new PreferencesView();
+            window.view.render();
+        }
+        else {
+            window.view = new ListView(plexAPI.getURL(key));
             window.view.render();
         }
     };

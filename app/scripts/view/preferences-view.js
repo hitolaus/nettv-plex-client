@@ -1,28 +1,29 @@
+/**
+ * Preferences view.
+ *
+ * @author Jakob Hilarius, http://syscall.dk
+ *
+ * @constructor
+ */
 function PreferencesView() {
     var ACTIVE_RADIO_BTN = '<img src="images/LEDOn.png" alt="" />';
     var INACTIVE_RADIO_BTN = '<img src="images/LEDOff.png" alt="" />';
 
     var preferencesView = document.getElementById('preferences');
 
-    var list = document.getElementById('pref-system-list');
-    var current = null;
+    var nav = new SimpleListMenu('pref-system-list');
 
     function show() {
         preferencesView.style.display = 'block';
     }
     function hide() {
-        DOM.removeClass(current, 'active');
+        nav.reset();
         preferencesView.style.display = 'none';
     }
     function close() {
         window.view = new HomeView();
         window.view.reload();
         hide();
-    }
-    function setCurrentElement(elem) {
-        DOM.removeClass(current, 'active');
-        current = elem;
-        DOM.addClass(current, 'active');
     }
 
 
@@ -36,11 +37,11 @@ function PreferencesView() {
     }
 
     this.onEnter = function () {
-        if (!current) {
+        if (!nav.current()) {
             return;
         }
 
-        var val = current.getElementsByClassName('value')[0];
+        var val = nav.current().getElementsByClassName('value')[0];
         var id = val.id;
 
         if (id === 'pref-pms-address') {
@@ -60,34 +61,10 @@ function PreferencesView() {
     };
     this.onRight = function () {};
     this.onUp = function () {
-        var prev;
-        if (current) {
-            prev = DOM.getPreviousElement(current);
-        }
-        else {
-            prev = DOM.getFirstElement(list);
-        }
-
-        if (prev === null) {
-            return;
-        }
-
-        setCurrentElement(prev);
+        nav.prev();
     };
     this.onDown = function () {
-        var next;
-        if (current) {
-            next = DOM.getNextElement(current);
-        }
-        else {
-            next = DOM.getFirstElement(list);
-        }
-
-        if (next === null) {
-            return;
-        }
-
-        setCurrentElement(next);
+        nav.next();
     };
 
     this.reload = function () {};

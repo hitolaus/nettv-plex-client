@@ -150,3 +150,73 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
         incr = getCurrentElementWidth(current);
     }
 }
+
+function SimpleListMenu(menuId, selected, maxElements) {
+    var list = document.getElementById(menuId);
+    var current = selected;
+    var i = 0;
+
+    maxElements = maxElements || -1;
+
+    function setCurrentElement(elem) {
+        DOM.removeClass(current, 'active');
+        current = elem;
+        DOM.addClass(current, 'active');
+    }
+
+    this.reset = function () {
+        DOM.removeClass(current, 'active');
+    };
+    this.current = function () {
+        return current;
+    };
+    this.prev = function () {
+        var prev;
+        if (current) {
+            prev = DOM.getPreviousElement(current);
+        }
+        else {
+            prev = DOM.getFirstElement(list);
+        }
+
+        if (prev === null) {
+            return;
+        }
+
+        if (maxElements > -1) {
+            var top = parseInt(list.style.top, 10) || 0;
+            i--;
+            if (i < 0) {
+                // 2 is the margin
+                list.style.top = (top + current.offsetHeight + 2) + 'px';
+                i = 0;
+            }
+        }
+        setCurrentElement(prev);
+    };
+
+    this.next = function() {
+        var next;
+        if (current) {
+            next = DOM.getNextElement(current);
+        }
+        else {
+            next = DOM.getFirstElement(list);
+        }
+
+        if (next === null) {
+            return;
+        }
+
+        if (maxElements > -1) {
+            var top = parseInt(list.style.top, 10) || 0;
+            i++;
+            if (i > maxElements-1) {
+                // 2 is the margin
+                list.style.top = (top - current.offsetHeight - 2) + 'px';
+                i = maxElements-1;
+            }
+        }
+        setCurrentElement(next);
+    };
+}

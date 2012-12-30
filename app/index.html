@@ -76,6 +76,20 @@
             </div>
         </div>
 
+        <div id="list" style="display:none">
+            <img class="bg" id="list-bg1" src="" alt="" />
+            <img class="bg" id="list-bg2" src="" alt="" />
+
+            <div class="header">
+                <div id="list-objects">Objects: <span id="list-objects-count">0</span></div>
+            </div>
+            <div class="main">
+                <div id="list-menu">
+                </div>
+                <div id="list-info"></div>
+            </div>
+        </div>
+
         <!-- the object tag needs to be visible at load therefore we load it offscreen -->
         <div id="player" style="top:-9999px">
             <div id="video-loading">
@@ -109,6 +123,7 @@
         <script src="scripts/debug.js" type="text/javascript"></script>
         <script src="scripts/string.js" type="text/javascript"></script>
         <script src="scripts/time.js" type="text/javascript"></script>
+        <script src="scripts/background-loader.js" type="text/javascript"></script>
         <script src="scripts/model/directory.js" type="text/javascript"></script>
         <script src="scripts/model/media-container.js" type="text/javascript"></script>
         <script src="scripts/model/video.js" type="text/javascript"></script>
@@ -121,6 +136,7 @@
         <script src="scripts/view/resume-view.js" type="text/javascript"></script>
         <script src="scripts/view/player-view.js" type="text/javascript"></script>
         <script src="scripts/view/home-view.js" type="text/javascript"></script>
+        <script src="scripts/view/list-view.js" type="text/javascript"></script>
         <script src="scripts/main.js" type="text/javascript"></script>
         <!-- endbuild -->
     </body>
