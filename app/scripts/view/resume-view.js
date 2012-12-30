@@ -1,16 +1,27 @@
-function ResumeView(uri, viewOffset) {
-    
+/**
+ * The resume diaload where the user can select to start from the begining or
+ * resume from the previous position.
+ *
+ * @author Jakob Hilarius, http://syscall.dk
+ *
+ * @constructor
+ * @param {string} uri The PLex API address of the video meta data.
+ * @param {number} viewOffset The position to start from
+ * @param {object} [returnView] The view to return to
+ */
+function ResumeView(uri, viewOffset, returnView) {
+
     var view = document.getElementById('resume');
     var active = document.getElementById('resume-offset');
-    
+
     function show() {
         view.style.display = 'block';
     }
     function hide() {
         DOM.removeClass(active, 'active');
-        view.style.display = 'none';     
+        view.style.display = 'none';
     }
-    
+
 	this.onUp = function () {
         var prev = DOM.getPreviousElement(active);
         if (prev) {
@@ -34,26 +45,31 @@ function ResumeView(uri, viewOffset) {
 	this.onEnter = function () {
         var useViewoffset = active.getAttribute('id') !== null;
 
-        window.view = new PlayerView(uri, useViewoffset);
+        window.view = new PlayerView(uri, useViewoffset, returnView);
         hide();
 	};
 	this.onBack = function () {
-        // TODO: Depends on where the user originates from
-        window.view = new HomeView();
+
+        if (!returnView) {
+            window.view = new HomeView();
+        }
+        else {
+            window.view = returnView;
+        }
         window.view.reload();
         hide();
 	};
-    
+
 	this.render = function () {
         var offsetString = Time.format(viewOffset);
-        
+
         document.getElementById('resume-offset').innerHTML = 'Resume from ' + offsetString;
-        
+
         DOM.addClass(active, 'active');
-        
+
         show();
 	};
-    
+
     // Make self-rendering
     this.render();
 }

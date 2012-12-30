@@ -31,7 +31,6 @@ function ListView(uri, returnView) {
             window.view = new HomeView();
             window.view.reload();
 
-
             hide();
         }
         else {
@@ -171,10 +170,10 @@ function ListView(uri, returnView) {
             var offset = mediaList[idx].viewOffset;
 
             if (offset > 0) {
-                window.view = new ResumeView(plexAPI.getURL(key), offset);
+                window.view = new ResumeView(plexAPI.getURL(key), offset, this);
             }
             else {
-                window.view = new PlayerView(plexAPI.getURL(key));
+                window.view = new PlayerView(plexAPI.getURL(key), false, this);
             }
         }
     };
@@ -182,7 +181,9 @@ function ListView(uri, returnView) {
         close();
     };
 
-    this.reload = function () {};
+    this.reload = function () {
+        this.render();
+    };
     this.render = function () {
         plexAPI.browse(uri, function(container) {
             //var mediaList = container.media;

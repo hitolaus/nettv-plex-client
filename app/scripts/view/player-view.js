@@ -5,10 +5,11 @@
  *
  * @constructor
  * @param {string} uri The PLex API address of the video meta data.
- * @param {boolean} useViewOffset If <code>true</code> the view offset will be used.
+ * @param {boolean} [useViewOffset] If <code>true</code> the view offset will be used.
+ * @param {object} [returnView] The view to return to
  */
 /*global Popcorn,video */
-function PlayerView(uri, useViewOffset) {
+function PlayerView(uri, useViewOffset, returnView) {
     var CONTROLS_TIMEOUT = 5000;
     var PROGRESS_INTERVAL = 60000;
 
@@ -58,7 +59,12 @@ function PlayerView(uri, useViewOffset) {
         clearInterval(processTimer);
         clearInterval(plexProgressTimer);
 
-        window.view = new HomeView();
+        if (!returnView) {
+            window.view = new HomeView();
+        }
+        else {
+            window.view = returnView;
+        }
         window.view.reload();
 
         player.style.display = 'none';
