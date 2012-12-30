@@ -80,7 +80,17 @@
 #list-info .episode h2 span {
     color: white;
 }
-
+#list-info .episode p {
+    position: absolute;
+    top:300px;
+    left:30px;
+    margin: 0;
+    width: 630px;
+    height: 105px;
+    overflow: hidden;
+    font-size: 18px;
+    color:#C9C9C9;
+}
 
 #list-info .generic img {
     position: absolute;

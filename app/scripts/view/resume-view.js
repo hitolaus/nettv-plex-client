@@ -21,6 +21,16 @@ function ResumeView(uri, viewOffset, returnView) {
         DOM.removeClass(active, 'active');
         view.style.display = 'none';
     }
+    function close() {
+        if (!returnView) {
+            window.view = new HomeView();
+        }
+        else {
+            window.view = returnView;
+        }
+        window.view.reload();
+        hide();
+    }
 
 	this.onUp = function () {
         var prev = DOM.getPreviousElement(active);
@@ -49,16 +59,11 @@ function ResumeView(uri, viewOffset, returnView) {
         hide();
 	};
 	this.onBack = function () {
-
-        if (!returnView) {
-            window.view = new HomeView();
-        }
-        else {
-            window.view = returnView;
-        }
-        window.view.reload();
-        hide();
+        close();
 	};
+    this.onStop = function () {
+        close();
+    };
 
 	this.render = function () {
         var offsetString = Time.format(viewOffset);

@@ -1,5 +1,5 @@
 /**
- * Preferences view.
+ * List view.
  *
  * @author Jakob Hilarius, http://syscall.dk
  *
@@ -91,6 +91,11 @@ function ListView(uri, returnView) {
         heading2.innerHTML = episodeInfo;
 
         container.appendChild(heading2);
+
+        var summary = document.createElement('p');
+        summary.innerHTML = media.summary;
+
+        container.appendChild(summary);
 
         var thumb = new Image();
         thumb.src = plexAPI.getScaledImageURL(plexAPI.getURL(media.thumb), 460, 210);
