@@ -51,6 +51,7 @@ function PlayerView(uri, useViewOffset, returnView) {
         player.style.top = '0';
     }
     function closePlayer() {
+        hideControls();
         video.stop();
 
         // Manually report that we have stopped
