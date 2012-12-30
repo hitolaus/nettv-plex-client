@@ -11,6 +11,9 @@ function MediaContainer(elem) {
 	var title1 = elem.getAttribute('title1');
 	var title2 = elem.getAttribute('title2');
 
+    var grandparentTitle = elem.getAttribute('grandparentTitle');
+    var season = elem.getAttribute('parentIndex');
+
     var media = [];
 
     var children = elem.childNodes;
@@ -31,6 +34,8 @@ function MediaContainer(elem) {
         art: art,
         title1: title1,
         title2: title2,
+        grandparentTitle: grandparentTitle,
+        season: season,
         media: media
     };
 }

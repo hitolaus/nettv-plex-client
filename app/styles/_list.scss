@@ -69,10 +69,12 @@
     top:30px;
     left:30px;
     margin: 0;
-    width: 600px;
+    width: 650px;
     font-size: 20px;
     font-weight: normal;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
     color: $highlight-color;
 }
 #list-info .episode h2 span {
@@ -118,6 +120,7 @@
     font-size: 20px;
     font-weight: normal;
     overflow: hidden;
+
     color: #A2A2A2;
 }
 

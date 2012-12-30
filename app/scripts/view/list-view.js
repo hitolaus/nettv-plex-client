@@ -11,6 +11,7 @@ function ListView(uri, returnView) {
     var view = document.getElementById('list');
     var menu = document.getElementById('list-menu');
 
+    var mediaContainer;
     var mediaList;
 
     var nav;
@@ -40,7 +41,7 @@ function ListView(uri, returnView) {
     }
     function buildDescription () {
         var idx = nav.current().getAttribute('data-index');
-        var media = mediaList[idx];
+        var media = mediaContainer.media[idx];
 
         backgroundLoader.load(media.art);
 
@@ -80,11 +81,11 @@ function ListView(uri, returnView) {
         DOM.addClass(container, 'episode');
 
         var heading1 = document.createElement('h1');
-        heading1.appendChild(document.createTextNode(media.grandparentTitle));
+        heading1.innerHTML = (media.grandparentTitle) ? media.grandparentTitle : mediaContainer.grandparentTitle;
 
         container.appendChild(heading1);
 
-        var episodeInfo = 'Season ' + media.season + ', Episode ' + media.episode + ':<span> ' + media.title+ '</span>';
+        var episodeInfo = 'Season ' + ((media.season) ? media.season : mediaContainer.season) + ', Episode ' + media.episode + ':<span> ' + media.title+ '</span>';
 
         var heading2 = document.createElement('h2');
         heading2.innerHTML = episodeInfo;
@@ -134,14 +135,12 @@ function ListView(uri, returnView) {
     this.onUp = function () {
         if (nav) {
             nav.prev();
-            //backgroundLoader.load(nav.current().getAttribute('data-art'));
             buildDescription();
         }
     };
     this.onDown = function () {
         if (nav) {
             nav.next();
-            //backgroundLoader.load(nav.current().getAttribute('data-art'));
             buildDescription();
         }
     };
@@ -156,18 +155,15 @@ function ListView(uri, returnView) {
 
         var selected = nav.current();
         var idx = selected.getAttribute('data-index');
-        var key = mediaList[idx].key;
-        var isContainer = mediaList[idx].container;
-        //var key = selected.getAttribute('data-key');
-        //var isContainer = selected.getAttribute('data-container') === 'true';
+        var key = mediaContainer.media[idx].key;
+        var isContainer = mediaContainer.media[idx].container;
 
         if (isContainer) {
             window.view = new ListView(plexAPI.getURL(key, uri), this);
             window.view.render();
         }
         else {
-            //var offset = parseInt(selected.getAttribute('data-offset'), 10);
-            var offset = mediaList[idx].viewOffset;
+            var offset = mediaContainer.media[idx].viewOffset;
 
             if (offset > 0) {
                 window.view = new ResumeView(plexAPI.getURL(key), offset, this);
@@ -186,8 +182,9 @@ function ListView(uri, returnView) {
     };
     this.render = function () {
         plexAPI.browse(uri, function(container) {
-            //var mediaList = container.media;
-            mediaList = container.media;
+            mediaContainer = container;
+
+            var mediaList = container.media;
 
             backgroundLoader.load(container.art);
 
