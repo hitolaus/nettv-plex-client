@@ -73,25 +73,24 @@ DOM.hasClass = function(elem, className) {
     }
     return elem.className.indexOf(className) > -1;
 };
-/**
- * TODO: Make proper implementation
- */
+
 DOM.addClass = function(elem, className) {
     if (!elem) {
         return null;
     }
     if (!DOM.hasClass(elem,className)) {
-        elem.className = className;
+        elem.className = [elem.className, className].join(' ');
     }
 };
-/**
- * TODO: Make proper implementation
- */
+
 DOM.removeClass = function(elem, className) {
     if (!elem) {
         return null;
     }
     if (DOM.hasClass(elem, className)) {
-        elem.className = '';
+        var classes = elem.className.split(' ');
+        classes.splice(classes.indexOf(className), 1);
+
+        elem.className = classes.join(' ');
     }
 };
