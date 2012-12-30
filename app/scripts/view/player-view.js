@@ -21,6 +21,10 @@ function PlayerView(uri, useViewOffset, returnView) {
     var status = document.getElementById('player-status-message');
     var loadingMessage = document.getElementById('video-loading-message"');
 
+    if (Settings.useAnim()) {
+        DOM.addClass(controls, 'controls-transition');
+    }
+
     var totalDuration = 0;
     var durationIndex = 0;
 
