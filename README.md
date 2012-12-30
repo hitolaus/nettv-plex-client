@@ -11,13 +11,13 @@ This project uses Yeoman (http://yeoman.io) as build system. To run the tests yo
     $ cd nettv-plex-client
     $ yeoman build
 
-Now the app is available in the dist/ directory which can be copied to any webserver. One
+Now the app is available in the `dist/` directory which can be copied to any webserver. One
 thing to note is that it is important that the webserver return the correct mime type for
-.html files in the application directory. The mime type has to be
+`.html files in the application directory. The mime type has to be
 
     application/ce-html+xml;charset="UTF-8";supportspointer=false
 
-If you use Apache it should work out-of-the-box as the app is distributed with a .htaccess
+If you use Apache it should work out-of-the-box as the app is distributed with a `.htaccess`
 file setting the correct mime type.
 
 # Compatibility
