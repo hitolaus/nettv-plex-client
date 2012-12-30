@@ -30,7 +30,7 @@ function PreferencesView() {
     function loadSettings() {
         document.getElementById('pref-pms-address').innerHTML = Settings.getPMS();
 
-        document.getElementById('pref-anim-enabled').innerHTML = ACTIVE_RADIO_BTN;
+        document.getElementById('pref-anim-enabled').innerHTML = (Settings.useAnim()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
         document.getElementById('pref-debug-enabled').innerHTML = (Settings.getDebug()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
 
         document.getElementById('pref-debug-uuid').innerHTML = ' (' + Settings.getDebugUUID() + ')';
@@ -51,6 +51,10 @@ function PreferencesView() {
         else if (id === 'pref-debug-enabled') {
             Settings.setDebug(!Settings.getDebug());
             document.getElementById('pref-debug-enabled').innerHTML = (Settings.getDebug()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
+        }
+        else if (id === 'pref-anim-enabled') {
+            Settings.setAnim(!Settings.useAnim());
+            document.getElementById('pref-anim-enabled').innerHTML = (Settings.useAnim()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
         }
     };
     this.onBack = function () {

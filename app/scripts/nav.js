@@ -6,6 +6,10 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     var menu = document.getElementById(menuId);
     var current = document.getElementById(activeId);
 
+    if (Settings.useAnim()) {
+        DOM.addClass(menu, 'vertical-transtion');
+    }
+
     var incr = 0;
     if (current !== null) {
         incr = current.offsetHeight;
@@ -75,6 +79,10 @@ function VerticalFixedScrollMenu(menuId, activeId) {
 function HorizontalFixedScrollMenu(menuId, activeId) {
     var menu = document.getElementById(menuId);
     var current = document.getElementById(activeId);
+
+    if (Settings.useAnim()) {
+        DOM.addClass(menu, 'horizontal-transition');
+    }
 
     var incr = 0;
 

@@ -38,6 +38,7 @@ function Settings() {
         _pms = getCookie('nettv_plex_pms_ip');
         _debug = getCookie('nettv_plex_debug') === 'true';
         _debugUUID = getCookie('nettv_plex_debug_uuid');
+        _anim = getCookie('nettv_plex_disable_anim') !== 'true';
 
         if (_debugUUID === undefined) {
             _debugUUID = 'nettv-plex-' + UUID.simple();
@@ -57,14 +58,15 @@ function Settings() {
           deleteCookie(cookies[i].split('=')[0]);
         }
     };
+
     this.setPMS = function(pms) {
         setCookie('nettv_plex_pms_ip', pms, 3600);
         _pms = pms;
     };
-
     this.getPMS = function() {
 		return _pms;
     };
+
     this.getDebug = function () {
         return _debug;
     };
@@ -74,6 +76,15 @@ function Settings() {
     this.setDebug = function(debug) {
         setCookie('nettv_plex_debug', debug, 3600);
         _debug = debug;
+    };
+
+    this.setAnim = function(anim) {
+        setCookie('nettv_plex_disable_anim', !anim, 3600);
+        _anim = anim;
+    };
+
+    this.useAnim = function() {
+        return _anim;
     };
 }
 
