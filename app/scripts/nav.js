@@ -156,7 +156,7 @@ function SimpleListMenu(menuId, selected, maxElements) {
     var current = selected;
     var i = 0;
 
-    maxElements = maxElements || -1;
+    maxElements = maxElements || -1;
 
     function setCurrentElement(elem) {
         DOM.removeClass(current, 'active');

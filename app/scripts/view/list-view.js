@@ -202,12 +202,22 @@ function ListView(uri, returnView) {
 
                 var offset = (media.viewOffset) ? media.viewOffset : 0;
 
+                var builder = [ media.title ];
+                if (media.unwatched > 0) {
+                    builder.push('<span>'+media.unwatched+'</span>');
+                }
+
+                if (!media.container) {
+                    if (media.viewOffset > 0) {
+                        builder.push('<img src="images/OverlayInProgress.png" alt="" />');
+                    }
+                    else if (!media.viewCount) {
+                        builder.push('<img src="images/OverlayUnwatched.png" alt="" />');
+                    }
+                }
+
                 var item = document.createElement('li');
-                item.appendChild(document.createTextNode(media.title));
-                //item.setAttribute('data-key', media.key);
-                //item.setAttribute('data-container', media.container);
-                //item.setAttribute('data-offset', offset);
-                //item.setAttribute('data-art', media.art);
+                item.innerHTML = builder.join(' ');
                 item.setAttribute('data-index', i);
 
                 if (i === 0) {
@@ -225,7 +235,6 @@ function ListView(uri, returnView) {
 
             nav = new SimpleListMenu('list-scroller', selectedItem, 8);
             document.getElementById('list-objects-count').innerHTML = n;
-            //backgroundLoader.load(selectedItem.getAttribute('data-art'));
             buildDescription();
 
             show();

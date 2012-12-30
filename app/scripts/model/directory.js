@@ -3,12 +3,13 @@ function Directory(elem) {
 	var key = elem.getAttribute('key');
 	var title = elem.getAttribute('title');
 	var type = elem.getAttribute('type');
+	var summary = elem.getAttribute('summary');
 
-	var summaryAttrNode = elem.attributes.getNamedItem("summary");
-	var thumbAttrNode = elem.attributes.getNamedItem("thumb");
-	var artAttrNode = elem.attributes.getNamedItem("art");
-	var leafCountAttrNode = elem.attributes.getNamedItem("leafCount");
-	var viewedLeafCountAttrNode = elem.attributes.getNamedItem("viewedLeafCount");
+
+	var thumb = elem.getAttribute('thumb');
+	var art = elem.getAttribute('art');
+	var leafCount = elem.getAttribute('leafCount');
+	var viewedLeafCount = elem.getAttribute('viewedLeafCount');
 
 	var year = elem.getAttribute('year');
 
@@ -17,23 +18,9 @@ function Directory(elem) {
         duration = Math.floor(parseInt(elem.getAttribute('duration'), 10)/1000);
     }
 
-	var summary = "";
-	if (summaryAttrNode != null) {
-		summary = summaryAttrNode.nodeValue;
-	}
-	var thumb = "";
-	if (thumbAttrNode != null) {
-		thumb = thumbAttrNode.nodeValue;
-	}
-	var art = "";
-	if (artAttrNode != null) {
-		art = artAttrNode.nodeValue;
-	}
-
 	var unwatched = 0;
-	if (leafCountAttrNode != null && viewedLeafCountAttrNode != null) {
-		unwatched = leafCountAttrNode.nodeValue - viewedLeafCountAttrNode.nodeValue;
-
+	if (leafCount && viewedLeafCount) {
+		unwatched = leafCount - viewedLeafCount;
 	}
 
 	return {
@@ -47,5 +34,5 @@ function Directory(elem) {
 		unwatched: unwatched,
 		duration: duration,
 		year: year
-	}
+	};
 }

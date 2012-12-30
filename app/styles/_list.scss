@@ -157,6 +157,23 @@
     color: white;
     background-color: $highlight-color;
 }
+#list-menu li.active span {
+    color:white;
+}
+
+#list-menu li span {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    float: right;
+    color: #909090;
+    background: #666666;
+    border-radius: 5px;
+}
+
+#list-menu li img {
+    float: right;
+}
 
 #list-objects {
     position:absolute;

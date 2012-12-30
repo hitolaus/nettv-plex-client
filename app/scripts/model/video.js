@@ -55,6 +55,8 @@ function Video(elem) {
         viewOffset = Math.floor(parseInt(elem.getAttribute('viewOffset'), 10)/1000);
     }
 
+    var viewCount = elem.getAttribute('viewCount');
+
     var grandparentTitle = elem.getAttribute('grandparentTitle');
     var grandparentThumb = elem.getAttribute('grandparentThumb');
 
@@ -126,6 +128,7 @@ function Video(elem) {
         mimeType: getContainerMimeType(mimeType),
 		subtitles: subtitles,
         duration: duration,
+        viewCount: viewCount,
         viewOffset: viewOffset
 	};
 }
