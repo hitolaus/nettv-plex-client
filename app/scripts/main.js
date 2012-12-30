@@ -80,14 +80,19 @@ function keydownHandler(e) {
 }
 
 function init() {
-    document.addEventListener('keydown', keydownHandler, true);
+    try {
+        document.addEventListener('keydown', keydownHandler, true);
 
-    var initialized = Settings.init();
-    if (!initialized) {
-        window.view = new SettingsView();
+        var initialized = Settings.init();
+        if (!initialized) {
+            window.view = new SettingsView();
+        }
+        else {
+            window.view = new HomeView();
+        }
+        window.view.render();
     }
-    else {
-        window.view = new HomeView();
+    catch (e) {
+        console.log('FATAL:' + e.message);
     }
-    window.view.render();
 }
