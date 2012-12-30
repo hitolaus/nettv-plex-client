@@ -1,14 +1,14 @@
 function keydownHandler(e) {
-	switch (e.keyCode) {
-		case VK_UP:
+    switch (e.keyCode) {
+        case VK_UP:
             window.view.onUp();
-			break;
+            break;
         case VK_RIGHT:
             window.view.onRight();
             break;
-		case VK_DOWN:
+        case VK_DOWN:
             window.view.onDown();
-			break;
+            break;
         case VK_LEFT:
             window.view.onLeft();
             break;
@@ -74,9 +74,9 @@ function keydownHandler(e) {
                 window.view.onYellow();
             }
             break;
-		default:
-			break;
-	}
+        default:
+            break;
+    }
 }
 
 function init() {
