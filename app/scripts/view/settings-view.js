@@ -8,14 +8,16 @@ function SettingsView(returnView) {
         settingsView.style.display = 'none';
     }
     function close() {
-        if (!returnView) {
-            window.view = new HomeView();
-            window.view.reload();
+        if (Settings.getPMS()) {
+            if (!returnView) {
+                window.view = new HomeView();
+                window.view.reload();
+            }
+            else {
+                window.view = returnView;
+            }
+            hide();
         }
-        else {
-            window.view = returnView;
-        }
-        hide();
     }
 
 	function getAddressAsString() {
@@ -64,10 +66,12 @@ function SettingsView(returnView) {
         }
     };
     this.onBack = function () {
-        if (Settings.getPMS()) {
-            close();
-        }
+        close();
     };
+    this.onStop = function () {
+        close();
+    };
+
     this.onLeft = function () {};
     this.onRight = function () {};
     this.onUp = function () {};

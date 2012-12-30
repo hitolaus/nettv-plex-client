@@ -5,15 +5,22 @@ function HomeView() {
 
     var nav = null;
 
+    // The menus
     var ondeckMenu = null;
     var recentlyAddedMenu = null;
     var homeMenu = null;
 
+    // Name of the last used menu
     var lastUsedMenu = null;
 
+    // Timer for preview menu (so we can cancel loading)
     var previewLoader;
 
     var backgroundLoader = new BackgroundLoader('bg1', 'bg2');
+
+    // Whether we need to load the thumbs
+    var dirtyOndeckThumbs = false;
+    var dirtyRecentlyAddedThumbs = false;
 
     function updateTime() {
         document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
@@ -27,8 +34,6 @@ function HomeView() {
         nav.activate();
 
         var menuList = DOM.getParent(nav.current());
-
-        loadImages(menuList);
 
         // Set title of the scroller
         var scrollerId = menuList.getAttribute('id');
@@ -56,6 +61,7 @@ function HomeView() {
         if (!elem) {
             return;
         }
+
         var images = elem.getElementsByTagName('img');
 
         var n = images.length;
@@ -81,6 +87,10 @@ function HomeView() {
             if (!e.boundary) {
                 setTitle('ondeck-title', e.element);
             }
+
+            if (dirtyOndeckThumbs) {
+                loadImages(DOM.getParent(nav.current()));
+            }
         };
         ondeckMenu.onmenudown = function(e) {
             if (e.boundary) {
@@ -99,6 +109,10 @@ function HomeView() {
         recentlyAddedMenu.onmenuright = function(e) {
             if (!e.boundary) {
                 setTitle('recentlyadded-title', e.element);
+            }
+
+            if (dirtyRecentlyAddedThumbs) {
+                loadImages(DOM.getParent(nav.current()));
             }
         };
         recentlyAddedMenu.onmenuup = function(e) {
@@ -177,11 +191,13 @@ function HomeView() {
             plexAPI.browse(plexAPI.onDeck(key), function(container) {
                 buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
                 ondeckMenu.reload();
+                dirtyOndeckThumbs = true;
             });
 
             plexAPI.browse(plexAPI.recentlyAdded(key), function(container) {
                 buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media);
                 recentlyAddedMenu.reload();
+                dirtyRecentlyAddedThumbs = true;
             });
 
         }, PREVIEW_MENU_LOADING_DELAY);
