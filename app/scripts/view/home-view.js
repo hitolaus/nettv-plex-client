@@ -49,7 +49,7 @@ function HomeView() {
     function setTitle(id, element) {
         var heading = document.getElementById(id);
         var title = element.getAttribute('data-title').encodeHTML();
-        var meta = element.getAttribute('data-meta');
+        var meta = element.getAttribute('data-meta').encodeHTML();
 
         heading.innerHTML = title+'<span>'+meta+'</span>';
     }

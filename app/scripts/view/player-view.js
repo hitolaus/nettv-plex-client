@@ -106,18 +106,18 @@ function PlayerView(uri, useViewOffset, returnView) {
         var title = document.getElementById('controls-title');
 
         if (media.type === 'episode') {
-            heading1 = media.grandparentTitle;
-            heading2 = 'Season ' + media.season + ', Episode ' + media.episode + '<br/>' + media.title;
+            heading1 = media.grandparentTitle.encodeHTML();
+            heading2 = 'Season ' + media.season + ', Episode ' + media.episode + '<br/>' + media.title.encodeHTML();
         }
         else {
-            heading1 = media.title;
+            heading1 = media.title.encodeHTML();
             heading2 = '(' + media.year + ')';
         }
 
         title.innerHTML = '<h1>' + heading1 + '</h1><h2>' + heading2 + '</h2>';
 
 
-        document.getElementById('controls-description').innerHTML = media.summary;
+        document.getElementById('controls-description').innerHTML = media.summary.encodeHTML();
     }
 
     function readyHandler() {

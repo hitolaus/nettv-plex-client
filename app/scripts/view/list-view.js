@@ -85,7 +85,7 @@ function ListView(uri, returnView) {
 
         container.appendChild(heading1);
 
-        var episodeInfo = 'Season ' + ((media.season) ? media.season : mediaContainer.season) + ', Episode ' + media.episode + ':<span> ' + media.title+ '</span>';
+        var episodeInfo = 'Season ' + ((media.season) ? media.season : mediaContainer.season) + ', Episode ' + media.episode + ':<span> ' + media.title.encodeHTML()+ '</span>';
 
         var heading2 = document.createElement('h2');
         heading2.innerHTML = episodeInfo;
@@ -113,17 +113,17 @@ function ListView(uri, returnView) {
         DOM.addClass(container, 'video');
 
         var heading1 = document.createElement('h1');
-        heading1.appendChild(document.createTextNode(media.title));
+        heading1.innerHTML = media.title.encodeHTML();
 
         container.appendChild(heading1);
 
         var heading2 = document.createElement('h2');
-        heading2.appendChild(document.createTextNode(media.year + ' - ' + Time.format(media.duration)));
+        heading2.innerHTML = media.year + ' - ' + Time.format(media.duration);
 
         container.appendChild(heading2);
 
         var summary = document.createElement('p');
-        summary.appendChild(document.createTextNode(media.summary));
+        summary.innerHTML = media.summary.encodeHTML();
 
         container.appendChild(summary);
 
@@ -204,7 +204,7 @@ function ListView(uri, returnView) {
 
                 var offset = (media.viewOffset) ? media.viewOffset : 0;
 
-                var builder = [ media.title ];
+                var builder = [ media.title.encodeHTML() ];
                 if (media.unwatched > 0) {
                     builder.push('<span>'+media.unwatched+'</span>');
                 }
