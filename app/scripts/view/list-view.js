@@ -160,17 +160,19 @@ function ListView(uri, returnView) {
 
         var selected = nav.current();
         var idx = selected.getAttribute('data-index');
-        var key = mediaContainer.media[idx].key;
-        var isContainer = mediaContainer.media[idx].container;
+        var media = mediaContainer.media[idx];
+
+        var key = media.key;
+        var isContainer = media.container;
 
         if (isContainer) {
             window.view = new ListView(plexAPI.getURL(key, uri), this);
             window.view.render();
         }
         else {
-            var offset = mediaContainer.media[idx].viewOffset;
+            var offset = media.viewOffset;
 
-            if (offset > 0) {
+            if (offset > 0 && media.canSeek()) {
                 window.view = new ResumeView(plexAPI.getURL(key), offset, this);
             }
             else {

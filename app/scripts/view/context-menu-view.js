@@ -101,7 +101,7 @@ function ContextMenuView(media, returnView) {
             list.appendChild(unwatched);
         }
 
-        if (media.viewOffset) {
+        if (media.viewOffset && media.canSeek()) {
             var resume = document.createElement('li');
             resume.setAttribute('id', 'context-menu-resume');
 

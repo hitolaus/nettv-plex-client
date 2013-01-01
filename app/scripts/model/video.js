@@ -129,6 +129,15 @@ function Video(elem) {
 		subtitles: subtitles,
         duration: duration,
         viewCount: viewCount,
-        viewOffset: viewOffset
+        viewOffset: viewOffset,
+
+        /**
+         * Returns whether or not the platform can seek in this media file.
+         *
+         * @returns <code>true</code> if the player can seek in the media type
+         */
+        canSeek: function() {
+            return true;
+        }
 	};
 }
