@@ -55,8 +55,20 @@ function PlexAPI() {
         dummy.src = 'http://'+address+':32400/:/resources/movie-fanart.jpg';
     };
 
-    this.reportProgress = function(key, time, state) {
+    this.progress = function(key, time, state) {
         var url = 'http://'+Settings.getPMS()+':32400/:/progress?key='+key+'&identifier=com.plexapp.plugins.library&time='+time+'&state='+state;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send(null);
+    };
+    this.watched = function(key) {
+        var url = 'http://'+Settings.getPMS()+':32400/:/scrobble?key='+key+'&identifier=com.plexapp.plugins.library';
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.send(null);
+    };
+    this.unwatched = function(key) {
+        var url = 'http://'+Settings.getPMS()+':32400/:/unscrobble?key='+key+'&identifier=com.plexapp.plugins.library';
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.send(null);

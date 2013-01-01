@@ -94,7 +94,7 @@ function PlayerView(uri, useViewOffset, returnView) {
                 break;
         }
 
-        plexAPI.reportProgress(mediaRatingKey, video.playPosition, state);
+        plexAPI.progress(mediaRatingKey, video.playPosition, state);
     }
 
     function setLoadingMessage(msg) {

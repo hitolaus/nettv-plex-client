@@ -1,5 +1,5 @@
 /**
- * The resume diaload where the user can select to start from the begining or
+ * The resume dialog where the user can select to start from the begining or
  * resume from the previous position.
  *
  * @author Jakob Hilarius, http://syscall.dk

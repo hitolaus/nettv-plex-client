@@ -27,6 +27,7 @@
         "VerticalFixedScrollMenu",
         "SimpleListMenu",
         "BackgroundLoader",
+        "ContextMenuView",
         "ResumeView",
         "PlayerView",
         "HomeView",

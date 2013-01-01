@@ -182,6 +182,16 @@ function ListView(uri, returnView) {
         close();
     };
 
+    this.onGreen = function () {
+        var selected = nav.current();
+        var idx = selected.getAttribute('data-index');
+        var media = mediaContainer.media[idx];
+
+        if (!media.container) {
+            window.view = new ContextMenuView(media, this);
+        }
+    };
+
     this.reload = function () {
         this.render();
     };

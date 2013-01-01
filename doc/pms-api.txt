@@ -30,10 +30,6 @@ URLs
 /video/:/transcode/segmented/stop?session=[sessionCookieGUID]
 /video/:/transcode/segmented/ping
 /music/:/transcode/generic.mp3?offset=[offset]&format=mp3&audioCodec=libmp3lame&audioBitrate=320&audioSamples=44100&url=[url]&X-Plex-Client-Capabilities
-/:/progress?key=[mediaKey]&identifier=com.plexapp.plugins.library&time=[time]&state=[state]
-/:/scrobble?key=[mediaKey]&identifier=com.plexapp.plugins.library       -> mark as viewed
-/:/unscrobble?key=[mediaKey]&identifier=com.plexapp.plugins.library     -> mark as not viewed
-/:/rate?key=[mediaKey]&identifier=com.plexapp.plugins.library&rating=[rating]
 
 ping and progress every 60s
 
@@ -52,8 +48,6 @@ http://192.168.0.49:32400/system/bundle/media/flags/studio/Focus%20Features?t=13
 http://192.168.0.49:32400/system/bundle/media/flags/videoFrameRate/PAL?t=1336406161
 http://192.168.0.49:32400/system/bundle/media/flags/audioCodec/mp3?t=1336406161
 http://192.168.0.49:32400/photo/:/transcode?width=1280&height=720&url=http%3a%2f%2f127%2e0%2e0%2e1%3a32400%2flibrary%2fmetadata%2f267%2fart%3ft%3d1334557392
-http://192.168.0.49:32400/:/progress?key=281&identifier=com.plexapp.plugins.library&time=1&state=playing
-http://192.168.0.49:32400/:/progress?key=281&identifier=com.plexapp.plugins.library&time=7765&state=stopped
 http://88.190.36.70:32400/library/parts/779/file.mkv -> uses Range: byte=xxxxxxx-\r\n in query
 http://88.190.36.70:32400/video/:/transcode/segmented/start.m3u8?url=http%3a%2f%2f127%2e0%2e0%2e1%3a32400%2flibrary%2fparts%2f779%2ffile%2emkv&quality=7&session=c09a976a-ee48-4e12-9d7b-a720f26939a7&X-Plex-Token=vfz5vr3S7BsxK6qpybyW&X-Plex-Access-Key=KQMIY6GATPC63AIMC4R2&X-Plex-Access-Time=1337499321&X-Plex-Access-Code=u5te5vEcklSw4s8aVsdUYNZ0cC4dKS9zFayRiBC0ptQ%3D
 http://88.190.36.70:32400/video/:/transcode/segmented/session/c09a976a-ee48-4e12-9d7b-a720f26939a7/7/index.m3u8
@@ -113,6 +107,20 @@ Not used for hmac
 
 /:/progress?key=[mediaKey]&identifier=com.plexapp.plugins.library&time=[time]&state=[state]
 
-[mediaKey] =  key
+[mediaKey] = key
 [time] = time in milliseconds
-[state] = playing?/stopped?
+[state] = playing/stopped/paused
+
+## Set watched/unwatched
+
+/:/scrobble?key=[mediaKey]&identifier=com.plexapp.plugins.library
+/:/unscrobble?key=[mediaKey]&identifier=com.plexapp.plugins.library
+
+[mediaKey] = key
+
+## Set Rating
+
+/:/rate?key=[mediaKey]&identifier=com.plexapp.plugins.library&rating=[rating]
+
+[mediaKey] = key
+[rating] = ?
