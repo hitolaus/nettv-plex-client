@@ -182,7 +182,7 @@ function ListView(uri, returnView) {
         close();
     };
 
-    this.onGreen = function () {
+    this.onYellow = function () {
         var selected = nav.current();
         var idx = selected.getAttribute('data-index');
         var media = mediaContainer.media[idx];

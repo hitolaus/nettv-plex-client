@@ -19,7 +19,6 @@ function PlayerView(uri, useViewOffset, returnView) {
     var player = document.getElementById('player');
 	var controls = document.getElementById('controls');
     var status = document.getElementById('player-status-message');
-    var loadingMessage = document.getElementById('video-loading-message"');
 
     if (Settings.useAnim()) {
         DOM.addClass(controls, 'controls-transition');
@@ -63,6 +62,7 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         clearInterval(processTimer);
         clearInterval(plexProgressTimer);
+        clearInterval(controlsTimer);
 
         if (!returnView) {
             window.view = new HomeView();
@@ -74,8 +74,9 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         player.style.display = 'none';
     }
+
     function reportPlexProgress() {
-        console.log('reporting progress for '  + mediaRatingKey);
+
         if (!mediaRatingKey) {
             return;
         }
@@ -95,10 +96,6 @@ function PlayerView(uri, useViewOffset, returnView) {
         }
 
         plexAPI.progress(mediaRatingKey, video.playPosition, state);
-    }
-
-    function setLoadingMessage(msg) {
-        loadingMessage.innerHTML = msg;
     }
 
     function setMetaData(media) {
@@ -160,10 +157,8 @@ function PlayerView(uri, useViewOffset, returnView) {
             case 2: // paused
                 break;
             case 3: // connecting
-                setLoadingMessage('Connecting...');
                 break;
             case 4: // buffering
-                setLoadingMessage('Buffering...');
                 showControls('BUFFERING', CONTROLS_TIMEOUT);
                 break;
             default:
@@ -282,6 +277,7 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         // Update process bar every second
         processTimer = setInterval(updateElapsedTime, 1000);
+
         // Report progress to Plex
         plexProgressTimer = setInterval(reportPlexProgress, PROGRESS_INTERVAL);
 

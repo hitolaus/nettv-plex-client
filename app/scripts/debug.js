@@ -47,5 +47,5 @@ if (!window.VK_GREEN) {
     VK_GREEN = 55;
 }
 if (!window.VK_YELLOW) {
-    VK_YELLOW = 56; // 7
+    VK_YELLOW = 56; // 8
 }
