@@ -62,6 +62,12 @@ function ContextMenuView(media, returnView) {
         else if (id === 'context-menu-unwatched') {
             plexAPI.unwatched(media.ratingKey);
         }
+        else if (id === 'context-menu-resume') {
+            window.view = new PlayerView(plexAPI.getURL(media.key), true, returnView);
+        }
+        else if (id === 'context-menu-play') {
+            window.view = new PlayerView(plexAPI.getURL(media.key), false, returnView);
+        }
 
         close();
     };
@@ -94,6 +100,20 @@ function ContextMenuView(media, returnView) {
             unwatched.appendChild(document.createTextNode('Mark as unwatched'));
             list.appendChild(unwatched);
         }
+
+        if (media.viewOffset) {
+            var resume = document.createElement('li');
+            resume.setAttribute('id', 'context-menu-resume');
+
+            resume.appendChild(document.createTextNode('Resume from ' + Time.format(media.viewOffset)));
+            list.appendChild(resume);
+        }
+
+        var play = document.createElement('li');
+        play.setAttribute('id', 'context-menu-play');
+
+        play.appendChild(document.createTextNode('Play from here'));
+        list.appendChild(play);
 
         view.appendChild(list);
 
