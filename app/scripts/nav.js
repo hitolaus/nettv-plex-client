@@ -159,10 +159,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     }
 }
 
-//function SimpleListMenu(menuId, selected, maxElements) {
 function SimpleListMenu(maxElements) {
-    //var list = document.getElementById(menuId);
-    //var current = selected;
     var list, current;
     var i = 0;
 
