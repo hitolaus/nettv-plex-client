@@ -11,7 +11,8 @@ function PreferencesView() {
 
     var preferencesView = document.getElementById('preferences');
 
-    var nav = new SimpleListMenu('pref-system-list');
+    var nav = new SimpleListMenu();
+    nav.init(document.getElementById('pref-system-list'));
 
     function show() {
         preferencesView.style.display = 'block';
