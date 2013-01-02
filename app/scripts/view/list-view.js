@@ -40,6 +40,9 @@ function ListView(uri, returnView) {
         }
     }
     function buildDescription () {
+        if (!nav.current()) {
+            return;
+        }
         var idx = nav.current().getAttribute('data-index');
         var media = mediaContainer.media[idx];
 
@@ -50,6 +53,9 @@ function ListView(uri, returnView) {
         listInfo.innerHTML = '';
         if (!media.type) {
             // This is a container
+            listInfo.appendChild(buildGenericMetaData(media));
+        }
+        else if (media.type === 'genre') {
             listInfo.appendChild(buildGenericMetaData(media));
         }
         else if (media.type === 'episode') {
@@ -123,17 +129,18 @@ function ListView(uri, returnView) {
         container.appendChild(heading2);
 
         var summary = document.createElement('p');
-        summary.innerHTML = media.summary.encodeHTML();
+        summary.innerHTML = (media.summary) ? media.summary.encodeHTML() : '';
 
         container.appendChild(summary);
 
-        var thumb = new Image();
-        thumb.src = plexAPI.getScaledImageURL(plexAPI.getURL(media.thumb), 245, 360);
-        thumb.style.width = '245px';
-        thumb.style.height = '360px';
+        if (media.thumb) {
+            var thumb = new Image();
+            thumb.src = plexAPI.getScaledImageURL(plexAPI.getURL(media.thumb), 245, 360);
+            thumb.style.width = '245px';
+            thumb.style.height = '360px';
 
-        container.appendChild(thumb);
-
+            container.appendChild(thumb);
+        }
         return container;
     }
 

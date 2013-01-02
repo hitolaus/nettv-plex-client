@@ -110,7 +110,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
         return current;
     };
     this.reload = function() {
-        menu.style.left = 0;
+        menu.style.left = '5px';
         current = document.getElementById(activeId);
         if (current !== null) {
             incr = getCurrentElementWidth(current);
@@ -162,6 +162,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
 function SimpleListMenu(maxElements) {
     var list, current;
     var i = 0;
+    var top = 0;
 
     maxElements = maxElements || -1;
 
@@ -181,7 +182,11 @@ function SimpleListMenu(maxElements) {
             }
         }
         else {
-            setCurrentElement(DOM.getNthElement(list, i));
+            var dummy = DOM.getFirstElement(list);
+            var offset = Math.floor(Math.abs(parseInt(top, 10)) / (dummy.offsetHeight+2));
+
+            setCurrentElement(DOM.getNthElement(list, i+offset));
+            list.style.top = top;
         }
     };
     this.reset = function () {
@@ -210,11 +215,12 @@ function SimpleListMenu(maxElements) {
         }
 
         if (maxElements > -1) {
-            var top = parseInt(list.style.top, 10) || 0;
+            var currentTop = parseInt(list.style.top, 10) || 0;
             i--;
             if (i < 0) {
                 // 2 is the margin
-                list.style.top = (top + current.offsetHeight + 2) + 'px';
+                top = (currentTop + current.offsetHeight + 2) + 'px';
+                list.style.top = top;
                 i = 0;
             }
         }
@@ -239,11 +245,12 @@ function SimpleListMenu(maxElements) {
         }
 
         if (maxElements > -1) {
-            var top = parseInt(list.style.top, 10) || 0;
+            var currentTop = parseInt(list.style.top, 10) || 0;
             i++;
             if (i > maxElements-1) {
                 // 2 is the margin
-                list.style.top = (top - current.offsetHeight - 2) + 'px';
+                top = (currentTop - current.offsetHeight - 2) + 'px';
+                list.style.top = top;
                 i = maxElements-1;
             }
         }
