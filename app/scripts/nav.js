@@ -159,9 +159,11 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     }
 }
 
-function SimpleListMenu(menuId, selected, maxElements) {
-    var list = document.getElementById(menuId);
-    var current = selected;
+//function SimpleListMenu(menuId, selected, maxElements) {
+function SimpleListMenu(maxElements) {
+    //var list = document.getElementById(menuId);
+    //var current = selected;
+    var list, current;
     var i = 0;
 
     maxElements = maxElements || -1;
@@ -172,13 +174,32 @@ function SimpleListMenu(menuId, selected, maxElements) {
         DOM.addClass(current, 'active');
     }
 
+    this.init = function(menu) {
+        list = menu;
+
+        if (!current) {
+            var firstElement = DOM.getFirstElement(list);
+            if (firstElement) {
+                setCurrentElement(firstElement);
+            }
+        }
+        else {
+            setCurrentElement(DOM.getNthElement(list, i));
+        }
+    };
     this.reset = function () {
         DOM.removeClass(current, 'active');
     };
+
+
     this.current = function () {
         return current;
     };
     this.prev = function () {
+        if (!list) {
+            throw 'Navigation not initialized';
+        }
+
         var prev;
         if (current) {
             prev = DOM.getPreviousElement(current);
@@ -204,6 +225,10 @@ function SimpleListMenu(menuId, selected, maxElements) {
     };
 
     this.next = function() {
+        if (!list) {
+            throw 'Navigation not initialized';
+        }
+
         var next;
         if (current) {
             next = DOM.getNextElement(current);

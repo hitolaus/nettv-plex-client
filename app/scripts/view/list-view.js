@@ -14,7 +14,7 @@ function ListView(uri, returnView) {
     var mediaContainer;
     var mediaList;
 
-    var nav;
+    var nav = new SimpleListMenu(8);
 
     var backgroundLoader = new BackgroundLoader('list-bg1', 'list-bg2');
 
@@ -159,7 +159,7 @@ function ListView(uri, returnView) {
         }
 
         var selected = nav.current();
-        var idx = selected.getAttribute('data-index');
+        var idx = parseInt(selected.getAttribute('data-index'), 10);
         var media = mediaContainer.media[idx];
 
         var key = media.key;
@@ -234,20 +234,14 @@ function ListView(uri, returnView) {
                 item.innerHTML = builder.join(' ');
                 item.setAttribute('data-index', i);
 
-                if (i === 0) {
-                    DOM.addClass(item, 'active');
-                    selectedItem = item;
-                    selectedIdx = i;
-                }
-
                 scroller.appendChild(item);
             }
 
             menu.innerHTML = '';
             menu.appendChild(scroller);
 
+            nav.init(scroller);
 
-            nav = new SimpleListMenu('list-scroller', selectedItem, 8);
             document.getElementById('list-objects-count').innerHTML = n;
             buildDescription();
 

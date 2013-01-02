@@ -32,6 +32,27 @@ DOM.getFirstElement = function (elem) {
         }
     }
 };
+DOM.getNthElement = function (parent, i) {
+    if (!parent || i < 0) {
+        return null;
+    }
+    var elem = parent.firstChild;
+    while (true) {
+        if (!elem) {
+            return null;
+        }
+
+        if (i === 0) {
+            return elem;
+        }
+
+        elem = elem.nextSibling;
+
+        if (this.isElement(elem)) {
+          i--;
+        }
+    }
+};
 DOM.getPreviousElement = function (elem) {
     if (!elem) {
         return null;
