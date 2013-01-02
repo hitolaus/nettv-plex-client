@@ -80,7 +80,8 @@ function keydownHandler(e) {
         }
     }
     catch (err) {
-        console.log('FATAL:' + err.message);
+        console.log('FATAL:' + err);
+        throw err;
     }
 }
 
