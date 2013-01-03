@@ -8,6 +8,8 @@
  * @param {object} returnView  The view instance to return to when this view closes
  */
 function ListView(uri, returnView) {
+    var METADATA_LOADING_DELAY = 1000;
+
     var view = document.getElementById('list');
     var menu = document.getElementById('list-menu');
 
@@ -17,6 +19,8 @@ function ListView(uri, returnView) {
     var nav = new SimpleListMenu(8);
 
     var backgroundLoader = new BackgroundLoader('list-bg1', 'list-bg2');
+
+    var resourceLoadTimer;
 
     function show() {
         view.style.display = 'block';
@@ -39,6 +43,12 @@ function ListView(uri, returnView) {
             window.view.render();
         }
     }
+
+    function loadMetadata() {
+        clearTimeout(resourceLoadTimer);
+        resourceLoadTimer = setTimeout(buildDescription, METADATA_LOADING_DELAY);
+    }
+
     function buildDescription () {
         if (!nav.current()) {
             return;
@@ -147,13 +157,13 @@ function ListView(uri, returnView) {
     this.onUp = function () {
         if (nav) {
             nav.prev();
-            buildDescription();
+            loadMetadata();
         }
     };
     this.onDown = function () {
         if (nav) {
             nav.next();
-            buildDescription();
+            loadMetadata();
         }
     };
     this.onLeft = function () {
