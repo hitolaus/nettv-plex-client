@@ -32,6 +32,8 @@ function ListView(uri, returnView) {
         view.style.display = 'none';
     }
     function close () {
+        clearTimeout(resourceLoadTimer);
+
         if (!returnView) {
             window.view = new HomeView();
             window.view.reload();
@@ -174,6 +176,8 @@ function ListView(uri, returnView) {
         if (!nav) {
             return;
         }
+
+        clearTimeout(resourceLoadTimer);
 
         var selected = nav.current();
         var idx = parseInt(selected.getAttribute('data-index'), 10);
