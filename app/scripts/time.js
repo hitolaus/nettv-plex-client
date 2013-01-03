@@ -1,10 +1,10 @@
 function Time() {
     function pad(s) {
-    	s += "";
-    	if (s.length < 2) 
-    		s = "0" + s;
-	
-    	return s;
+        s += '';
+        if (s.length < 2) {
+            s = '0' + s;
+        }
+        return s;
     }
 
     this.format = function(t) {
@@ -28,6 +28,6 @@ function Time() {
 
         return hours + ':' + minutes + ' ' + ampm;
     };
-};
+}
 
 window.Time = new Time();

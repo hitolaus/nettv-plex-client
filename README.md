@@ -35,3 +35,16 @@ The following awesome projects are included in this distibution.
 The following assets are also used
 
 * Plex Mediastream Skin (https://github.com/elan/plex-mediastream)
+
+# Changelog
+
+### v0.6.0: 01/??-2013
+
+* (NEW) Context menu to set watched/unwatched
+* (NEW) Remembers position in list view
+* (FIXED) HTML encoding of media title in list view
+* (UPDATED) A bunch of minor UI updates/fixes
+
+### v0.5.0: 12/13-2012
+
+* Initial release
