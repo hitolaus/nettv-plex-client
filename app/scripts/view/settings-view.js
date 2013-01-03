@@ -49,7 +49,7 @@ function SettingsView(returnView) {
             return plexAPI.ping(address, function(valid) {
                 if (valid) {
                     Settings.setPMS(address);
-                    close();
+                    window.location.reload();
                 }
                 else {
                     document.getElementById('c1').focus();
