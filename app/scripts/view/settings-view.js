@@ -84,10 +84,11 @@ function SettingsView(returnView) {
                       '<input type="text" name="c3" id="c3" maxlength="3" />.' +
                       '<input type="text" name="c4" id="c4" maxlength="3" />';
 
+
         var heading = '<h1>Enter address of Plex Media Server</h1>';
         var error = '<p id="address-error"></p>';
 
-        settingsView.innerHTML = '<section id="address">' + heading + address + error + '</section>';
+        settingsView.innerHTML = '<div id="address">' + heading + address + error + '</div>';
 
         setTimeout(function() {
             document.getElementById('c1').focus();

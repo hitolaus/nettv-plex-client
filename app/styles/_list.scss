@@ -14,7 +14,8 @@
     top:0;
     width:1280px;
     height:55px;
-    background-color: rgba(0,0,0,0.9);
+    background-color: black;
+    opacity: 0.9;
     border-bottom: 1px solid #555354;
 }
 
@@ -24,7 +25,8 @@
     bottom:0;
     width:1280px;
     height:450px;
-    background-color: rgba(0,0,0,0.9);
+    background-color: black;
+    opacity: 0.9;
     border-top: 1px solid #555354;
 }
 
@@ -59,10 +61,8 @@
     margin: 0;
     width: 350px;
     font-size: 24px;
-    text-shadow: 1px 1px 5px black;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 #list-info .episode h2 {
     position: absolute;
@@ -74,7 +74,6 @@
     font-weight: normal;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow:ellipsis;
     color: $highlight-color;
 }
 #list-info .episode h2 span {
@@ -115,7 +114,6 @@
     margin: 0;
     width: 350px;
     font-size: 24px;
-    text-shadow: 1px 1px 5px black;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -159,7 +157,7 @@
 
 #list-menu li {
     color: #909090;
-    background-color: rgba(0,0,0,0.4);
+    background-color: black;
     padding: 10px 30px;
     margin: 2px 0;
     overflow: hidden;
@@ -172,16 +170,16 @@
 }
 #list-menu li.active span {
     color:white;
+    background-image: url('../images/UnwatchedcountFocused.png');
 }
 
 #list-menu li span {
     display: inline-block;
-    width: 50px;
+    width: 48px;
     text-align: center;
     float: right;
     color: #909090;
-    background: #666666;
-    border-radius: 5px;
+    background-image: url('../images/Unwatchedcount.png');
 }
 
 #list-menu li img {

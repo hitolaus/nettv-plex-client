@@ -114,7 +114,7 @@ $control-transition-time: 500ms;
 
 #progressbar-back {
     @include progressbar;
-    background: rgba(255,255,255,0.4);
+    background: #666666;
     width: 1200px;
     background-size: 100%;
     z-index:20;
