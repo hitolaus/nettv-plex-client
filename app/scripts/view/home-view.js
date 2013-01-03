@@ -312,8 +312,17 @@ function HomeView() {
         item.appendChild(document.createTextNode('Preferences'));
         list.appendChild(item);
 
+        if (n === 0) {
+            item.setAttribute('id','current');
+            activeHeight = list.offsetHeight;
+        }
+
         // 360 = mid height, move half the count of elements down
-        list.style.top = (360-(Math.floor(i/2)*activeHeight)+8)+'px';
+        var midElementIdx = Math.floor(i/2);
+        if (midElementIdx < 1) {
+            midElementIdx = 1;
+        }
+        list.style.top = (360-(midElementIdx*activeHeight)+8)+'px';
 
         backgroundLoader.load(activeBg);
         loadPreviewMenu(activeKey);
