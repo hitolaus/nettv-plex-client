@@ -43,16 +43,27 @@ function PlexAPI() {
 		return 'http://'+Settings.getPMS()+':32400/library/sections';
 	};
 
+    /**
+     * Ping an address to see if it is an valid Plex Media Server.
+     *
+     * @param address {string} the ip address of the PMS
+     * @param callback {function} function that called with the result. The callback takes
+     *                            a boolean param that indicate if the address was valid.
+     */
     this.ping = function(address, callback) {
-        var dummy = new Image();
-        dummy.onload = function () {
-            callback(true);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if ( xhr.status === 200 ) {
+                    callback(true);
+                }
+            }
         };
-        dummy.onerror = function () {
+        xhr.onerror = function() {
             callback(false);
         };
-        // TODO: is /:/resources/movie-fanart.jpg always okay?
-        dummy.src = 'http://'+address+':32400/:/resources/movie-fanart.jpg';
+        xhr.open('GET', 'http://'+address+':32400/library/sections', true);
+        xhr.send(null);
     };
 
     this.progress = function(key, time, state) {
