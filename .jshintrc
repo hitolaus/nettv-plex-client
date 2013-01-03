@@ -58,6 +58,9 @@
         "VK_BLUE",
         "VK_YELLOW",
         "unescape",
-        "escape"
+        "escape",
+        "describe",
+        "it",
+        "expect"
     ]
 }
