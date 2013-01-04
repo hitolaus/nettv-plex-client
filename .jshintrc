@@ -61,6 +61,7 @@
         "escape",
         "describe",
         "it",
-        "expect"
+        "expect",
+        "beforeEach"
     ]
 }

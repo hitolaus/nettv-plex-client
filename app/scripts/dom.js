@@ -90,14 +90,16 @@ DOM.getNextElement = function(elem) {
 
 DOM.hasClass = function(elem, className) {
     if (!elem) {
-        return null;
+        return false;
     }
-    return elem.className.indexOf(className) > -1;
+
+    var classes = elem.className.split(' ');
+    return classes.indexOf(className) > -1;
 };
 
 DOM.addClass = function(elem, className) {
     if (!elem) {
-        return null;
+        return;
     }
     if (!DOM.hasClass(elem,className)) {
         elem.className = [elem.className, className].join(' ');
@@ -106,7 +108,7 @@ DOM.addClass = function(elem, className) {
 
 DOM.removeClass = function(elem, className) {
     if (!elem) {
-        return null;
+        return;
     }
     if (DOM.hasClass(elem, className)) {
         var classes = elem.className.split(' ');
