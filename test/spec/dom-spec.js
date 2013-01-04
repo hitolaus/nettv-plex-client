@@ -14,6 +14,10 @@
             it('should return false if the class doesnt exists', function() {
                 expect(DOM.hasClass(elem, 'test-class2')).to.equal(false);
             });
+            it('should return false if the elem is undefined', function() {
+                var elem2;
+                expect(DOM.hasClass(elem2, 'test-class')).to.equal(false);
+            });
         });
         describe('#addClass()', function(){
             it('should add a new class and not delete the old ones', function() {
