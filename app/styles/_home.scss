@@ -91,10 +91,11 @@ $selected-poster-height: 150px;
     width: 5000px; /* FIXME: no-wrap hack */
 }
 @mixin selectedPoster {
-    margin:10px;
-    border-radius:5px;
-    border:5px solid $highlight-color;
     height:$selected-poster-height;
+    background-image: url('../images/PosterSelected.png');
+    background-repeat: no-repeat;
+    padding:5px;
+    margin: 10px;
 }
 #preview-menu li {
     float: left;

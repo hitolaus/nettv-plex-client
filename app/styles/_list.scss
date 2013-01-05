@@ -51,8 +51,6 @@
     position: absolute;
     top:75px;
     left:30px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px black;
 }
 #list-info .episode h1 {
     position: absolute;
@@ -95,16 +93,12 @@
     position: absolute;
     top:0;
     right:30px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px black;
 }
 
 #list-info .video img {
     position: absolute;
     top:0;
     right:30px;
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px black;
 }
 
 #list-info .video h1 {
@@ -116,7 +110,6 @@
     font-size: 24px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 #list-info .video h2 {
@@ -162,7 +155,6 @@
     margin: 2px 0;
     overflow: hidden;
     white-space:nowrap;
-    text-overflow: ellipsis;
 }
 #list-menu li.active {
     color: white;
