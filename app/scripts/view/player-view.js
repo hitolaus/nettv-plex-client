@@ -13,6 +13,9 @@ function PlayerView(uri, useViewOffset, returnView) {
     var CONTROLS_TIMEOUT = 5000;
     var PROGRESS_INTERVAL = 60000;
 
+    // Offset from the end of video where we regard it as watched
+    var WATCHED_OFFSET = 300000;
+
 	var scope = this;
 
     // Preload the element lookups
@@ -95,7 +98,25 @@ function PlayerView(uri, useViewOffset, returnView) {
                 break;
         }
 
-        plexAPI.progress(mediaRatingKey, video.playPosition, state);
+        var duration = video.playTime;
+        var position = video.playPosition;
+
+        if (duration === 0) {
+            // This happens when we are stopping a video
+            return;
+        }
+
+        if ((duration - position) < WATCHED_OFFSET) {
+            // Last 5 min. are regarded as watched
+            plexAPI.watched(mediaRatingKey);
+
+            // Stop any further progress reporting
+            clearInterval(plexProgressTimer);
+
+            return;
+        }
+
+        plexAPI.progress(mediaRatingKey, position, state);
     }
 
     function setMetaData(media) {
