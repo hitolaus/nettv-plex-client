@@ -8,6 +8,7 @@
  * @param {object} returnView  The view instance to return to when this view closes
  */
 function ListView(uri, returnView) {
+    var NO_OF_MENU_ELEMENTS = 8;
     var METADATA_LOADING_DELAY = 1000;
 
     var view = document.getElementById('list');
@@ -16,7 +17,7 @@ function ListView(uri, returnView) {
     var mediaContainer;
     var mediaList;
 
-    var nav = new SimpleListMenu(8);
+    var nav = new SimpleListMenu(NO_OF_MENU_ELEMENTS);
 
     var backgroundLoader = new BackgroundLoader('list-bg1', 'list-bg2');
 
@@ -156,6 +157,39 @@ function ListView(uri, returnView) {
         return container;
     }
 
+    function buildScroller(mediaList) {
+        var scroller = document.createElement('ul');
+        scroller.setAttribute('id', 'list-scroller');
+
+        var n = mediaList.length;
+        for (var i = 0; i < n; i++) {
+            var media = mediaList[i];
+
+            var offset = (media.viewOffset) ? media.viewOffset : 0;
+
+            var builder = [ media.title.encodeHTML() ];
+            if (media.unwatched > 0) {
+                builder.push('<span>'+media.unwatched+'</span>');
+            }
+
+            if (!media.container) {
+                if (media.viewOffset > 0) {
+                    builder.push('<img src="images/OverlayInProgress.png" alt="" />');
+                }
+                else if (!media.viewCount) {
+                    builder.push('<img src="images/OverlayUnwatched.png" alt="" />');
+                }
+            }
+
+            var item = document.createElement('li');
+            item.innerHTML = builder.join(' ');
+            item.setAttribute('data-index', i);
+
+            scroller.appendChild(item);
+        }
+        return scroller;
+    }
+
     this.onUp = function () {
         if (nav) {
             nav.prev();
@@ -223,47 +257,29 @@ function ListView(uri, returnView) {
             mediaContainer = container;
 
             var mediaList = container.media;
+            var mediaListCount = mediaList.length;
 
             backgroundLoader.load(container.art);
 
-            var scroller = document.createElement('ul');
-            scroller.setAttribute('id', 'list-scroller');
-
-            var selectedItem;
-            var selectedIdx;
-            var n = mediaList.length;
-            for (var i = 0; i < n; i++) {
-                var media = mediaList[i];
-
-                var offset = (media.viewOffset) ? media.viewOffset : 0;
-
-                var builder = [ media.title.encodeHTML() ];
-                if (media.unwatched > 0) {
-                    builder.push('<span>'+media.unwatched+'</span>');
-                }
-
-                if (!media.container) {
-                    if (media.viewOffset > 0) {
-                        builder.push('<img src="images/OverlayInProgress.png" alt="" />');
-                    }
-                    else if (!media.viewCount) {
-                        builder.push('<img src="images/OverlayUnwatched.png" alt="" />');
-                    }
-                }
-
-                var item = document.createElement('li');
-                item.innerHTML = builder.join(' ');
-                item.setAttribute('data-index', i);
-
-                scroller.appendChild(item);
-            }
+            var scroller = buildScroller(mediaList);
 
             menu.innerHTML = '';
             menu.appendChild(scroller);
 
             nav.init(scroller);
 
-            document.getElementById('list-objects-count').innerHTML = n;
+            // 400 is the scrollbar height. We hardcode it since offsetHeight causes reflow
+            var scrollbarHeight = Math.floor(400/(mediaListCount/NO_OF_MENU_ELEMENTS));
+
+            nav.onscroll = function (top) {
+                var scaledElems = 400/mediaListCount;
+                var menuMove = (-parseInt(top,10))/50*scaledElems;
+                document.getElementById('list-scrollbar-thumb').style.top = menuMove + 'px';
+            };
+
+            document.getElementById('list-scrollbar-thumb').style.height = scrollbarHeight + 'px';
+
+            document.getElementById('list-objects-count').innerHTML = mediaListCount;
             buildDescription();
 
             show();

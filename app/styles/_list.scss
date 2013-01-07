@@ -40,6 +40,23 @@
     overflow: hidden;
 }
 
+#list-scrollbar {
+    position:absolute;
+    left:610px;
+    top:28px;
+    width:5px;
+    height: 400px;
+    background-color: #555555;
+}
+
+#list-scrollbar-thumb {
+    position:absolute;
+    left:-2px;
+    top:0;
+    width: 9px;
+    background-color: #cccccc;
+}
+
 #list-info {
     position:absolute;
     left:600px;

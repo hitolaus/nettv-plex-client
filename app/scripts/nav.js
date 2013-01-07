@@ -197,6 +197,9 @@ function SimpleListMenu(maxElements) {
     this.current = function () {
         return current;
     };
+
+    this.onscroll = function(top) {};
+
     this.prev = function () {
         if (!list) {
             throw 'Navigation not initialized';
@@ -222,6 +225,8 @@ function SimpleListMenu(maxElements) {
                 top = (currentTop + current.offsetHeight + 2) + 'px';
                 list.style.top = top;
                 i = 0;
+
+                this.onscroll(top);
             }
         }
         setCurrentElement(prev);
@@ -252,6 +257,8 @@ function SimpleListMenu(maxElements) {
                 top = (currentTop - current.offsetHeight - 2) + 'px';
                 list.style.top = top;
                 i = maxElements-1;
+
+                this.onscroll(top);
             }
         }
         setCurrentElement(next);
