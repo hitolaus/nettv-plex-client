@@ -40,7 +40,7 @@ function Platform(browser) {
         }
 
         if (isWebkit()) {
-            elem.style.webkitTranstion = style + ' ' + time + ' ease';
+            elem.style.webkitTransition = style + ' ' + time + ' ease';
         }
     };
 
