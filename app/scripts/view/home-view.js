@@ -1,3 +1,10 @@
+/**
+ * The main home screen view.
+ *
+ * @author Jakob Hilarius, http://syscall.dk
+ *
+ * @constructor 
+ */
 function HomeView() {
     var PLACEHOLDER_IMAGE = 'images/PosterPlaceholder.png';
     var PRELOADED_IMAGES = 7;

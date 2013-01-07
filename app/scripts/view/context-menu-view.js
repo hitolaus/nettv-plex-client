@@ -85,7 +85,7 @@ function ContextMenuView(media, returnView) {
 
         var list = document.createElement('ul');
 
-        if (!media.viewCount || media.viewOffset) {
+        if (!media.viewCount || media.viewOffset) {
             var watched = document.createElement('li');
             watched.setAttribute('id', 'context-menu-watched');
 
@@ -101,7 +101,7 @@ function ContextMenuView(media, returnView) {
             list.appendChild(unwatched);
         }
 
-        if (media.viewOffset && media.canSeek()) {
+        if (media.viewOffset && platform.canSeek(media)) {
             var resume = document.createElement('li');
             resume.setAttribute('id', 'context-menu-resume');
 

@@ -193,7 +193,7 @@ function ListView(uri, returnView) {
         else {
             var offset = media.viewOffset;
 
-            if (offset > 0 && media.canSeek()) {
+            if (offset > 0 && platform.canSeek(media)) {
                 window.view = new ResumeView(plexAPI.getURL(key), offset, this);
             }
             else {

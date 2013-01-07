@@ -21,6 +21,7 @@
     "smarttabs": true,
     "predef": [
         "plexAPI",
+        "platform",
         "Time",
         "DOM",
         "HorizontalFixedScrollMenu",

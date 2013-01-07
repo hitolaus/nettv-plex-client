@@ -1,5 +1,9 @@
 /**
  * The player view.
+ * <p>
+ * The view also handles reporting progress information to Plex as well as marking the
+ * video as watched when a given amount has been viewed.
+ * </p>
  *
  * @author Jakob Hilarius, http://syscall.dk
  *
@@ -13,18 +17,18 @@ function PlayerView(uri, useViewOffset, returnView) {
     var CONTROLS_TIMEOUT = 5000;
     var PROGRESS_INTERVAL = 60000;
 
-    // Offset from the end of video where we regard it as watched
-    var WATCHED_OFFSET = 300000;
+    // The percentage of the files that has to be view before we regard it as watched
+    var WATCHED_PERCENTAGE = 90;
 
-	var scope = this;
+    var scope = this;
 
     // Preload the element lookups
     var player = document.getElementById('player');
-	var controls = document.getElementById('controls');
+    var controls = document.getElementById('controls');
     var status = document.getElementById('player-status-message');
 
     if (Settings.useAnim()) {
-        DOM.addClass(controls, 'controls-transition');
+        platform.addTransition(controls, '500ms', 'bottom');
     }
 
     var totalDuration = 0;
@@ -106,7 +110,11 @@ function PlayerView(uri, useViewOffset, returnView) {
             return;
         }
 
-        if ((duration - position) < WATCHED_OFFSET) {
+        var viewedPercentage = Math.floor((position/duration)*100);
+
+        if (viewedPercentage > WATCHED_PERCENTAGE) {
+            console.log('Reporting watched since we have viewed ' + viewedPercentage + '%');
+
             // Last 5 min. are regarded as watched
             plexAPI.watched(mediaRatingKey);
 
@@ -224,7 +232,7 @@ function PlayerView(uri, useViewOffset, returnView) {
      * Skips x seconds in the video stream. If the amount to skip is outside the video
      * bounds the request is ignored.
      *
-     * @param {Number} time the time to skip in seconds
+     * @param {number} time the time to skip in seconds
      */
     function doSkip(time) {
         if (loading) {
@@ -241,6 +249,26 @@ function PlayerView(uri, useViewOffset, returnView) {
         }
     }
 
+    /**
+     * Increase the play speed.
+     * <p>
+     * NOTE: Is currently not supported by NetTV.
+     * </p>
+     *
+     * @param {number} direction if <code>1</code> seek forward if <code>-1</code> seek backwards
+     */
+    function doSeek(direction) {
+        if (loading) {
+            return;
+        }
+
+        showControls('');
+
+
+        // TODO: 4 is the constant test speed. If it works use incremental speed
+        video.play(direction*4);
+    }
+
 	this.onUp = function () {
         hideControls();
 	};
@@ -251,13 +279,13 @@ function PlayerView(uri, useViewOffset, returnView) {
         doSkip(-60.0);
 	};
     this.onRew = function () {
-        doSkip(300.0);
+        doSkip(-300.0);
     };
 	this.onRight = function () {
         doSkip(60.0);
 	};
     this.onFF = function () {
-        doSkip(-300.0);
+        doSkip(300.0);
     };
 	this.onEnter = function () {
         togglePause();
@@ -276,6 +304,8 @@ function PlayerView(uri, useViewOffset, returnView) {
     };
 	this.render = function (container) {
 		var media = container.media[0];
+
+        console.log('Playing: codec: ' + media.stream.video.codec + '/' + media.stream.audio.codec + ' profile: ' + media.stream.video.profile + ' level: ' + media.stream.video.level);
 
         showPlayer();
 

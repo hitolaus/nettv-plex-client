@@ -2,8 +2,10 @@
  * Parses a video container from Plex and returns if a simple/flat video
  * model.
  *
- * @class
  * @author Jakob Hilarius
+ *
+ * @constructor
+ * @param {object} elem The video element returned from Plex. This is NOT including the media container.
  */
 function Video(elem) {
     /**
@@ -30,6 +32,35 @@ function Video(elem) {
         }
 
         return null;
+    }
+
+    /**
+     * Returns the media information such as codec, bitrate, resolution etc.
+     *
+     * @param {object} stream the library stream that contains the information.
+     * @returns {object} an object containing the available media information.
+     */
+    function getVideoStreamInformation(stream) {
+        return {
+            codec: stream.getAttribute('codec'),
+            bitrate: stream.getAttribute('bitrate'),
+            framerate: stream.getAttribute('frameRate'),
+            profile: stream.getAttribute('profile'),
+            level: stream.getAttribute('level')
+        };
+    }
+
+    /**
+     * Returns the media information such as codec, bitrate, resolution etc.
+     *
+     * @param {object} stream the library stream that contains the information.
+     * @returns {object} an object containing the available media information.
+     */
+    function getAudioStreamInformation(stream) {
+        return {
+            codec: stream.getAttribute('codec'),
+            bitrate: stream.getAttribute('bitrate')
+        };
     }
 
 	var key = elem.getAttribute('key');
@@ -60,10 +91,14 @@ function Video(elem) {
     var grandparentTitle = elem.getAttribute('grandparentTitle');
     var grandparentThumb = elem.getAttribute('grandparentThumb');
 
+    var resolution;
+
 	var url = '';
     var mimeType = null;
 	var subtitles = null;
 	var files = [];
+
+    var streamInformation = {};
 
     var children = elem.childNodes;
     var mediaCount = children.length;
@@ -74,6 +109,7 @@ function Video(elem) {
         }
 
         mimeType = media.getAttribute('container');
+        resolution = media.getAttribute('videoResolution');
 
 		var parts = media.getElementsByTagName('Part');
         var partCount = parts.length;
@@ -93,12 +129,21 @@ function Video(elem) {
 
 				var streamKey = stream.getAttribute('key');
 				var streamCodec = stream.getAttribute('codec');
+                var streamType = stream.getAttribute('streamType');
 				var isStreamSelected = false;
 
 				var streamSelectedAttrNode = stream.attributes.getNamedItem('selected');
 				if (streamSelectedAttrNode !== null) {
 					isStreamSelected = streamSelectedAttrNode.nodeValue === '1';
 				}
+
+                if (streamType === '1') {
+                    streamInformation.video = getVideoStreamInformation(stream);
+                }
+
+                if (streamType === '2') {
+                    streamInformation.audio = getAudioStreamInformation(stream);
+                }
 
 				if (isStreamSelected) {
 					if (streamCodec === 'srt') {
@@ -130,14 +175,6 @@ function Video(elem) {
         duration: duration,
         viewCount: viewCount,
         viewOffset: viewOffset,
-
-        /**
-         * Returns whether or not the platform can seek in this media file.
-         *
-         * @returns <code>true</code> if the player can seek in the media type
-         */
-        canSeek: function() {
-            return true;
-        }
+        stream: streamInformation
 	};
 }
