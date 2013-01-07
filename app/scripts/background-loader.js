@@ -15,6 +15,12 @@ function BackgroundLoader(backgroundId1, backgroundId2) {
     var bg1 = document.getElementById(backgroundId1);
     var bg2 = document.getElementById(backgroundId2);
 
+    if (Settings.useAnim()) {
+        // Smooth the background change using transitions
+        platform.addTransition(bg1, '100ms', 'opacity');
+        platform.addTransition(bg2, '100ms', 'opacity');
+    }
+
     /**
      * Set the new background if it has changed. It sets the background image on the
      * non-visible image element and changes opacity to allow a CSS transition.

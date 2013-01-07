@@ -19,10 +19,6 @@ html, body {
     top: 0;
     width: 1280px;
     height: 720px;
-    transition: opacity $bg-transition-time ease-in-out;
-    -webkit-transition: opacity $bg-transition-time ease-in-out;
-    -moz-transition: opacity $bg-transition-time ease-in-out;
-    -o-transition: opacity $bg-transition-time ease-in-out;
 }
 
 li {
