@@ -266,16 +266,19 @@ function ListView(uri, returnView) {
             menu.innerHTML = '';
             menu.appendChild(scroller);
 
-            nav.init(scroller);
-
+            var chunks = mediaListCount/NO_OF_MENU_ELEMENTS;
+            if (chunks < 1) {
+                chunks = 1;
+            }
             // 400 is the scrollbar height. We hardcode it since offsetHeight causes reflow
-            var scrollbarHeight = Math.floor(400/(mediaListCount/NO_OF_MENU_ELEMENTS));
+            var scrollbarHeight = Math.floor(400/chunks);
 
             nav.onscroll = function (top) {
                 var scaledElems = 400/mediaListCount;
                 var menuMove = (-parseInt(top,10))/50*scaledElems;
                 document.getElementById('list-scrollbar-thumb').style.top = menuMove + 'px';
             };
+            nav.init(scroller);
 
             document.getElementById('list-scrollbar-thumb').style.height = scrollbarHeight + 'px';
 

@@ -180,6 +180,8 @@ function SimpleListMenu(maxElements) {
             if (firstElement) {
                 setCurrentElement(firstElement);
             }
+
+            this.onscroll(0);
         }
         else {
             var dummy = DOM.getFirstElement(list);
@@ -187,6 +189,8 @@ function SimpleListMenu(maxElements) {
 
             setCurrentElement(DOM.getNthElement(list, i+offset));
             list.style.top = top;
+
+            this.onscroll(top);
         }
     };
     this.reset = function () {
