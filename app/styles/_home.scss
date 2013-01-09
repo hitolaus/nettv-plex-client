@@ -101,19 +101,14 @@ $selected-poster-height: 150px;
     float: left;
     color: black;
     margin: 15px; /* 10px plus 5 px border */
-    box-shadow: 2px 2px 10px black;
     height:$poster-height;
 }
 #preview-menu li img {
     width: $poster-width;
     height: $poster-height;
-    border-radius: 5px;
 }
 #preview-menu li:hover {
     @include selectedPoster;
-}
-#preview-menu li:hover img {
-    border-radius:0;
 }
 
 #preview-menu h1 {
@@ -174,13 +169,7 @@ span img {
 #recentlyadded-menu .current-scroller #current-recentlyadded {
     @include selectedPoster;
 }
-#recentlyadded-menu .current-scroller #current-recentlyadded img {
-    border-radius:0;
-}
 #ondeck-menu .current-scroller #current-ondeck {
     @include selectedPoster;
-}
-#ondeck-menu .current-scroller #current-ondeck  img {
-    border-radius:0;
 }
 

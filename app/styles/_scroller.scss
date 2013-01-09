@@ -1,5 +1,3 @@
-$scroller-transition-time:100ms;
-
 @mixin scroller-base {
     position:absolute;
     top:0;
@@ -11,22 +9,8 @@ $scroller-transition-time:100ms;
     @include scroller-base;
 }
 
-.vertical-transtion {
-    transition: top $scroller-transition-time ease;
-    -moz-transition: top $scroller-transition-time ease;
-    -webkit-transition: top $scroller-transition-time ease;
-    -o-transition: top $scroller-transition-time ease;
-}
-
 @mixin horizontal-scroller {
     @include scroller-base;
-}
-
-.horizontal-transition {
-    transition: left $scroller-transition-time ease;
-    -moz-transition: left $scroller-transition-time ease;
-    -webkit-transition: left $scroller-transition-time ease;
-    -o-transition: left $scroller-transition-time ease;
 }
 
 #scroller {

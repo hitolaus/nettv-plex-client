@@ -7,7 +7,7 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     var current = document.getElementById(activeId);
 
     if (Settings.useAnim()) {
-        DOM.addClass(menu, 'vertical-transtion');
+        platform.addTransition(menu, '200ms', 'top');
     }
 
     var incr = 0;
@@ -81,7 +81,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     var current = document.getElementById(activeId);
 
     if (Settings.useAnim()) {
-        DOM.addClass(menu, 'horizontal-transition');
+        platform.addTransition(menu, '200ms', 'left');
     }
 
     var incr = 0;
