@@ -101,7 +101,8 @@ $selected-poster-height: 150px;
     position: relative;
     float: left;
     color: black;
-    margin: 15px; /* 10px plus 5 px border */
+    margin: 10px; /* 10px plus 5 px border */
+    padding: 5px;
     height:$poster-height;
     width: $poster-width;
 }
