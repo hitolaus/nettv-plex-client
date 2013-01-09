@@ -98,12 +98,22 @@ $selected-poster-height: 150px;
     margin: 10px;
 }
 #preview-menu li {
+    position: relative;
     float: left;
     color: black;
     margin: 15px; /* 10px plus 5 px border */
     height:$poster-height;
+    width: $poster-width;
+}
+#preview-menu li .overlay {
+    position: absolute;
+    height:$poster-height;
+    width:$poster-width;
+    background-image: url('../images/PosterCornerOverlay.png');
+    background-repeat: no-repeat;
 }
 #preview-menu li img {
+    position: absolute;
     width: $poster-width;
     height: $poster-height;
 }
@@ -173,3 +183,9 @@ span img {
     @include selectedPoster;
 }
 
+#recentlyadded-menu .current-scroller #current-recentlyadded .overlay {
+    background-image: url('../images/PosterCornerOverlaySelected.png');
+}
+#ondeck-menu .current-scroller #current-ondeck .overlay {
+   background-image: url('../images/PosterCornerOverlaySelected.png');
+}

@@ -3,7 +3,7 @@
  *
  * @author Jakob Hilarius, http://syscall.dk
  *
- * @constructor 
+ * @constructor
  */
 function HomeView() {
     var PLACEHOLDER_IMAGE = 'images/PosterPlaceholder.png';
@@ -256,6 +256,9 @@ function HomeView() {
 
             var scaledThumb = plexAPI.getScaledImageURL(plexAPI.getURL(thumb), 110, 150);
 
+            var overlay = document.createElement('div');
+            DOM.addClass(overlay, 'overlay');
+
             var img = new Image();
             img.onerror = posterErrorHandler;
             if (i < PRELOADED_IMAGES) {
@@ -267,6 +270,7 @@ function HomeView() {
             }
 
             item.appendChild(img);
+            item.appendChild(overlay);
             list.appendChild(item);
 
             if (i === 0) {
