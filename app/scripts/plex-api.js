@@ -92,6 +92,17 @@ function PlexAPI() {
         xhr.send(null);
     };
 
+    /**
+     * Use the Plex Media Server to scale the a image.
+     * <p>
+     * The PMS is quick to scale the image and it allows for less network traffic and
+     * due to the smaller footprint more image can be cached on the client.
+     * </p>
+     *
+     * @param {string} the absolute URL of the image
+     * @param {int} new image width
+     * @param {int} new image height
+     */
     this.getScaledImageURL = function(url, width, height) {
         return 'http://'+Settings.getPMS()+':32400/photo/:/transcode?width='+width+'&height='+height+'&url='+encodeURIComponent(url);
     };
@@ -118,7 +129,7 @@ function PlexAPI() {
         };
         xhr.open('POST',url);
         xhr.setRequestHeader('Authorization', auth);
-        xhr.setRequestHeader('X-Plex-Client-Identifier', 'nettv-plex-client'); // TODO: should be device unique
+        xhr.setRequestHeader('X-Plex-Client-Identifier', Settings.getDeviceId());
         xhr.setRequestHeader('X-Plex-Platform', 'NetTV');
         //xhr.setRequestHeader('X-Plex-Platform-Version', '');
         xhr.setRequestHeader('X-Plex-Provides', 'player');
@@ -132,7 +143,7 @@ function PlexAPI() {
      * List the available servers.
      *
      * @param {string} token the authentication token
-     * @param {function} callback the callback function that is called with the list of servers
+     * @param {function} callback the callback function that is called with the array of servers
      */
     this.servers = function (token, callback) {
 
@@ -142,13 +153,12 @@ function PlexAPI() {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    console.log(xhr.responseXML);
+                    callback(new Servers(xhr.responseXML).servers);
                 }
             }
         };
-        xhr.open('POST',url);
-
-        xhr.setRequestHeader('X-Plex-Client-Identifier', 'nettv-plex-client'); // TODO: should be device unique
+        xhr.open('GET',url);
+        xhr.setRequestHeader('X-Plex-Client-Identifier', Settings.getDeviceId());
         xhr.send(null);
     };
 }

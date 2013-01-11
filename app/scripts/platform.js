@@ -4,6 +4,7 @@
  * @author Jakob Hilarius, http://syscall.dk
  *
  * @contructor
+ * @param {object} browser the 'window.navigator' object
  */
 function Platform(browser) {
     var ua = browser.userAgent;

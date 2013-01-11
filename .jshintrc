@@ -41,6 +41,8 @@
         "MediaContainer",
         "Video",
         "Directory",
+        "Server",
+        "Servers",
         "VK_UP",
         "VK_DOWN",
         "VK_LEFT",

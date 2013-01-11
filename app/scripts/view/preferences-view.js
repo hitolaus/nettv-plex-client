@@ -34,7 +34,7 @@ function PreferencesView() {
         document.getElementById('pref-anim-enabled').innerHTML = (Settings.useAnim()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
         document.getElementById('pref-debug-enabled').innerHTML = (Settings.getDebug()) ? ACTIVE_RADIO_BTN : INACTIVE_RADIO_BTN;
 
-        document.getElementById('pref-debug-uuid').innerHTML = ' (' + Settings.getDebugUUID() + ')';
+        document.getElementById('pref-debug-uuid').innerHTML = ' (' + Settings.getDeviceId() + ')';
     }
 
     this.onEnter = function () {

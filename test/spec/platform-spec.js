@@ -34,7 +34,7 @@
 
                 webkitPlatform.addTransition(elem, '500ms', 'bottom');
 
-                expect(elem.style.webkitTranstion).to.equal('bottom 500ms ease');
+                expect(elem.style.webkitTransition).to.equal('bottom 500ms ease');
             });
         });
     });
