@@ -202,7 +202,7 @@ function HomeView() {
             });
 
             plexAPI.browse(plexAPI.recentlyAdded(key), function(container) {
-                buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media);
+                buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media, true);
                 recentlyAddedMenu.reload();
                 dirtyRecentlyAddedThumbs = true;
             });
@@ -221,7 +221,9 @@ function HomeView() {
     /**
      * FIXME: List is being modified directly on the DOM. Make a temp list and only one append to the DOM
      */
-    function buildVideoList(id, activeId, media) {
+    function buildVideoList(id, activeId, media, excludeWatched) {
+        excludeWatched = excludeWatched || false;
+
         var list = document.getElementById(id);
 
         // clear old content
@@ -231,8 +233,15 @@ function HomeView() {
 
         console.log('Building menu ('+id+') with ' + n + ' elements');
 
+        var displayedPosterIndex = 0;
         for (var i = 0; i < n; i++) {
             var video = media[i];
+
+            if (excludeWatched && video.viewCount > 0) {
+                continue;
+            }
+
+            displayedPosterIndex++;
 
             var title = video.title;
             if (video.grandparentTitle) {
@@ -261,7 +270,7 @@ function HomeView() {
 
             var img = new Image();
             img.onerror = posterErrorHandler;
-            if (i < PRELOADED_IMAGES) {
+            if (displayedPosterIndex < PRELOADED_IMAGES) {
                 img.src = scaledThumb;
             }
             else {
