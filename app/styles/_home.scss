@@ -133,7 +133,9 @@ $selected-poster-height: 150px;
 #preview-menu li:hover {
     @include selectedPoster;
 }
-
+#preview-menu li:hover .overlay {
+    background-image: url('../images/PosterCornerOverlaySelected.png');
+}
 #preview-menu h1 {
     position:absolute;
     width:400px;
