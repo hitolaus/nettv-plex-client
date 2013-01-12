@@ -265,6 +265,13 @@ function HomeView() {
 
             var scaledThumb = plexAPI.getScaledImageURL(plexAPI.getURL(thumb), 110, 150);
 
+            var info;
+            if (video.season && video.episode) {
+                info = document.createElement('div');
+                DOM.addClass(info, 'info');
+                info.innerHTML = 'S' + video.season + ' E' + video.episode;
+            }
+
             var overlay = document.createElement('div');
             DOM.addClass(overlay, 'overlay');
 
@@ -279,6 +286,9 @@ function HomeView() {
             }
 
             item.appendChild(img);
+            if (info) {
+                item.appendChild(info);
+            }
             item.appendChild(overlay);
             list.appendChild(item);
 

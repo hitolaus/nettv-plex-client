@@ -106,6 +106,18 @@ $selected-poster-height: 150px;
     height:$poster-height;
     width: $poster-width;
 }
+#preview-menu li .info {
+    position: absolute;
+    background-color: #333333;
+    width:$poster-width;
+    height:28px;
+    line-height: 28px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    bottom: 0;
+    margin-bottom: 5px;
+}
 #preview-menu li .overlay {
     position: absolute;
     height:$poster-height;
