@@ -31,7 +31,8 @@ The application is tested on the following devices
 The following awesome projects are included in this distibution.
 
 * PopcornJS (http://popcornjs.org)
+* jssha (http://caligatio.github.com/jsSHA/)
 
-The following assets are also used
+The following beautiful assets are also used
 
 * Plex Mediastream Skin (https://github.com/elan/plex-mediastream)

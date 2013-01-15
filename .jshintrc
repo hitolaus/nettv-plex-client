@@ -20,6 +20,7 @@
     "trailing": true,
     "smarttabs": true,
     "predef": [
+        "jsSHA",
         "Base64",
         "plexAPI",
         "platform",
