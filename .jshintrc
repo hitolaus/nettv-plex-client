@@ -13,7 +13,7 @@
     "newcap": true,
     "noarg": true,
     "quotmark": "single",
-    "regexp": true,
+    "regexp": false, /* . (dot) is ok to use in regular expression */
     "undef": true,
     "unused": false, /* This is needed for the 'class' definition. use 'export: HomeView' when jshint is updated */
     "strict": false,
@@ -22,6 +22,7 @@
     "predef": [
         "jsSHA",
         "Base64",
+        "TranscoderHLS",
         "plexAPI",
         "platform",
         "Time",

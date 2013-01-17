@@ -1,3 +1,10 @@
+/**
+ * Wrapper for Plex API functions.
+ *
+ * Jakob Hilarius, http://syscall.dk
+ *
+ * @constructor
+ */
 function PlexAPI() {
     'use strict';
 
@@ -162,43 +169,14 @@ function PlexAPI() {
         xhr.send(null);
     };
 
-    function getAuthParameters(url) {
-        var publicKey = 'KQMIY6GATPC63AIMC4R2';
-        var privateKey = 'k3U6GLkZOoNIoSgjDshPErvqMIFdE0xMTx8kgsrhnC0=';
-
-        var time = Math.round(new Date().getTime() / 1000);
-
-        var msg = url+'@'+time;
-
-        var sha  = new jsSHA(msg, 'TEXT');
-        var hmac = sha.getHMAC(privateKey, 'B64', 'SHA-256', 'B64');
-
-        return '&X-Plex-Access-Key=' + encodeURIComponent(publicKey) + '&X-Plex-Access-Time='+ time + '&X-Plex-Access-Code=' + encodeURIComponent(hmac);
-    }
-
     /**
-     * Start transcoding of a video stream
+     * Start transcoding of a video stream using the default transcoder.
      *
-     * @param {object} the video object to transcode
-     * @param {number} view offset
+     * @param {object} video the video object to transcode
+     * @param {function} callback the callback function
      */
-    this.transcode = function (video, offset) {
-        offset = offset || 0;
-
-        var quality = 5;
-
-        var url = '/video/:/transcode/segmented/start.m3u8?';
-        url += 'identifier=com.plexapp.plugins.library';
-        // Maybe use 127.0.0.1:32400
-        url += '&url='+encodeURIComponent('http://'+Settings.getPMS()+':32400' + video.url);
-        url += '&quality='+quality;
-        url += '&ratingKey=' + video.ratingKey;
-        url += '&3g=0';
-        //url += '&httpCookies=&userAgent=';
-        url += '&offset='+offset;
-        url += getAuthParameters(url);
-
-        return 'http://'+Settings.getPMS()+':32400' + url;
+    this.transcode = function (video, callback) {
+        new TranscoderHLS().transcode(video, callback);
     };
 }
 

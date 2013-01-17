@@ -269,6 +269,27 @@ function PlayerView(uri, useViewOffset, returnView) {
         video.play(direction*4);
     }
 
+    /**
+     * Initializes playback.
+     *
+     * @param {string} url The url to start playing
+     * @param {string} mimeType The mime type of the video content
+     */
+    function doPlayback(url, mimeType) {
+        video.data = url;
+        if (mimeType) {
+            video.type = mimeType;
+        }
+        video.play(1);
+
+
+        // Update process bar every second
+        processTimer = setInterval(updateElapsedTime, 1000);
+
+        // Report progress to Plex
+        plexProgressTimer = setInterval(reportPlexProgress, PROGRESS_INTERVAL);
+    }
+
 	this.onUp = function () {
         hideControls();
 	};
@@ -317,28 +338,32 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         setMetaData(media);
 
-        var url = plexAPI.getURL(media.url);
+        var url;
+        var mimeType;
+        if (media.mimeType === 'video/x-matroska') {
+            plexAPI.transcode(media, function(m3u8, sessionId) {
+                url = m3u8;
+                mimeType = 'application/vnd.apple.mpegurl';
 
-        video.data = url;
-        if (media.mimeType) {
-            video.type = media.mimeType;
+                console.log('Transcoding: ' + url);
+
+                doPlayback(url, mimeType);
+            });
         }
-        video.play(1);
+        else {
+            url = plexAPI.getURL(media.url);
+            mimeType = media.mimeType;
 
+            doPlayback(url, mimeType);
+        }
 
-        // Update process bar every second
-        processTimer = setInterval(updateElapsedTime, 1000);
-
-        // Report progress to Plex
-        plexProgressTimer = setInterval(reportPlexProgress, PROGRESS_INTERVAL);
-
-		// Load subtitles
-		if (media.subtitles) {
+        // Load subtitles
+        if (media.subtitles) {
             console.log('Loading subtitle ' + media.subtitles + '...');
-			var p =  new Popcorn( '#video' )
+            var p =  new Popcorn( '#video' )
                         .parseSRT(plexAPI.getURL(media.subtitles))
                         .play();
-		}
+        }
 	};
 
     loading = true;
