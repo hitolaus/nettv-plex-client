@@ -23,6 +23,7 @@
         "jsSHA",
         "Base64",
         "TranscoderHLS",
+        "TranscoderGeneric",
         "plexAPI",
         "platform",
         "Time",

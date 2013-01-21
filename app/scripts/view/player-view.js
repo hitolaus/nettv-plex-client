@@ -340,10 +340,12 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         var url;
         var mimeType;
-        if (media.mimeType === 'video/x-matroska') {
+        if (!platform.isSupported(media)) {
             plexAPI.transcode(media, function(m3u8, sessionId) {
                 url = m3u8;
-                mimeType = 'application/vnd.apple.mpegurl';
+                //mimeType = 'application/vnd.apple.mpegurl';
+                //mimeType = 'application/x-mpegURL';
+                mimeType = 'video/mpeg';
 
                 console.log('Transcoding: ' + url);
 

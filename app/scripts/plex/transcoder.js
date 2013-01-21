@@ -30,7 +30,7 @@ function TranscoderHLS() {
      *   <li>quality: The quality of the stream. Legal values are 5-15. Default: 8</li>
      * </ul>
      *
-     * @param {object} the video object to transcode
+     * @param {object} video the video object to transcode
      * @param {function} callback called on success with absolute playlist path and session id
      * @param {object} [options] The options for the transcoder
      */
@@ -42,7 +42,7 @@ function TranscoderHLS() {
         var quality = options.quality || 8;
 
         var url = '/video/:/transcode/segmented/start.m3u8?';
-        url += 'identifier=com.plexapp.plugins.library';
+        url += 'identifier='+encodeURIComponent('com.plexapp.plugins.library');
         url += '&url='+encodeURIComponent('http://127.0.0.1:32400' + video.url);
         url += '&quality='+quality;
         url += '&ratingKey=' + video.ratingKey;
@@ -73,6 +73,21 @@ function TranscoderHLS() {
         };
         xhr.send();
     };
+
+
+    /**
+     * Stop a transcoding session.
+     *
+     * @param {string} sessionId The session to stop
+     */
+    this.stop = function (sessionId) {
+
+        var url = '/video/:/transcode/segmented/stop?session=' + sessionId;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','http://'+Settings.getPMS()+':32400' + url);
+        xhr.send();
+    };
 }
 
 /**
@@ -84,4 +99,33 @@ function TranscoderHLS() {
  */
 function TranscoderGeneric() {
     // See how DLNA clients uses the generic transcoder
+
+    this.transcode = function (video, callback, options) {
+        options = options || {};
+
+        var offset  = options.offset  || 0;
+
+        var quality = options.quality || 8;
+        var format = options.format || 'mpegts';
+        var audioCodec = options.audioCodec || 'libmp3lame'; // AAC: libfaac, MP3: libmp3lame
+        var audioBitrate = options.audioBitrate || 128;
+        var videoCodec = options.videoCodec || 'libx264'; // H.264: libx264
+        var videoBitrate = options.videoBitrate || '4000';
+
+        var url = '/video/:/transcode/generic.'+format+'?';
+        url += 'identifier='+encodeURIComponent('com.plexapp.plugins.library');
+        url += 'format='+format;
+        //url += '&vpre=video-embedded-h264&apre=audio-embedded-aac';
+        url += '&videoCodec='+videoCodec+'&videoBitrate='+videoBitrate;
+        url += '&audioCodec='+audioCodec+'&audioBitrate='+audioBitrate;
+        url += '&size=1280x720';
+        url += '&width=1280&height=720';
+        url += '&quality='+quality;
+        url += '&fakeContentLength=2000000000';
+        url += '&offset='+offset;
+        url += '&url=' + encodeURIComponent('http://'+Settings.getPMS()+':32400' + video.url);
+
+        callback('http://'+Settings.getPMS()+':32400' + url);
+    };
 }
+

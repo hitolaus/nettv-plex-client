@@ -176,7 +176,8 @@ function PlexAPI() {
      * @param {function} callback the callback function
      */
     this.transcode = function (video, callback) {
-        new TranscoderHLS().transcode(video, callback);
+        //new TranscoderHLS().transcode(video, callback);
+        new TranscoderGeneric().transcode(video, callback);
     };
 }
 

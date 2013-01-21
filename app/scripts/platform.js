@@ -51,7 +51,9 @@ function Platform(browser) {
      *
      * @returns <code>true</code> if the player can play the media
      */
-    this.isSupported = function(media) { return true; };
+    this.isSupported = function(media) {
+        return media.mimeType !== 'video/x-matroska';
+    };
 
     /**
      * Returns whether or not the platform can seek in the media file.
