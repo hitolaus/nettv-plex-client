@@ -345,7 +345,7 @@ function PlayerView(uri, useViewOffset, returnView) {
                 url = m3u8;
                 //mimeType = 'application/vnd.apple.mpegurl';
                 //mimeType = 'application/x-mpegURL';
-                mimeType = 'video/mpeg';
+                mimeType = 'video/mp4';
 
                 console.log('Transcoding: ' + url);
 

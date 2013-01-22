@@ -27,7 +27,7 @@ function TranscoderHLS() {
      * Supported options for the transcoder are:
      * <ul>
      *   <li>offset: Begining streaming offset. Default: 0</li>
-     *   <li>quality: The quality of the stream. Legal values are 5-15. Default: 8</li>
+     *   <li>quality: The quality of the stream. Legal values are 1-15. Default: 8</li>
      * </ul>
      *
      * @param {object} video the video object to transcode
@@ -106,15 +106,15 @@ function TranscoderGeneric() {
         var offset  = options.offset  || 0;
 
         var quality = options.quality || 8;
-        var format = options.format || 'mpegts';
-        var audioCodec = options.audioCodec || 'libmp3lame'; // AAC: libfaac, MP3: libmp3lame
+        var format = options.format || 'mp4';
+        var audioCodec = options.audioCodec || 'libfaac'; // AAC: libfaac, MP3: libmp3lame
         var audioBitrate = options.audioBitrate || 128;
         var videoCodec = options.videoCodec || 'libx264'; // H.264: libx264
-        var videoBitrate = options.videoBitrate || '4000';
+        var videoBitrate = options.videoBitrate || 4000;
 
         var url = '/video/:/transcode/generic.'+format+'?';
         url += 'identifier='+encodeURIComponent('com.plexapp.plugins.library');
-        url += 'format='+format;
+        url += '&format='+format;
         //url += '&vpre=video-embedded-h264&apre=audio-embedded-aac';
         url += '&videoCodec='+videoCodec+'&videoBitrate='+videoBitrate;
         url += '&audioCodec='+audioCodec+'&audioBitrate='+audioBitrate;
