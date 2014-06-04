@@ -352,7 +352,8 @@ function HomeView() {
         if (midElementIdx < 1) {
             midElementIdx = 1;
         }
-        list.style.top = (360-(midElementIdx*activeHeight)+8)+'px';
+
+        list.style.top = (360-activeHeight+8)+'px';
 
         backgroundLoader.load(activeBg);
         loadPreviewMenu(activeKey);
