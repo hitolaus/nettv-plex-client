@@ -55,7 +55,7 @@ function Settings() {
     this.reset = function() {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
-          deleteCookie(cookies[i].split('=')[0]);
+            deleteCookie(cookies[i].split('=')[0]);
         }
     };
 

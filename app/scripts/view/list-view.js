@@ -15,7 +15,6 @@ function ListView(uri, returnView) {
     var menu = document.getElementById('list-menu');
 
     var mediaContainer;
-    var mediaList;
 
     var nav = new SimpleListMenu(NO_OF_MENU_ELEMENTS);
 

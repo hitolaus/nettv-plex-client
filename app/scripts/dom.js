@@ -11,7 +11,7 @@ DOM.getParent = function(elem) {
             return null;
         }
         if (!this.isElement(parent)) {
-          parent = parent.parentNode;
+            parent = parent.parentNode;
         }
         else {
             return parent;
@@ -25,7 +25,7 @@ DOM.getFirstElement = function (elem) {
             return null;
         }
         if (!this.isElement(first)) {
-          first = first.nextSibling;
+            first = first.nextSibling;
         }
         else {
             return first;
@@ -49,7 +49,7 @@ DOM.getNthElement = function (parent, i) {
         elem = elem.nextSibling;
 
         if (this.isElement(elem)) {
-          i--;
+            i--;
         }
     }
 };
@@ -63,7 +63,7 @@ DOM.getPreviousElement = function (elem) {
             return null;
         }
         if (!this.isElement(prev)) {
-          prev = prev.previousSibling;
+            prev = prev.previousSibling;
         }
         else {
             return prev;
@@ -80,7 +80,7 @@ DOM.getNextElement = function(elem) {
             return null;
         }
         if (!this.isElement(next)) {
-          next = next.nextSibling;
+            next = next.nextSibling;
         }
         else {
             return next;

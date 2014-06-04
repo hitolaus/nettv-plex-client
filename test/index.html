@@ -1,42 +1,40 @@
 <!doctype html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Mocha Spec Runner</title>
-  <link rel="stylesheet" href="lib/mocha/mocha.css">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Mocha Spec Runner</title>
+      <link rel="stylesheet" href="lib/mocha/mocha.css">
 </head>
 <body>
-  <div id="mocha"></div>
-  <script src="lib/mocha/mocha.js"></script>
-  <script>mocha.setup('bdd')</script>
+    <div id="mocha"></div>
+    <script src="lib/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
 
-  <!-- assertion framework -->
+    <!-- assertion framework -->
+    <script src="lib/chai.js"></script>
 
-  <script src="lib/chai.js"></script>
+    <script>expect = chai.expect</script>
 
+    <!-- include source files here... -->
+    <script type="text/javascript" src="scripts/string.js"></script>
+    <script type="text/javascript" src="scripts/time.js"></script>
+    <script type="text/javascript" src="scripts/dom.js"></script>
+    <script type="text/javascript" src="scripts/platform.js"></script>
 
-  <script>expect = chai.expect</script>
+    <script type="text/javascript" src="scripts/model/video.js"></script>
+    <script type="text/javascript" src="scripts/model/server.js"></script>
 
-  <!-- include source files here... -->
-  <script type="text/javascript" src="../app/scripts/string.js"></script>
-  <script type="text/javascript" src="../app/scripts/time.js"></script>
-  <script type="text/javascript" src="../app/scripts/dom.js"></script>
-  <script type="text/javascript" src="../app/scripts/platform.js"></script>
+    <!-- include spec files here... -->
+    <script type="text/javascript" src="spec/string-spec.js"></script>
+    <script type="text/javascript" src="spec/time-spec.js"></script>
+    <script type="text/javascript" src="spec/dom-spec.js"></script>
+    <script type="text/javascript" src="spec/platform-spec.js"></script>
 
-  <script type="text/javascript" src="../app/scripts/model/video.js"></script>
-  <script type="text/javascript" src="../app/scripts/model/server.js"></script>
+    <script type="text/javascript" src="spec/model/video-spec.js"></script>
+    <script type="text/javascript" src="spec/model/server-spec.js"></script>
 
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/string-spec.js"></script>
-  <script type="text/javascript" src="spec/time-spec.js"></script>
-  <script type="text/javascript" src="spec/dom-spec.js"></script>
-  <script type="text/javascript" src="spec/platform-spec.js"></script>
-
-  <script type="text/javascript" src="spec/model/video-spec.js"></script>
-  <script type="text/javascript" src="spec/model/server-spec.js"></script>
-
-  <!-- trigger the mocha runner -->
-  <script src="runner/mocha.js"></script>
+    <!-- trigger the mocha runner -->
+    <script src="runner/mocha.js"></script>
 
 </body>
 </html>
