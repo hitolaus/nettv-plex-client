@@ -14,33 +14,34 @@
  */
 /*global Popcorn,video */
 function PlayerView(uri, useViewOffset, returnView) {
-    var CONTROLS_TIMEOUT = 5000;
-    var PROGRESS_INTERVAL = 60000;
-
-    // The percentage of the files that has to be view before we regard it as watched
-    var WATCHED_PERCENTAGE = 90;
+    var CONTROLS_TIMEOUT = 5000,
+        PROGRESS_INTERVAL = 60000,
+        // The percentage of the files that has to be view before we regard it as watched
+        WATCHED_PERCENTAGE = 90;
 
     var scope = this;
 
     // Preload the element lookups
-    var player = document.getElementById('player');
-    var controls = document.getElementById('controls');
-    var status = document.getElementById('player-status-message');
+    var player = document.getElementById('player'),
+        controls = document.getElementById('controls'),
+        status = document.getElementById('player-status-message'),
+        video = document.getElementById('video');
+
 
     if (Settings.useAnim()) {
         platform.addTransition(controls, '500ms', 'bottom');
     }
 
-    var totalDuration = 0;
-    var durationIndex = 0;
+    var durationIndex = 0,
+        state = 'stopped';
 
     var mediaRatingKey;
     var loading = false;
     var startViewOffset = null;
 
-    var controlsTimer;
-    var processTimer;
-    var plexProgressTimer;
+    var controlsTimer,
+        processTimer,
+        plexProgressTimer;
 
     function showControls(msg, timeout) {
         controls.style.bottom = 0;
@@ -51,22 +52,26 @@ function PlayerView(uri, useViewOffset, returnView) {
             controlsTimer = setTimeout(hideControls, timeout);
         }
     }
+
     function hideControls() {
         controls.style.bottom = -controls.offsetHeight + 'px';
     }
 
-    function showPlayer () {
+    function showPlayer() {
         player.style.display = 'block';
         // Initially the player is offscreen due to the loading hack, so we need to move it back
         player.style.top = '0';
     }
+
     function closePlayer() {
         hideControls();
-        video.stop();
+        video.pause();
+        state = 'stopped';
 
         // Manually report that we have stopped
         reportPlexProgress();
 
+        // Stop all timers
         clearInterval(processTimer);
         clearInterval(plexProgressTimer);
         clearInterval(controlsTimer);
@@ -88,34 +93,20 @@ function PlayerView(uri, useViewOffset, returnView) {
             return;
         }
 
-        var state = 'stopped';
-        switch (video.playState)
-        {
-            case 0:
-                state = 'stopped';
-                break;
-            case 1:
-                state = 'playing';
-                break;
-            case 2:
-                state = 'paused';
-                break;
-        }
-
-        var duration = video.playTime;
-        var position = video.playPosition;
+        var duration = video.duration,
+            position = Math.floor(video.currentTime);
 
         if (duration === 0) {
             // This happens when we are stopping a video
             return;
         }
 
-        var viewedPercentage = Math.floor((position/duration)*100);
+        var viewedPercentage = Math.floor((position / duration) * 100);
 
         if (viewedPercentage > WATCHED_PERCENTAGE) {
             console.log('Reporting watched since we have viewed ' + viewedPercentage + '%');
 
-            // Last 5 min. are regarded as watched
+            // Last 10% are regarded as watched
             plexAPI.watched(mediaRatingKey);
 
             // Stop any further progress reporting
@@ -159,52 +150,21 @@ function PlayerView(uri, useViewOffset, returnView) {
     }
 
     function setDuration() {
-        totalDuration = Math.floor(video.playTime/1000);
-        durationIndex = 1200/totalDuration;
+        var totalDuration = Math.floor(video.duration);
+        durationIndex = 1200 / totalDuration;
 
         document.getElementById('total-duration').innerHTML = Time.format(totalDuration);
-    }
-
-    function checkPlayState() {
-        console.log('Player state: ' + video.playState);
-        switch (video.playState)
-        {
-            case 5: // finished
-                closePlayer();
-                break;
-            case 0: // stopped
-                break;
-            case 6: // error
-                // TODO: Error message for the enduser
-                closePlayer();
-                break;
-            case 1: // playing
-                if (loading) {
-                    readyHandler();
-                }
-                break;
-            case 2: // paused
-                break;
-            case 3: // connecting
-                break;
-            case 4: // buffering
-                showControls('BUFFERING', CONTROLS_TIMEOUT);
-                break;
-            default:
-                // do nothing
-                break;
-        }
     }
 
     /**
      * Update the progress bar.
      */
     function updateElapsedTime() {
-        var ct = video.playPosition/1000;
+        var ct = video.currentTime;
         document.getElementById('duration').innerHTML = Time.format(ct);
 
         var sliceTime = Math.round(ct * durationIndex);
-        document.getElementById('progressbar-front').style.width = sliceTime+'px';
+        document.getElementById('progressbar-front').style.width = sliceTime + 'px';
     }
 
     /**
@@ -215,15 +175,19 @@ function PlayerView(uri, useViewOffset, returnView) {
             return;
         }
 
-        if (parseInt(controls.style.bottom,10) === 0) {
-            video.play(1);
+        if (parseInt(controls.style.bottom, 10) === 0) {
+            video.play();
+            state = 'playing';
+
             // Delay hidding the controls a bit to make it more fluent
-            setTimeout(function() {
+            setTimeout(function () {
                 hideControls();
             }, 1000);
         }
         else {
-            video.play(0);
+            video.pause();
+            state = 'paused';
+
             showControls('PAUSED');
         }
     }
@@ -241,11 +205,11 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         showControls('', CONTROLS_TIMEOUT);
 
-        // Get the total time in milliseconds
-        var totalTime = video.playPosition + (time * 1000);
+        // Get the total time in seconds
+        var totalTime = video.currentTime + time;
 
-        if (totalTime > 0 && totalTime < video.playTime) {
-            video.seek(totalTime);
+        if (totalTime > 0 && totalTime < video.duration) {
+            video.currentTime = totalTime;
         }
     }
 
@@ -264,9 +228,7 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         showControls('');
 
-
-        // TODO: 4 is the constant test speed. If it works use incremental speed
-        video.play(direction*4);
+        video.playbackRate = direction * 4;
     }
 
     /**
@@ -276,12 +238,12 @@ function PlayerView(uri, useViewOffset, returnView) {
      * @param {string} mimeType The mime type of the video content
      */
     function doPlayback(url, mimeType) {
-        video.data = url;
+        video.src = url;
         if (mimeType) {
             video.type = mimeType;
         }
-        video.play(1);
-
+        video.play();
+        state = 'playing';
 
         // Update process bar every second
         processTimer = setInterval(updateElapsedTime, 1000);
@@ -290,41 +252,41 @@ function PlayerView(uri, useViewOffset, returnView) {
         plexProgressTimer = setInterval(reportPlexProgress, PROGRESS_INTERVAL);
     }
 
-	this.onUp = function () {
+    this.onUp = function () {
         hideControls();
-	};
-	this.onDown = function () {
+    };
+    this.onDown = function () {
         showControls('');
-	};
-	this.onLeft = function () {
+    };
+    this.onLeft = function () {
         doSkip(-60.0);
-	};
+    };
     this.onRew = function () {
         doSkip(-300.0);
     };
-	this.onRight = function () {
+    this.onRight = function () {
         doSkip(60.0);
-	};
+    };
     this.onFF = function () {
         doSkip(300.0);
     };
-	this.onEnter = function () {
+    this.onEnter = function () {
         togglePause();
-	};
+    };
     this.onPlay = function () {
         togglePause();
     };
     this.onPause = function () {
         togglePause();
     };
-	this.onBack = function () {
+    this.onBack = function () {
         closePlayer();
-	};
+    };
     this.onStop = function () {
         closePlayer();
     };
-	this.render = function (container) {
-		var media = container.media[0];
+    this.render = function (container) {
+        var media = container.media[0];
 
         console.log('Playing: codec: ' + media.stream.video.codec + '/' + media.stream.audio.codec + ' profile: ' + media.stream.video.profile + ' level: ' + media.stream.video.level);
 
@@ -338,10 +300,11 @@ function PlayerView(uri, useViewOffset, returnView) {
 
         setMetaData(media);
 
-        var url;
-        var mimeType;
+        var url,
+            mimeType;
+
         if (!platform.isSupported(media)) {
-            plexAPI.transcode(media, function(m3u8, sessionId) {
+            plexAPI.transcode(media, function (m3u8, sessionId) {
                 url = m3u8;
                 //mimeType = 'application/vnd.apple.mpegurl';
                 //mimeType = 'application/x-mpegURL';
@@ -362,18 +325,49 @@ function PlayerView(uri, useViewOffset, returnView) {
         // Load subtitles
         if (media.subtitles) {
             console.log('Loading subtitle ' + media.subtitles + '...');
-            var p =  new Popcorn( '#video' )
-                        .parseSRT(plexAPI.getURL(media.subtitles))
-                        .play();
+            var p = new Popcorn('#video')
+                .parseSRT(plexAPI.getURL(media.subtitles))
+                .play();
         }
-	};
+    };
 
     loading = true;
     document.getElementById('video-loading').style.display = 'block';
 
-    video.onPlayStateChange=checkPlayState;
+    video.addEventListener('abort', function () {
+        console.log('abort');
+    }, true);
+    video.addEventListener('error', function () {
+        console.log('error');
+        // TODO: Error message for the enduser
+        closePlayer();
+    }, true);
+    video.addEventListener('canplay', function () {
+        console.log('canplay');
+        if (loading) {
+            readyHandler();
+        }
+    }, true);
+    video.addEventListener('play', function () {
+        console.log('play');
+    }, true);
+    video.addEventListener('playing', function () {
+        console.log('playing');
+    }, true);
+    video.addEventListener('pause', function () {
+        console.log('pause');
+    }, true);
+    video.addEventListener('stalled', function () {
+        console.log('stalled');
+    }, true);
+    video.addEventListener('waiting', function () {
+        console.log('waiting');
+        if (!loading) {
+            showControls('BUFFERING', CONTROLS_TIMEOUT);
+        }
+    }, true);
 
-	plexAPI.browse(uri, function(container) {
-		scope.render(container);
-	});
+    plexAPI.browse(uri, function (container) {
+        scope.render(container);
+    });
 }
