@@ -1,13 +1,16 @@
 function DOM() {}
 
 DOM.isElement = function(node) {
+    node = node || {};
     return node.nodeType === 1;
 };
 
-DOM.getParent = function(elem) {
-    var parent = elem.parentNode;
+DOM.getParent = function(e) {
+    var elem = e || {},
+        parent = elem.parentNode;
+
     while (true) {
-        if (parent === null) {
+        if (!parent) {
             return null;
         }
         if (!this.isElement(parent)) {

@@ -33,9 +33,21 @@ function HomeView() {
         document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
     }
 
+    /**
+     * Changes the current active menu.
+     *
+     * @param newMenu The new menu to activate
+     * @returns {boolean} <code>true</code> if the change was successful. It will fail if the new
+     * menu have no elements.
+     */
     function changeActiveMenu(newMenu) {
+        if (!newMenu.current()) {
+            return false;
+        }
+
         document.getElementById('ondeck-title').innerHTML = '';
         document.getElementById('recentlyadded-title').innerHTML = '';
+
         nav.deactivate();
         nav = newMenu;
         nav.activate();
@@ -47,10 +59,12 @@ function HomeView() {
         var typeIdx = scrollerId.indexOf('-');
         if (typeIdx > 0) {
             // The section menu scroller doesn't contain '-'
-            var titleId = scrollerId.substring(typeIdx+1) + '-title';
+            var titleId = scrollerId.substring(typeIdx + 1) + '-title';
 
             setTitle(titleId, nav.current());
         }
+
+        return true;
     }
 
     function setTitle(id, element) {
@@ -58,7 +72,7 @@ function HomeView() {
         var title = element.getAttribute('data-title').encodeHTML();
         var meta = element.getAttribute('data-meta');
 
-        heading.innerHTML = title+'<span>'+meta+'</span>';
+        heading.innerHTML = title + '<span>' + meta + '</span>';
     }
 
     /**
@@ -83,9 +97,11 @@ function HomeView() {
     }
 
     function buildNavigation() {
-        ondeckMenu = new HorizontalFixedScrollMenu('scroller-ondeck','current-ondeck');
-        ondeckMenu.onmenuleft = function(e) {
-            if (e.boundary) { changeActiveMenu(homeMenu); }
+        ondeckMenu = new HorizontalFixedScrollMenu('scroller-ondeck', 'current-ondeck');
+        ondeckMenu.onmenuleft = function (e) {
+            if (e.boundary) {
+                changeActiveMenu(homeMenu);
+            }
             else {
                 setTitle('ondeck-title', e.element);
             }
@@ -99,21 +115,24 @@ function HomeView() {
                 loadImages(DOM.getParent(nav.current()));
             }
         };
-        ondeckMenu.onmenudown = function(e) {
+        ondeckMenu.onmenudown = function (e) {
             if (e.boundary) {
-                changeActiveMenu(recentlyAddedMenu);
-                lastUsedMenu = 'recentlyadded';
+                if (changeActiveMenu(recentlyAddedMenu)) {
+                    lastUsedMenu = 'recentlyadded';
+                }
             }
         };
 
-        recentlyAddedMenu = new HorizontalFixedScrollMenu('scroller-recentlyadded','current-recentlyadded');
-        recentlyAddedMenu.onmenuleft = function(e) {
-            if (e.boundary) { changeActiveMenu(homeMenu); }
+        recentlyAddedMenu = new HorizontalFixedScrollMenu('scroller-recentlyadded', 'current-recentlyadded');
+        recentlyAddedMenu.onmenuleft = function (e) {
+            if (e.boundary) {
+                changeActiveMenu(homeMenu);
+            }
             else {
                 setTitle('recentlyadded-title', e.element);
             }
         };
-        recentlyAddedMenu.onmenuright = function(e) {
+        recentlyAddedMenu.onmenuright = function (e) {
             if (!e.boundary) {
                 setTitle('recentlyadded-title', e.element);
             }
@@ -122,16 +141,17 @@ function HomeView() {
                 loadImages(DOM.getParent(nav.current()));
             }
         };
-        recentlyAddedMenu.onmenuup = function(e) {
+        recentlyAddedMenu.onmenuup = function (e) {
             if (e.boundary) {
-                changeActiveMenu(ondeckMenu);
-                lastUsedMenu = 'ondeck';
+                if (changeActiveMenu(ondeckMenu)) {
+                    lastUsedMenu = 'ondeck';
+                }
             }
         };
 
 
         homeMenu = new VerticalFixedScrollMenu('scroller', 'current');
-        homeMenu.onmenuright = function(e) {
+        homeMenu.onmenuright = function (e) {
             var key = e.element.getAttribute('data-key');
             if (key === '') {
                 // This is the preferences element
@@ -153,13 +173,13 @@ function HomeView() {
                 }
             }
         };
-        homeMenu.onmenuup = function(e) {
+        homeMenu.onmenuup = function (e) {
             clearTimeout(previewLoader);
             backgroundLoader.load(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
             lastUsedMenu = null;
         };
-        homeMenu.onmenudown = function(e) {
+        homeMenu.onmenudown = function (e) {
             clearTimeout(previewLoader);
             backgroundLoader.load(e.element.getAttribute('data-bg'));
             loadPreviewMenu(e.element.getAttribute('data-key'));
@@ -193,15 +213,15 @@ function HomeView() {
             return;
         }
 
-        previewLoader = setTimeout(function() {
+        previewLoader = setTimeout(function () {
 
-            plexAPI.browse(plexAPI.onDeck(key), function(container) {
-                buildVideoList('scroller-ondeck', 'current-ondeck',container.media);
+            plexAPI.browse(plexAPI.onDeck(key), function (container) {
+                buildVideoList('scroller-ondeck', 'current-ondeck', container.media);
                 ondeckMenu.reload();
                 dirtyOndeckThumbs = true;
             });
 
-            plexAPI.browse(plexAPI.recentlyAdded(key), function(container) {
+            plexAPI.browse(plexAPI.recentlyAdded(key), function (container) {
                 buildVideoList('scroller-recentlyadded', 'current-recentlyadded', container.media, true);
                 recentlyAddedMenu.reload();
                 dirtyRecentlyAddedThumbs = true;
@@ -212,7 +232,7 @@ function HomeView() {
         document.getElementById('preview-menu').style.display = 'block';
     }
 
-    function posterErrorHandler (source) {
+    function posterErrorHandler(source) {
         this.src = PLACEHOLDER_IMAGE;
         this.onerror = ''; // Reset the error handler to avoid recursive references
         return true;
@@ -231,7 +251,7 @@ function HomeView() {
 
         var n = media.length;
 
-        console.log('Building menu ('+id+') with ' + n + ' elements');
+        console.log('Building menu (' + id + ') with ' + n + ' elements');
 
         var displayedPosterIndex = 0;
         for (var i = 0; i < n; i++) {
@@ -292,8 +312,8 @@ function HomeView() {
             item.appendChild(overlay);
             list.appendChild(item);
 
-            if (i === 0) {
-                item.setAttribute('id',activeId);
+            if (displayedPosterIndex === 1) {
+                item.setAttribute('id', activeId);
             }
 
         }
@@ -315,7 +335,7 @@ function HomeView() {
 
         var i = 0;
         var n = media.length;
-        var selectedIndex = Math.floor(n/2);
+        var selectedIndex = Math.floor(n / 2);
         for (i = 0; i < n; i++) {
             var section = media[i];
 
@@ -328,7 +348,7 @@ function HomeView() {
             list.appendChild(item);
 
             if (i === selectedIndex) {
-                item.setAttribute('id','current');
+                item.setAttribute('id', 'current');
                 activeKey = section.key;
                 activeBg = section.art;
                 activeHeight = list.offsetHeight;
@@ -343,27 +363,21 @@ function HomeView() {
         list.appendChild(item);
 
         if (n === 0) {
-            item.setAttribute('id','current');
+            item.setAttribute('id', 'current');
             activeHeight = list.offsetHeight;
         }
 
-        // 360 = mid height, move half the count of elements down
-        var midElementIdx = Math.floor(i/2);
-        if (midElementIdx < 1) {
-            midElementIdx = 1;
-        }
-
-        list.style.top = (360-activeHeight+8)+'px';
+        list.style.top = (360 - activeHeight + 8) + 'px';
 
         backgroundLoader.load(activeBg);
         loadPreviewMenu(activeKey);
     }
 
-    this.reload = function() {
+    this.reload = function () {
         buildNavigation();
     };
-    this.render = function() {
-        plexAPI.browse(plexAPI.sections(), function(container) {
+    this.render = function () {
+        plexAPI.browse(plexAPI.sections(), function (container) {
 
             buildSectionList(container.media);
             buildNavigation();
@@ -372,7 +386,7 @@ function HomeView() {
             setInterval(updateTime, 1000);
 
             // Hide the loading screen
-            setTimeout(function() {
+            setTimeout(function () {
                 document.getElementById('loader').style.display = 'none';
             }, 2000);
         });
@@ -383,10 +397,10 @@ function HomeView() {
         if (idx < 0) {
             return 'current';
         }
-        return 'current'+scrollerId.substring(idx);
+        return 'current' + scrollerId.substring(idx);
     }
 
-    this.onEnter = function() {
+    this.onEnter = function () {
         var currentScroller = document.getElementsByClassName('current-scroller')[0];
 
         var currentId = getCurrentId(currentScroller.getAttribute('id'));
@@ -414,22 +428,22 @@ function HomeView() {
         }
     };
 
-    this.onBack = function() {
+    this.onBack = function () {
     };
 
-    this.onRight = function() {
+    this.onRight = function () {
         nav.right();
     };
 
-    this.onLeft = function() {
+    this.onLeft = function () {
         nav.left();
     };
 
-    this.onUp = function() {
+    this.onUp = function () {
         nav.up();
     };
 
-    this.onDown = function() {
+    this.onDown = function () {
         nav.down();
     };
 }

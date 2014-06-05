@@ -3,16 +3,16 @@
  */
 function VerticalFixedScrollMenu(menuId, activeId) {
 
-    var menu = document.getElementById(menuId);
-    var current = document.getElementById(activeId);
+    var menu = document.getElementById(menuId),
+        current = document.getElementById(activeId);
 
     if (Settings.useAnim()) {
         platform.addTransition(menu, '200ms', 'top');
     }
 
-    var incr = 0;
+    var offset = 0;
     if (current !== null) {
-        incr = current.offsetHeight;
+        offset = current.offsetHeight;
     }
 
     function setCurrentElement(elem) {
@@ -29,11 +29,13 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     this.current = function() {
         return current;
     };
+
     this.reload = function() {
         menu.style.top = 0;
+
         current = document.getElementById(activeId);
         if (current !== null) {
-            incr = current.offsetHeight;
+            offset = current.offsetHeight;
         }
     };
     this.activate = function() {
@@ -50,7 +52,6 @@ function VerticalFixedScrollMenu(menuId, activeId) {
     };
     this.up = function() {
         var prev = DOM.getPreviousElement(current);
-        //var prev = DOM.getPreviousElement(document.getElementById(activeId));
         if (prev === null) {
             this.onmenuup({ element: current, boundary: true });
             return;
@@ -58,12 +59,11 @@ function VerticalFixedScrollMenu(menuId, activeId) {
 
         setCurrentElement(prev);
 
-        menu.style.top = parseInt(menu.style.top, 10) + incr + 'px';
+        menu.style.top = parseInt(menu.style.top, 10) + offset + 'px';
         this.onmenuup({ element: current, boundary: false });
     };
     this.down = function() {
         var next = DOM.getNextElement(current);
-        //var next = DOM.getNextElement(document.getElementById(activeId));
         if (next === null) {
             this.onmenudown({ element: current, boundary: true });
             return;
@@ -71,20 +71,20 @@ function VerticalFixedScrollMenu(menuId, activeId) {
 
         setCurrentElement(next);
 
-        menu.style.top = parseInt(menu.style.top, 10) - incr + 'px';
+        menu.style.top = parseInt(menu.style.top, 10) - offset + 'px';
         this.onmenudown({ element: current, boundary: false });
     };
 }
 
 function HorizontalFixedScrollMenu(menuId, activeId) {
-    var menu = document.getElementById(menuId);
-    var current = document.getElementById(activeId);
+    var menu = document.getElementById(menuId),
+        current = document.getElementById(activeId);
 
     if (Settings.useAnim()) {
         platform.addTransition(menu, '200ms', 'left');
     }
 
-    var incr = 0;
+    var offset = 0;
 
     function setCurrentElement(elem) {
         current.removeAttribute('id');
@@ -93,12 +93,12 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     }
 
     function getCurrentElementWidth(elem) {
-        var computedStyle = getComputedStyle(current, null);
+        var computedStyle = getComputedStyle(elem, null);
 
         var leftMargin  = parseInt(computedStyle.marginLeft,  10);
         var rightMargin = parseInt(computedStyle.marginRight, 10);
 
-        return current.offsetWidth + leftMargin + rightMargin;
+        return elem.offsetWidth + leftMargin + rightMargin;
     }
 
     this.onmenuright = function() {};
@@ -109,19 +109,23 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
     this.current = function() {
         return current;
     };
+
     this.reload = function() {
         menu.style.left = '5px';
         current = document.getElementById(activeId);
         if (current !== null) {
-            incr = getCurrentElementWidth(current);
+            offset = getCurrentElementWidth(current);
         }
     };
+
     this.activate = function() {
         DOM.addClass(menu, 'current-scroller');
     };
+
     this.deactivate = function() {
         DOM.removeClass(menu, 'current-scroller');
     };
+
     this.left = function() {
         var prev = DOM.getPreviousElement(current);
         if (prev === null) {
@@ -131,7 +135,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
 
         setCurrentElement(prev);
 
-        menu.style.left = parseInt(menu.style.left, 10) + incr + 'px';
+        menu.style.left = parseInt(menu.style.left, 10) + offset + 'px';
         this.onmenuleft({ element: current, boundary: false });
     };
     this.right = function() {
@@ -143,7 +147,7 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
 
         setCurrentElement(next);
 
-        menu.style.left = parseInt(menu.style.left, 10) - incr + 'px';
+        menu.style.left = parseInt(menu.style.left, 10) - offset + 'px';
         this.onmenuright({ element: current, boundary: false });
     };
     this.up = function() {
@@ -155,14 +159,15 @@ function HorizontalFixedScrollMenu(menuId, activeId) {
 
 
     if (current !== null) {
-        incr = getCurrentElementWidth(current);
+        offset = getCurrentElementWidth(current);
     }
 }
 
 function SimpleListMenu(maxElements) {
-    var list, current;
-    var i = 0;
-    var top = 0;
+    var list,
+        current,
+        i = 0,
+        top = 0;
 
     maxElements = maxElements || -1;
 
