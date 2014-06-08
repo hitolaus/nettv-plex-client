@@ -16,6 +16,15 @@ function Platform(browser) {
         return ua.indexOf('NETTV') > -1;
     }
 
+    this.disablePointer = function() {
+        /* jshint ignore:start */
+        if (isNetTV()) {
+            deviceUiObject.userPointerMode = NetTV_DeviceUI.USERPOINTERMODE_OFF;
+            //deviceUiObject.userPointerMode = NetTV_DeviceUI.USERPOINTERMODE_AUTO
+        }
+        /* jshint ignore:end */
+    };
+
     /**
      * Returns whether or not the platform supports transisions/animations.
      *

@@ -49,8 +49,10 @@ function Settings() {
             activateDebug(_deviceId);
         }
 
+        platform.disablePointer();
+
         console.log('Using PMS: ' + _pms);
-        return _pms !== null && _pms !== undefined;
+        return !!_pms;
     };
     this.reset = function() {
         var cookies = document.cookie.split(';');
