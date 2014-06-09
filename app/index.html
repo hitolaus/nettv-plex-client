@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Plex</title>
-        <meta http-equiv="content-type" content="text/html;charset=UTF-8;supportspointer=false"/>
+        <meta http-equiv="content-type" content="text/html"/>
         <link rel="stylesheet" href="styles/main.css" />
         <style type="text/css">
 #loader {
@@ -20,8 +20,8 @@
         </style>
     </head>
     <body onload="init()">
-        <img class="bg" id="bg1" src="" alt="" />
-        <img class="bg" id="bg2" src="" alt="" />
+        <img class="bg" id="bg1" src="images/bg-placeholder.jpg" alt="" />
+        <img class="bg" id="bg2" src="images/bg-placeholder.jpg" alt="" />
 
         <div id="loader"></div>
 
@@ -52,6 +52,20 @@
 
         <div id="home">
             <div id="home-time">0:00 AM</div>
+            <div id="home-description">
+                <div id="home-description-art">
+                    <img id="home-description-art1" src="images/bg-placeholder.jpg" alt="" />
+                    <img id="home-description-art2" src="images/bg-placeholder.jpg" alt="" />
+                </div>
+                <div id="home-description-title"></div>
+                <div id="home-description-info"><!-- length * year \n Genre--></div>
+                <div id="home-description-summary"></div>
+                <div id="home-description-fileinfo">
+                    <img id="home-description-resolution" src="images/blank.gif" alt="" />
+                    <img id="home-description-audiocodec" src="images/blank.gif" alt="" />
+                    <img id="home-description-audiochannels" src="images/blank.gif" alt="" />
+                </div>
+            </div>
             <div id="home-menu">
                 <div class="overlay"></div>
                 <ul id="scroller" style="top:0">

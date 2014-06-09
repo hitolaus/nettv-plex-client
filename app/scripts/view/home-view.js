@@ -23,7 +23,8 @@ function HomeView() {
     // Timer for preview menu (so we can cancel loading)
     var previewLoader;
 
-    var backgroundLoader = new BackgroundLoader('bg1', 'bg2');
+    var backgroundLoader = new BackgroundLoader('bg1', 'bg2'),
+        artLoader = new BackgroundLoader('home-description-art1', 'home-description-art2', 425, 240);
 
     // Whether we need to load the thumbs
     var dirtyOndeckThumbs = false;
@@ -31,6 +32,53 @@ function HomeView() {
 
     function updateTime() {
         document.getElementById('home-time').innerHTML = Time.to12HourFormat(new Date());
+    }
+
+    // Cache description elements
+    var descriptionElem = document.getElementById('home-description'),
+        descriptionTitleElem = document.getElementById('home-description-title'),
+        descriptionInfoElem = document.getElementById('home-description-info'),
+        descriptionSummaryElem = document.getElementById('home-description-summary'),
+        descriptionResolutionFlagElem = document.getElementById('home-description-resolution'),
+        descriptionAudioCodecFlagElem = document.getElementById('home-description-audiocodec'),
+        descriptionAudioChannelsFlagElem = document.getElementById('home-description-audiochannels');
+
+    if (Settings.useAnim()) {
+        platform.addTransition(descriptionElem, '500ms', 'left');
+    }
+
+    function showDescription() {
+        DOM.addClass(descriptionElem, 'show');
+    }
+
+    function hideDescription() {
+        DOM.removeClass(descriptionElem, 'show');
+    }
+
+    function updateDescription(key) {
+
+        // FIXME: This data was actually already loaded in the buildVideoList call.
+        plexAPI.browse(plexAPI.getURL(key), function (container) {
+            var media = container.media[0];
+
+            artLoader.load(media.art);
+
+            var title = media.title;
+            if (media.grandparentTitle) {
+                title = media.grandparentTitle;
+            }
+            descriptionTitleElem.innerHTML = title;
+
+            //var meta = Time.format(media.duration) + ' <img src="images/bullet1.png" alt=""  /> ' + media.year;
+            var meta = Time.format(media.duration) + ' ' + media.year;
+            descriptionInfoElem.innerHTML = meta;
+
+            descriptionSummaryElem.innerHTML = media.summary;
+
+            descriptionResolutionFlagElem.src = plexAPI.flagMedia('videoResolution', media.stream.video.resolution);
+            descriptionAudioCodecFlagElem.src = plexAPI.flagMedia('audioCodec', media.stream.audio.codec);
+            descriptionAudioChannelsFlagElem.src = plexAPI.flagMedia('audioChannels', media.stream.audio.channels);
+        });
     }
 
     /**
@@ -61,18 +109,10 @@ function HomeView() {
             // The section menu scroller doesn't contain '-'
             var titleId = scrollerId.substring(typeIdx + 1) + '-title';
 
-            setTitle(titleId, nav.current());
+            updateDescription(nav.current().getAttribute('data-key'));
         }
 
         return true;
-    }
-
-    function setTitle(id, element) {
-        var heading = document.getElementById(id);
-        var title = element.getAttribute('data-title').encodeHTML();
-        var meta = element.getAttribute('data-meta');
-
-        heading.innerHTML = title + '<span>' + meta + '</span>';
     }
 
     /**
@@ -100,15 +140,16 @@ function HomeView() {
         ondeckMenu = new HorizontalFixedScrollMenu('scroller-ondeck', 'current-ondeck');
         ondeckMenu.onmenuleft = function (e) {
             if (e.boundary) {
+                hideDescription();
                 changeActiveMenu(homeMenu);
             }
             else {
-                setTitle('ondeck-title', e.element);
+                updateDescription(e.element.getAttribute('data-key'));
             }
         };
         ondeckMenu.onmenuright = function (e) {
             if (!e.boundary) {
-                setTitle('ondeck-title', e.element);
+                updateDescription(e.element.getAttribute('data-key'));
             }
 
             if (dirtyOndeckThumbs) {
@@ -126,15 +167,16 @@ function HomeView() {
         recentlyAddedMenu = new HorizontalFixedScrollMenu('scroller-recentlyadded', 'current-recentlyadded');
         recentlyAddedMenu.onmenuleft = function (e) {
             if (e.boundary) {
+                hideDescription();
                 changeActiveMenu(homeMenu);
             }
             else {
-                setTitle('recentlyadded-title', e.element);
+                updateDescription(e.element.getAttribute('data-key'));
             }
         };
         recentlyAddedMenu.onmenuright = function (e) {
             if (!e.boundary) {
-                setTitle('recentlyadded-title', e.element);
+                updateDescription(e.element.getAttribute('data-key'));
             }
 
             if (dirtyRecentlyAddedThumbs) {
@@ -159,6 +201,7 @@ function HomeView() {
             }
 
             if (e.boundary) {
+                showDescription();
                 if (lastUsedMenu === null || lastUsedMenu === 'recentlyadded') {
                     changeActiveMenu(recentlyAddedMenu);
                     lastUsedMenu = 'recentlyadded';
@@ -267,14 +310,12 @@ function HomeView() {
             if (video.grandparentTitle) {
                 title = video.grandparentTitle;
             }
-            var meta = ' <img src="images/bullet1.png" alt=""  /> ' + video.year;
             var offset = (video.viewOffset) ? video.viewOffset : 0;
 
             var item = document.createElement('li');
             item.setAttribute('data-key', video.key);
             item.setAttribute('data-type', (video.container) ? 'container' : 'video');
             item.setAttribute('data-title', title);
-            item.setAttribute('data-meta', meta);
             item.setAttribute('data-offset', offset);
             //item.setAttribute('onclick', 'jump(,"'+(i*140)+'px");');
 

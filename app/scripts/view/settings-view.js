@@ -40,7 +40,7 @@ function SettingsView(returnView) {
 
 
     this.onEnter = function () {
-        var activeElement = document.querySelector('input:focus');
+        var activeElement = document.querySelector('input:focus') || document.getElementById('c4');
         var activeId = activeElement.getAttribute('id');
         var lastValueEntered = activeId === 'c4' && activeElement.value !== '';
 
@@ -79,16 +79,24 @@ function SettingsView(returnView) {
 
     this.reload = function () {};
     this.render = function () {
-        var address = '<input type="text" name="c1" id="c1" maxlength="3" />.' +
-                      '<input type="text" name="c2" id="c2" maxlength="3" />.' +
-                      '<input type="text" name="c3" id="c3" maxlength="3" />.' +
-                      '<input type="text" name="c4" id="c4" maxlength="3" />';
+        var address = '<input type="number" name="c1" id="c1" maxlength="3" />.' +
+                      '<input type="number" name="c2" id="c2" maxlength="3" />.' +
+                      '<input type="number" name="c3" id="c3" maxlength="3" />.' +
+                      '<input type="number" name="c4" id="c4" maxlength="3" />';
 
 
         var heading = '<h1>Enter address of Plex Media Server</h1>';
         var error = '<p id="address-error"></p>';
 
         settingsView.innerHTML = '<div id="address">' + heading + address + error + '</div>';
+
+        var done = document.createElement('div');
+        var text = document.createTextNode('DONE');
+        done.appendChild(text);
+        done.addEventListener('click', this.onEnter);
+        DOM.addClass(done, 'btn');
+
+        settingsView.appendChild(done);
 
         setTimeout(function() {
             document.getElementById('c1').focus();

@@ -91,7 +91,7 @@ function Video(elem) {
     var grandparentTitle = elem.getAttribute('grandparentTitle');
     var grandparentThumb = elem.getAttribute('grandparentThumb');
 
-    var resolution;
+    var resolution, channels;
 
 	var url = '';
     var mimeType = null;
@@ -110,6 +110,7 @@ function Video(elem) {
 
         mimeType = media.getAttribute('container');
         resolution = media.getAttribute('videoResolution');
+        channels = media.getAttribute('audioChannels');
 
 		var parts = media.getElementsByTagName('Part');
         var partCount = parts.length;
@@ -139,10 +140,12 @@ function Video(elem) {
 
                 if (streamType === '1') {
                     streamInformation.video = getVideoStreamInformation(stream);
+                    streamInformation.video.resolution = resolution;
                 }
 
                 if (streamType === '2') {
                     streamInformation.audio = getAudioStreamInformation(stream);
+                    streamInformation.audio.channels = channels;
                 }
 
 				if (isStreamSelected) {

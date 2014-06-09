@@ -10,10 +10,15 @@
  * @constructor
  * @param {string} backgroundId1 Id of the first image tag
  * @param {string} backgroundId2 Id of the second image tag
+ * @param {number} [width] the width of the image used for scaling. Default 1280
+ * @param {number} [height] the height of image used for scaling. Default 720
  */
-function BackgroundLoader(backgroundId1, backgroundId2) {
-    var bg1 = document.getElementById(backgroundId1);
-    var bg2 = document.getElementById(backgroundId2);
+function BackgroundLoader(backgroundId1, backgroundId2, width, height) {
+    var bg1 = document.getElementById(backgroundId1),
+        bg2 = document.getElementById(backgroundId2);
+
+    width = width || 1280;
+    height = height || 720;
 
     if (Settings.useAnim()) {
         // Smooth the background change using transitions
@@ -29,7 +34,7 @@ function BackgroundLoader(backgroundId1, backgroundId2) {
      */
     this.load = function(url) {
         if (url) {
-            var scaledBackground = plexAPI.getScaledImageURL(plexAPI.getURL(url), 1280, 720);
+            var scaledBackground = plexAPI.getScaledImageURL(plexAPI.getURL(url), width, height);
 
             if (bg2.style.opacity === '0') {
                 if (bg2.src !== scaledBackground) {

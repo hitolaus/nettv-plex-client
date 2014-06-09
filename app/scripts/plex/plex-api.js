@@ -56,6 +56,9 @@ function PlexAPI() {
 	this.sections = function() {
 		return 'http://'+Settings.getPMS()+':32400/library/sections';
 	};
+    this.flagMedia = function(type, value) {
+        return this.getURL('/system/bundle/media/flags/'+type+'/'+value+'?t='+(new Date()).getTime());
+    };
 
     /**
      * Ping an address to see if it is an valid Plex Media Server.
