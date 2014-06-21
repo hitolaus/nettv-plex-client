@@ -106,9 +106,6 @@ function HomeView() {
         var scrollerId = menuList.getAttribute('id');
         var typeIdx = scrollerId.indexOf('-');
         if (typeIdx > 0) {
-            // The section menu scroller doesn't contain '-'
-            var titleId = scrollerId.substring(typeIdx + 1) + '-title';
-
             updateDescription(nav.current().getAttribute('data-key'));
         }
 
@@ -495,57 +492,81 @@ function HomeView() {
     };
 
     var moveTimer;
+    function clearMoveTimer() { if (moveTimer) { clearTimeout(moveTimer); }}
     function move(id, direction) {
-        var menu = (id === 'ondeck') ? ondeckMenu : recentlyAddedMenu;
+        var menu;
+        // Find menu
+        switch (id) {
+            case 'ondeck':
+                menu = ondeckMenu;
+                break;
+            case 'recentlyadded':
+                menu = recentlyAddedMenu;
+                break;
+            default:
+                menu = homeMenu;
+        }
+
+
         return function() {
-            if (direction > 0) {
-                menu.left();
+            switch (direction) {
+                case 'up':
+                    menu.up();
+                    break;
+                case 'down':
+                    menu.down();
+                    break;
+                case 'left':
+                    menu.left();
+                    break;
+                case 'right':
+                    menu.right();
+                    break;
             }
-            else {
-                menu.right();
-            }
+
             moveTimer = setTimeout(move(id, direction), 500);
         };
     }
 
     document.getElementById('recentlyadded-scroll-left').onmouseover = function(e) {
-        move('recentlyadded', 1)();
+        move('recentlyadded', 'left')();
     };
-    document.getElementById('recentlyadded-scroll-left').onmouseout = function(e) {
-        if (moveTimer) {
-            clearTimeout(moveTimer);
-        }
-    };
+    document.getElementById('recentlyadded-scroll-left').onmouseout = clearMoveTimer;
+
     document.getElementById('recentlyadded-scroll-right').onmouseover = function(e) {
-        move('recentlyadded', -1)();
+        move('recentlyadded', 'right')();
     };
-    document.getElementById('recentlyadded-scroll-right').onmouseout = function(e) {
-        if (moveTimer) {
-            clearTimeout(moveTimer);
-        }
-    };
+    document.getElementById('recentlyadded-scroll-right').onmouseout = clearMoveTimer;
+
     document.getElementById('ondeck-scroll-left').onmouseover = function(e) {
-        move('ondeck', 1)();
+        move('ondeck', 'left')();
     };
-    document.getElementById('ondeck-scroll-left').onmouseout = function(e) {
-        if (moveTimer) {
-            clearTimeout(moveTimer);
-        }
+    document.getElementById('ondeck-scroll-left').onmouseout = clearMoveTimer;
+
+    document.getElementById('ondeck-scroll-right').onmouseover = function(e) {
+        move('ondeck', 'right')();
     };
-    document.getElementById('ondeck-scroll-left').onmouseover = function(e) {
-        move('ondeck', 1)();
+    document.getElementById('ondeck-scroll-right').onmouseout = clearMoveTimer;
+
+    document.getElementById('section-scroll-up').onmouseover = function(e) {
+        move('home', 'up')();
     };
-    document.getElementById('ondeck-scroll-left').onmouseout = function(e) {
-        if (moveTimer) {
-            clearTimeout(moveTimer);
-        }
+    document.getElementById('section-scroll-up').onmouseout = clearMoveTimer;
+
+    document.getElementById('section-scroll-down').onmouseover = function(e) {
+        move('home', 'down')();
     };
+    document.getElementById('section-scroll-down').onmouseout = clearMoveTimer;
+
 
     document.getElementById('preview-menu').onclick = function(e) {
         if (e.target.tagName === 'LI') {
-            console.log('test');
             activate(e.target);
         }
-
+    };
+    document.getElementById('home-menu').onclick = function(e) {
+        if (e.target.tagName === 'LI') {
+            activate(e.target);
+        }
     };
 }

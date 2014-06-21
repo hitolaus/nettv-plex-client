@@ -284,9 +284,16 @@ span img {
 .scroll-overlay {
     position: absolute;
     z-index: 20;
+    display: none;
+}
+
+.ondeck-scroll-overlay {
     height: 200px;
     width: 75px;
-    display: none;
+}
+.recentlyadded-scroll-overlay {
+    height: 200px;
+    width: 75px;
 }
 
 #ondeck-menu:hover .ondeck-scroll-overlay {
@@ -321,7 +328,29 @@ span img {
     @include selectedPoster;
 }
 
-#preview-menu .overlay, #preview-menu img {
+.section-scroll-overlay {
+    width: 200px;
+    height: 75px;
+}
+#home-menu:hover .section-scroll-overlay {
+    display: block;
+}
+
+#section-scroll-up {
+    background: url(../images/uparrow_85x60.png) no-repeat center center;
+    top: 0; right: 30px;
+}
+
+#section-scroll-down {
+    background: url(../images/downarrow_85x60.png) no-repeat center center;
+    bottom: 0; right: 30px;
+}
+
+.overlay {
+    pointer-events:none;
+}
+
+#preview-menu img {
     pointer-events:none;
 }
 
