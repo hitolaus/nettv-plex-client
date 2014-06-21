@@ -323,12 +323,14 @@ function PlayerView(uri, useViewOffset, returnView) {
         }
 
         // Load subtitles
+        /*
         if (media.subtitles) {
             console.log('Loading subtitle ' + media.subtitles + '...');
             var p = new Popcorn('#video')
                 .parseSRT(plexAPI.getURL(media.subtitles))
                 .play();
         }
+        */
     };
 
     loading = true;

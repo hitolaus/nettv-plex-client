@@ -57,7 +57,7 @@ AddType text/vtt                            vtt
 
 # CE-HTML
 #AddType application/ce-html+xml;charset="UTF-8";supportspointer=false     html
-AddType text/html;charset="UTF-8";supportspointer=false     html
+AddType text/html     html
 
 
 # ----------------------------------------------------------------------

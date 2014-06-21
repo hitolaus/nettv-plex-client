@@ -112,7 +112,9 @@ var Base64 = {
     _utf8_decode : function (utftext) {
         var string = "";
         var i = 0;
-        var c = c1 = c2 = 0;
+        var c = 0,
+            c1 = 0,
+            c2 = 0;
 
         while ( i < utftext.length ) {
 
@@ -138,4 +140,4 @@ var Base64 = {
 
         return string;
     }
-}
+};

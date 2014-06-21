@@ -27,7 +27,8 @@ $selected-poster-height: 150px;
     left: -427px;
     height: 720px;
     width: 425px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: black;
+    opacity: 0.8;
     border-right: 2px solid $highlight-color;
     z-index: 50;
 }
@@ -280,12 +281,48 @@ span img {
     overflow: hidden;
 }
 
+.scroll-overlay {
+    position: absolute;
+    z-index: 20;
+    height: 200px;
+    width: 75px;
+    display: none;
+}
+
+#ondeck-menu:hover .ondeck-scroll-overlay {
+    display: block;
+}
+#recentlyadded-menu:hover .recentlyadded-scroll-overlay {
+    display: block;
+}
+
+#ondeck-scroll-left {
+    background: url(../images/leftarrow_60x85.png) no-repeat center center;
+    top:0; left: 30px;
+}
+#ondeck-scroll-right {
+    background: url(../images/rightarrow_60x85.png) no-repeat center center;
+    top: 0; right: 0;
+}
+#recentlyadded-scroll-left {
+    background: url(../images/leftarrow_60x85.png) no-repeat center center;
+    top:0; left: 30px;
+}
+#recentlyadded-scroll-right {
+    background: url(../images/rightarrow_60x85.png) no-repeat center center;
+    top: 0; right: 0;
+}
+
 #recentlyadded-menu .current-scroller #current-recentlyadded {
     @include selectedPoster;
 }
 
 #ondeck-menu .current-scroller #current-ondeck {
     @include selectedPoster;
+}
+
+#preview-menu .overlay, #preview-menu img {
+    pointer-events:none;
 }
 
 #recentlyadded-menu .current-scroller #current-recentlyadded .overlay {

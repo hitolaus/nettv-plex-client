@@ -80,19 +80,23 @@ function keydownHandler(e) {
         }
     }
     catch (err) {
-        console.log('FATAL:' + err);
+        logger.fatal(err);
         throw err;
     }
 }
 
 function init() {
+    window.logger = new Logger(1000);
+
     document.addEventListener('keydown', keydownHandler, true);
 
     var initialized = Settings.init();
     if (!initialized) {
+        logger.debug('Initializing settings view');
         window.view = new SettingsView();
     }
     else {
+        logger.debug('Initializing home view');
         window.view = new HomeView();
     }
     window.view.render();

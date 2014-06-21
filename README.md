@@ -35,4 +35,5 @@ The following awesome projects are included in this distibution.
 
 The following beautiful assets are also used
 
-* Plex Mediastream Skin (https://github.com/elan/plex-mediastream)
+* Plex Mediastream Skin (https://github.com/plexinc/plex-mediastream)
+* PHT Plex Skin (https://github.com/plexinc/plex-home-theater-public/tree/pht-frodo/addons/skin.plex)

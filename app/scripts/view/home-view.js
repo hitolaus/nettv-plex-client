@@ -441,16 +441,11 @@ function HomeView() {
         return 'current' + scrollerId.substring(idx);
     }
 
-    this.onEnter = function () {
-        var currentScroller = document.getElementsByClassName('current-scroller')[0];
-
-        var currentId = getCurrentId(currentScroller.getAttribute('id'));
-        var current = document.getElementById(currentId);
-
-        var key = current.getAttribute('data-key');
-        var type = current.getAttribute('data-type');
+    function activate(selected) {
+        var key = selected.getAttribute('data-key');
+        var type = selected.getAttribute('data-type');
         if (type === 'video') {
-            var offset = parseInt(current.getAttribute('data-offset'), 10);
+            var offset = parseInt(selected.getAttribute('data-offset'), 10);
 
             if (offset > 0) {
                 window.view = new ResumeView(plexAPI.getURL(key), offset);
@@ -467,6 +462,17 @@ function HomeView() {
             window.view = new ListView(plexAPI.getURL(key));
             window.view.render();
         }
+    }
+
+    this.onEnter = function () {
+        hideDescription();
+
+        var currentScroller = document.getElementsByClassName('current-scroller')[0];
+
+        var currentId = getCurrentId(currentScroller.getAttribute('id'));
+        var current = document.getElementById(currentId);
+
+        activate(current);
     };
 
     this.onBack = function () {
@@ -486,5 +492,60 @@ function HomeView() {
 
     this.onDown = function () {
         nav.down();
+    };
+
+    var moveTimer;
+    function move(id, direction) {
+        var menu = (id === 'ondeck') ? ondeckMenu : recentlyAddedMenu;
+        return function() {
+            if (direction > 0) {
+                menu.left();
+            }
+            else {
+                menu.right();
+            }
+            moveTimer = setTimeout(move(id, direction), 500);
+        };
+    }
+
+    document.getElementById('recentlyadded-scroll-left').onmouseover = function(e) {
+        move('recentlyadded', 1)();
+    };
+    document.getElementById('recentlyadded-scroll-left').onmouseout = function(e) {
+        if (moveTimer) {
+            clearTimeout(moveTimer);
+        }
+    };
+    document.getElementById('recentlyadded-scroll-right').onmouseover = function(e) {
+        move('recentlyadded', -1)();
+    };
+    document.getElementById('recentlyadded-scroll-right').onmouseout = function(e) {
+        if (moveTimer) {
+            clearTimeout(moveTimer);
+        }
+    };
+    document.getElementById('ondeck-scroll-left').onmouseover = function(e) {
+        move('ondeck', 1)();
+    };
+    document.getElementById('ondeck-scroll-left').onmouseout = function(e) {
+        if (moveTimer) {
+            clearTimeout(moveTimer);
+        }
+    };
+    document.getElementById('ondeck-scroll-left').onmouseover = function(e) {
+        move('ondeck', 1)();
+    };
+    document.getElementById('ondeck-scroll-left').onmouseout = function(e) {
+        if (moveTimer) {
+            clearTimeout(moveTimer);
+        }
+    };
+
+    document.getElementById('preview-menu').onclick = function(e) {
+        if (e.target.tagName === 'LI') {
+            console.log('test');
+            activate(e.target);
+        }
+
     };
 }

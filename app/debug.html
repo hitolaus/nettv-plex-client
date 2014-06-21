@@ -28,6 +28,7 @@
     <body onload="ready()">
 
     <div id="pms"></div>
+    <div id="device-id"></div>
     <div class="btn" onclick="clearSettings()">Clear</div>
 
     <script>
@@ -56,11 +57,14 @@
 
         function clearSettings() {
             deleteCookie('nettv_plex_pms_ip');
+            deleteCookie('nettv_plex_device_id');
+
             window.location.reload();
         }
 
         function ready() {
             document.getElementById('pms').innerHTML = getCookie('nettv_plex_pms_ip');
+            document.getElementById('device-id').innerHTML = getCookie('nettv_plex_device_id');
         }
     </script>
     </body>
